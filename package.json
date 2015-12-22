@@ -1,0 +1,13 @@
+{
+  "name": "discord-bot",
+  "description": "SET-DESCRIPTION",
+  "version": "0.0.0",
+  "author": "Simon Knittel <hallo@simonknittel.de>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simonknittel/discord-bot"
+  },
+  "bugs": {
+    "url": "https://github.com/simonknittel/discord-bot/issues"
+  }
+}
