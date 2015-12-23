@@ -14,6 +14,11 @@ Add plugins
 1. Copy your plugin to the [_plugins](./_plugins) directory
 1. Add it to the top of the [index.js](./index.js) file
 
+Update the bot
+---
+1. Make sure you have Git installed
+2. Run `npm updatebot`
+
 Commands
 ---
 

@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "babel-node index",
-    "update": "git pull origin master"
+    "updatebot": "git pull origin master"
   },
   "main": "index.js",
   "dependencies": {
