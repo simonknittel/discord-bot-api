@@ -1,7 +1,7 @@
 {
   "name": "discord-bot",
   "description": "SET-DESCRIPTION",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
   "keywords": [
     "discord",
