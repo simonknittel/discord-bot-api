@@ -1,4 +1,6 @@
 Desktop.ini
 Thumbs.db
 .DS_Store
-node_nodules/
+node_modules/
+npm-debug.log
+config.json

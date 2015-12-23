@@ -1,10 +1,7 @@
-function stop() {
-    console.log('Discord Bot stopped.');
-}
+// Plugins
+import * as musicPlayer from './_plugins/music-player';
+// import * as raffle from './_plugins/raffle';
 
-function start() {
-    console.log('Discord Bot started.');
-    stop();
-}
+function checkForUpdates() {}
 
-start();
+checkForUpdates();
