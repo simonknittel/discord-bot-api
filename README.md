@@ -14,6 +14,15 @@ Add plugins
 1. Copy your plugin to the [_plugins](./_plugins) directory
 1. Add it to the top of the [index.js](./index.js) file
 
+Update your bot
+---
+1. Make sure you have Git installed
+2. Run `git pull origin master`
+
+OR
+
+1. Download the latest version from https://github.com/simonknittel/discord-bot
+
 Commands
 ---
 
