@@ -1,6 +1,7 @@
 // Plugins
-import * as musicPlayer from './_plugins/music-player';
-// import * as raffle from './_plugins/raffle';
+import './_plugins/music-player';
+import './_plugins/raffle';
+import './_plugins/announcements';
 
 function checkForUpdates() {}
 
