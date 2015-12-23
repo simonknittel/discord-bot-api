@@ -31,15 +31,17 @@ Commands
 * `!about` - Shows the version, description and contributors of the bot
 * `!rename` - Renames the bot
 * `!kill` - Stops the bot
+* `!userid` - Displays the ID of the user
 
 ### Music player
-* `!add` - Adds a song to the playlist
-* `!remove` - Removes a song to the playlist
+* `!add <YouTube link>` - Adds a song to the playlist
+* `!remove <YouTube link or title>` - Removes a song to the playlist
 * `!skip` - Skips the current song
 * `!play` - Starts the playlist
 * `!stop` - Stops the playlist
 * `!current` - Displays the current song
 * `!playlist` - Displays all songs on the playlist
+* `!enter <Channel name>` - Let the bot enter a voice channel
 
 ### Raffle
 * `!create` - Creates a new raffle

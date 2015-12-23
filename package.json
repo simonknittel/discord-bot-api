@@ -1,7 +1,7 @@
 {
   "name": "discord-bot",
   "description": "SET-DESCRIPTION",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
   "homepage": "https://github.com/simonknittel/discord-bot",
   "keywords": [
@@ -26,6 +26,7 @@
     "babel-cli": "^6.3.17",
     "babel-preset-es2015": "^6.3.13",
     "discord.io": "^1.5.2",
+    "pully": "^1.1.0",
     "request": "^2.67.0",
     "semver-compare": "^1.0.0"
   }

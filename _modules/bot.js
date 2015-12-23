@@ -26,9 +26,9 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
         return false;
     }
 
-    if (userID !== config.ownerID) {
-        return false;
-    }
+    // if (userID !== config.ownerID) {
+    //     return false;
+    // }
 
     if (!commands[requestedCommand]) {
         return false;
@@ -38,14 +38,14 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
 }
 
 function addGeneralCommands() {
-    bot.addCommand('about', (user, userID, channelID, message, rawEvent) => {
+    bot.addCommand('about', (user, userID, channelID) => {
         bot.sendMessage({
             to: channelID,
             message: 'Beep',
         });
     });
 
-    bot.addCommand('commands', (user, userID, channelID, message, rawEvent) => {
+    bot.addCommand('commands', (user, userID, channelID) => {
         bot.sendMessage({
             to: channelID,
             message: '`!commands` - Shows all available commands\n'
@@ -55,7 +55,7 @@ function addGeneralCommands() {
         });
     });
 
-    bot.addCommand('rename', (user, userID, channelID, message, rawEvent) => {
+    bot.addCommand('rename', (user, userID) => {
         if (userID !== config.ownerID) {
             return false;
         }
@@ -63,13 +63,20 @@ function addGeneralCommands() {
         setName(bot, message);
     });
 
-    bot.addCommand('kill', (user, userID, channelID, message, rawEvent) => {
+    bot.addCommand('kill', (user, userID) => {
         if (userID !== config.ownerID) {
             return false;
         }
 
         console.log('The Discord Bot got stopped through the kill command.');
         process.exit();
+    });
+
+    bot.addCommand('userid', (user, userID) => {
+        bot.sendMessage({
+            to: channelID,
+            message: 'Your ID:' + userID,
+        });
     });
 }
 
