@@ -20,7 +20,7 @@ function checkForUpdates() {
             const latestVersion = body.tag_name.substring(1);
 
             if (cmp(currentVersion, latestVersion) === -1) {
-                console.log('There is a new version available for the bot. Run "npm updatebot" to update your bot (you must have Git installed for this). You can also visit https://github.com/simonknittel/discord-bot to download the latest version manually.');
+                console.log('There is a new version available for the bot. Visit https://github.com/simonknittel/discord-bot to download the latest version.');
                 console.log(''); // Empty line
                 console.log('Your version:', currentVersion);
                 console.log('Latest version:', latestVersion);

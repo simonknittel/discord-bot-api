@@ -19,8 +19,7 @@
     "url": "https://github.com/simonknittel/discord-bot/issues"
   },
   "scripts": {
-    "start": "babel-node index",
-    "updatebot": "git pull origin master"
+    "start": "babel-node index"
   },
   "main": "index.js",
   "dependencies": {
