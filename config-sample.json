@@ -1,0 +1,20 @@
+{
+    "credentials": {
+        "name": "Name of your bot",
+        "email": "email@of-the.bot",
+        "password": ""
+    },
+    "musicLibrary": "../music",
+    "ownerID": "",
+    "commandPrefix": "!",
+    "serverID": "",
+    "operators": [
+        {
+            "id": "",
+            "permissions": [
+                "music player",
+                "raffle"
+            ]
+        }
+    ]
+}
