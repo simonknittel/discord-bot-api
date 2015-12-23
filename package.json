@@ -1,13 +1,30 @@
 {
   "name": "discord-bot",
   "description": "SET-DESCRIPTION",
-  "version": "0.0.0",
-  "author": "Simon Knittel <hallo@simonknittel.de>",
+  "version": "0.0.1",
+  "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
+  "keywords": [
+    "discord",
+    "bot",
+    "music",
+    "raffle",
+    "announcements"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/simonknittel/discord-bot"
   },
   "bugs": {
     "url": "https://github.com/simonknittel/discord-bot/issues"
+  },
+  "scripts": {
+    "start": "babel-node index",
+    "update": "git pull origin master"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "babel-cli": "^6.3.17",
+    "babel-preset-es2015": "^6.3.13",
+    "discord.io": "^1.5.2"
   }
 }
