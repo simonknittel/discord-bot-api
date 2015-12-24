@@ -1,4 +1,5 @@
 import config from '../config';
+import packageJSON from '../package';
 import DiscordClient from 'discord.io';
 
 let bot = new DiscordClient({
@@ -41,9 +42,9 @@ function addGeneralCommands() {
     bot.addCommand('about', (user, userID, channelID) => {
         bot.sendMessage({
             to: channelID,
-            message: 'Beep',
+            message: 'Hey there, I\'m a bot made by Simon Knittel (<hallo@simonknittel.de>). My functionality based on the Node.js library called discord.io (<https://github.com/izy521/discord.io>). My main feature is to offer a API for plugins that can be used with me. Visit <' + packageJSON.homepage + '> for more information. If you find bugs or have other issues please report them here <' + packageJSON.bugs.url + '>',
         });
-    }, 'Shows the version, description and contributors of the bot');
+    }, 'Shows a short description of the bot');
 
     bot.addCommand('commands', (user, userID, channelID) => {
         let string = '';

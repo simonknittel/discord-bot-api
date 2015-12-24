@@ -7,66 +7,66 @@ let playlist = [];
 let voiceChannelID = null;
 let currentSong = null;
 function playLoop(channelID) {
-    if (playlist.length < 1) {
-        return false;
-    }
+    if (voiceChannelID) {
+        if (playlist.length < 1) {
+            return false;
+        }
 
-    const nextSong = playlist[0];
-    currentSong = nextSong;
-    playlist.shift();
+        const nextSong = playlist[0];
+        currentSong = nextSong;
+        playlist.shift();
 
-    bot.sendMessage({
-        to: channelID,
-        message: 'Now playing: ' + nextSong.url,
-    });
-
-    bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
-        stream.playAudioFile(nextSong.file);
-        stream.once('fileEnd', () => {
-            setTimeout(() => {
-                currentSong = null;
-                playLoop(channelID);
-            }, 2000);
+        bot.sendMessage({
+            to: channelID,
+            message: 'Now playing: ' + nextSong.url,
         });
-    });
+
+        bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
+            stream.playAudioFile(nextSong.file);
+            stream.once('fileEnd', () => {
+                setTimeout(() => {
+                    currentSong = null;
+                    playLoop(channelID);
+                }, 2000);
+            });
+        });
+    } else {
+        bot.sendMessage({
+            to: channelID,
+            message: 'The bot is not in a voice channel.',
+        });
+    }
 }
 
 function addCommands() {
     bot.addCommand('add', (user, userID, channelID, message) => {
-        if (voiceChannelID) {
-            const url = message.split(' ')[0];
+        const url = message.split(' ')[0];
 
-            bot.sendMessage({
-                to: channelID,
-                message: 'Downloading the requested song now.',
-            });
+        bot.sendMessage({
+            to: channelID,
+            message: 'Downloading the requested song now.',
+        });
 
-            pully({
-                url: url,
-                preset: 'audio',
-            }, (error, info, filePath) => {
-                if (error) {
-                    bot.sendMessage({
-                        to: channelID,
-                        message: 'The download of the song `' + url + '` failed.',
-                    });
-                } else {
-                    playlist.push({
-                        url: url,
-                        file: filePath,
-                    });
-                    bot.sendMessage({
-                        to: channelID,
-                        message: 'The song `' + url + '` downloaded and added to the playlist. It\'s now on position ' + playlist.length + '.',
-                    });
-                }
-            });
-        } else {
-            bot.sendMessage({
-                to: channelID,
-                message: 'The bot is not in a voice channel.',
-            });
-        }
+        pully({
+            url: url,
+            preset: 'audio',
+        }, (error, info, filePath) => {
+            if (error) {
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'The download of the song <' + url + '> failed.',
+                });
+            } else {
+                playlist.push({
+                    url: url,
+                    file: filePath,
+                });
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'The song <' + url + '> downloaded and added to the playlist. It\'s now on position ' + playlist.length + '.',
+                });
+            }
+        });
     }, 'Adds a song to the playlist (Example: `' + config.commandPrefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
 
     bot.addCommand('remove', (user, userID, channelID, message) => {
