@@ -1,6 +1,6 @@
 Discord Bot API
 ===
-This bot is basically a API for plugins such as a music player or a raffle. You only have to add or develop your own plugins.
+This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins.
 
 Installing
 ---
@@ -37,7 +37,7 @@ Available plugins
 ---
 Contact me to get your plugins listed here.
 
-* [Music player](./_plugins/music-player.js) (enabled by default)
+* [Music bot](./_plugins/music-bot) (enabled by default)
     + This bot will currently download the requested songs to the directory where the bot is running.
     + `!add <YouTube link>` - Adds a song to the playlist
     + `!remove <YouTube link>` - Removes a song to the playlist
