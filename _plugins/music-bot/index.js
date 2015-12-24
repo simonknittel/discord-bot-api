@@ -174,15 +174,11 @@ function playlistCommand(user, userID, channelID) {
     }
 }
 
-function addCommands() {
-    bot.addCommand('add', addCommand, 'Adds a song to the playlist (Example: `' + config.commandPrefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
-    bot.addCommand('remove', removeCommand, 'Removes a song from the playlist (Example: `' + config.commandPrefix + 'remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
-    bot.addCommand('skip', skipCommand, 'Skips the current song');
-    bot.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + config.commandPrefix + 'enter Channel name`)');
-    bot.addCommand('play', playCommand, 'Starts the playlist');
-    bot.addCommand('stop', stopCommand, 'Stops the playlist');
-    bot.addCommand('current', currentCommand, 'Displays the current song');
-    bot.addCommand('playlist', playlistCommand, 'Displays all songs on the playlist');
-}
-
-addCommands();
+bot.addCommand('add', addCommand, 'Adds a song to the playlist (Example: `' + config.commandPrefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
+bot.addCommand('remove', removeCommand, 'Removes a song from the playlist (Example: `' + config.commandPrefix + 'remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
+bot.addCommand('skip', skipCommand, 'Skips the current song');
+bot.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + config.commandPrefix + 'enter Channel name`)');
+bot.addCommand('play', playCommand, 'Starts the playlist');
+bot.addCommand('stop', stopCommand, 'Stops the playlist');
+bot.addCommand('current', currentCommand, 'Displays the current song');
+bot.addCommand('playlist', playlistCommand, 'Displays all songs on the playlist');

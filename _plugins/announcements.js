@@ -1,5 +1,2 @@
+import config from '../config';
 import bot from '../_modules/bot';
-
-function addCommands() {}
-
-addCommands();

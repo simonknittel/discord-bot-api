@@ -3,16 +3,19 @@ import packageJSON from '../package';
 import DiscordClient from 'discord.io';
 import chalk from 'chalk';
 
+// Set a default global command prefix
 if (!config.commandPrefix) {
     config.commandPrefix = '!';
 }
 
+// Start the discord instance
 let bot = new DiscordClient({
     email: config.credentials.email,
     password: config.credentials.password,
     autorun: true,
 });
 
+// Rename the bot
 function setName(bot, name) {
     bot.editUserInfo({
         password: config.credentials.password,
@@ -22,6 +25,7 @@ function setName(bot, name) {
 
 let commands = {};
 
+// Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
     if (message.indexOf(config.commandPrefix) !== 0) {
         return false;
@@ -70,6 +74,7 @@ function renameCommand(user, userID) {
     setName(bot, message);
 }
 
+// Stops the bot
 function killCommand(user, userID) {
     if (userID !== config.ownerID) {
         return false;
@@ -86,14 +91,7 @@ function userIDCommand(user, userID, channelID) {
     });
 }
 
-function addGeneralCommands() {
-    bot.addCommand('about', aboutCommand, 'Shows a short description of the bot');
-    bot.addCommand('commands', commandsCommand, 'Shows all available commands');
-    bot.addCommand('rename', renameCommand, 'Renames the bot');
-    bot.addCommand('kill', killCommand, 'Stops the bot');
-    bot.addCommand('userid', userIDCommand, 'Displays the ID of the user');
-}
-
+// API endpoint through which the plugin can add commands
 bot.addCommand = (command, fn, description = '') => {
     commands[command] = {
         description,
@@ -101,13 +99,21 @@ bot.addCommand = (command, fn, description = '') => {
     };
 };
 
+// Discord instance is ready
 bot.on('ready', () => {
     console.log(chalk.green('Discord Bot started.'));
     setName(bot, config.credentials.name);
 });
 
+// Trigger on incomming message
 bot.on('message', handleMessage);
 
-addGeneralCommands();
+// General commands
+bot.addCommand('about', aboutCommand, 'Shows a short description of the bot');
+bot.addCommand('commands', commandsCommand, 'Shows all available commands');
+bot.addCommand('rename', renameCommand, 'Renames the bot');
+bot.addCommand('kill', killCommand, 'Stops the bot');
+bot.addCommand('userid', userIDCommand, 'Displays the ID of the user');
 
+// Make the discord instance and API endpoints available for plugins
 export default bot;

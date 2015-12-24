@@ -1,13 +1,12 @@
 // Plugins
 import './_plugins/music-bot';
-// import './_plugins/raffle';
-// import './_plugins/announcements';
 
 import request from 'request';
 import packageJSON from './package';
 import cmp from 'semver-compare';
 import chalk from 'chalk';
 
+// Checks the GitHub releases for the latest version and notifies the owner if a new release is available
 function checkForUpdates() {
     request({
         url: 'https://api.github.com/repos/simonknittel/discord-bot-api/releases/latest',
