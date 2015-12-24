@@ -76,7 +76,7 @@ function commandsCommand(user, userID, channelID) {
 }
 
 function renameCommand(user, userID) {
-    if (userID !== config.ownerID) {
+    if (bot.isOperator(userID, 'general:rename')) {
         return false;
     }
 
@@ -85,7 +85,7 @@ function renameCommand(user, userID) {
 
 // Stops the bot
 function killCommand(user, userID) {
-    if (userID !== config.ownerID) {
+    if (bot.isOperator(userID, 'general:kill')) {
         return false;
     }
 
@@ -106,6 +106,27 @@ bot.addCommand = (command, fn, description = '') => {
         description,
         fn,
     };
+};
+
+bot.isOperator = (userID, requestedPermission) => {
+    if (userID === config.ownerID) {
+        return true;
+    }
+
+    for (const operator of config.operators) {
+        if (operator.id === userID) {
+            for (const permission of operator.permissions) {
+                return permission === requestedPermission;
+            }
+        }
+    }
+
+    bot.sendMessage({
+        to: channelID,
+        message: 'You do not have the permission to run this command.',
+    });
+
+    return false;
 };
 
 // Discord instance is ready

@@ -86,6 +86,11 @@ function removeCommand(user, userID, channelID, message) {
 }
 
 function skipCommand(user, userID, channelID) {
+    // Check if the user has the permission to skip the current song
+    // if (!bot.isOperator(userID, 'music-bot:skip')) {
+    //     return false;
+    // }
+
     // Check if the bot is in a voice channel
     if (voiceChannelID) {
         bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
@@ -187,7 +192,7 @@ function playlistCommand(user, userID, channelID) {
 bot.addCommand('add', addCommand, 'Adds a song to the playlist (Example: `' + config.commandPrefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
 bot.addCommand('remove', removeCommand, 'Removes a song from the playlist (Example: `' + config.commandPrefix + 'remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
 bot.addCommand('skip', skipCommand, 'Skips the current song');
-bot.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + config.commandPrefix + 'enter Channel name`)');
+bot.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + config.commandPrefix + 'enter General`)');
 bot.addCommand('play', playCommand, 'Starts the playlist');
 bot.addCommand('stop', stopCommand, 'Stops the playlist');
 bot.addCommand('current', currentCommand, 'Displays the current song');
