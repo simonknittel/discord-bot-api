@@ -75,8 +75,8 @@ function commandsCommand(user, userID, channelID) {
     });
 }
 
-function renameCommand(user, userID) {
-    if (bot.isOperator(userID, 'general:rename')) {
+function renameCommand(user, userID, channelID, message) {
+    if (!bot.isOperator(userID, 'general:rename')) {
         return false;
     }
 
@@ -85,7 +85,7 @@ function renameCommand(user, userID) {
 
 // Stops the bot
 function killCommand(user, userID) {
-    if (bot.isOperator(userID, 'general:kill')) {
+    if (!bot.isOperator(userID, 'general:kill')) {
         return false;
     }
 
