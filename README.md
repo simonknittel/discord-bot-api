@@ -7,7 +7,7 @@ Installing
 1. Clone this repository with `git clone <the url of this repository>` or download it manually
 1. Make sure you have installed the latest version of [Node](https://nodejs.org/en/)
 2. Install all dependencies by running `npm install`
-3. Duplicate the `config-sample.json` and rename it to `config.json`
+3. Duplicate the `config-sample.json` and rename it to `config.json` (visit https://github.com/simonknittel/discord-bot/wiki/config.json-explained for more information)
 4. Edit `config.json` to your needs
 
 Start
@@ -28,9 +28,16 @@ OR
 1. Make sure you have Git installed and the url of the repository added as origin
 2. Run `git pull origin master`
 
-Plugins
+Develop your own plugins
 ---
+Visit this wiki page https://github.com/simonknittel/discord-bot/wiki/Develop-your-own-plugin
+
+Available plugins
+---
+Contact me to get your plugins listed here.
+
 * [Music player](./_plugins/music-player.js) (enabled by default)
+    + This bot will currently download the requested songs to the directory where the bot is running.
     + `!add <YouTube link>` - Adds a song to the playlist
     + `!remove <YouTube link>` - Removes a song to the playlist
     + `!skip` - Skips the current song

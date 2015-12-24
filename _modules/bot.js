@@ -1,6 +1,11 @@
 import config from '../config';
 import packageJSON from '../package';
 import DiscordClient from 'discord.io';
+import chalk from 'chalk';
+
+if (!config.commandPrefix) {
+    config.commandPrefix = '!';
+}
 
 let bot = new DiscordClient({
     email: config.credentials.email,
@@ -91,7 +96,7 @@ bot.addCommand = (command, fn, description = '') => {
 };
 
 bot.on('ready', () => {
-    console.log('Discord Bot started.');
+    console.log(chalk.green('Discord Bot started.'));
     setName(bot, config.credentials.name);
 });
 

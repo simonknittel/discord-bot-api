@@ -6,6 +6,7 @@ import './_plugins/music-player';
 import request from 'request';
 import packageJSON from './package';
 import cmp from 'semver-compare';
+import chalk from 'chalk';
 
 function checkForUpdates() {
     request({
@@ -20,9 +21,9 @@ function checkForUpdates() {
             const latestVersion = body.tag_name.substring(1);
 
             if (cmp(currentVersion, latestVersion) === -1) {
-                console.log('There is a new version available for the bot. Visit https://github.com/simonknittel/discord-bot to download the latest version.');
+                console.log(chalk.red('There is a new version available for the bot. Visit https://github.com/simonknittel/discord-bot to download the latest version.'));
                 console.log(''); // Empty line
-                console.log('Your version:', currentVersion);
+                console.log(chalk.yellow('Your version:', currentVersion));
                 console.log('Latest version:', latestVersion);
                 console.log(''); // Empty line
             }
