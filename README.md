@@ -59,13 +59,4 @@ General
 
 Planned features
 ---
-
-### Raffle (Plugin)
-* `!create` - Creates a new raffle
-* `!start` - Starts the raffle and opens it for participants
-* `!join` - Join the raffle
-* `!leave` - Leave the raffle
-* `!list` - Lists all participants
-* `!draw` - Closes the raffle and draws the winner
-
-### Announcements (Plugin)
+View https://github.com/simonknittel/discord-bot-api/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement

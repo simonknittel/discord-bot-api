@@ -21,29 +21,38 @@ function setName(bot, name) {
         password: config.credentials.password,
         username: name,
     });
+
+    // Save the new name to the config.json
 }
 
+// All commands will be stored in this object.
+// The keywords will be set as the keys so there will be no duplicates.
 let commands = {};
 
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
+    // Check if the global command prefix is on the first position of the message
     if (message.indexOf(config.commandPrefix) !== 0) {
         return false;
     }
 
+    // Get the command keyword without the global command prefix
     const requestedCommand = message.split(' ')[0].substring(config.commandPrefix.length);
     if (requestedCommand.length < 1) {
         return false;
     }
 
+    // Let only the owner control the whole bot
     // if (userID !== config.ownerID) {
     //     return false;
     // }
 
+    // Check if the requested command is available
     if (!commands[requestedCommand]) {
         return false;
     }
 
+    // Execute the command
     commands[requestedCommand].fn(user, userID, channelID, message.substring(message.split(' ')[0].length).trim(), rawEvent);
 }
 
@@ -80,7 +89,7 @@ function killCommand(user, userID) {
         return false;
     }
 
-    console.log('The Discord Bot got stopped through the kill command.');
+    console.log('The Discord Bot API got stopped through the kill command.');
     process.exit();
 }
 
@@ -102,7 +111,7 @@ bot.addCommand = (command, fn, description = '') => {
 // Discord instance is ready
 bot.on('ready', () => {
     console.log(chalk.green('Discord Bot started.'));
-    setName(bot, config.credentials.name);
+    setName(bot, config.credentials.name); // Set the name of the bot to the one defined in the config.json
 });
 
 // Trigger on incomming message
