@@ -1,5 +1,5 @@
 // Plugins
-import './_plugins/music-player';
+import './_plugins/music-bot';
 // import './_plugins/raffle';
 // import './_plugins/announcements';
 
@@ -10,7 +10,7 @@ import chalk from 'chalk';
 
 function checkForUpdates() {
     request({
-        url: 'https://api.github.com/repos/simonknittel/discord-bot/releases/latest',
+        url: 'https://api.github.com/repos/simonknittel/discord-bot-api/releases/latest',
         json: true,
         headers: {
             'User-Agent': 'simonknittel',
@@ -21,7 +21,7 @@ function checkForUpdates() {
             const latestVersion = body.tag_name.substring(1);
 
             if (cmp(currentVersion, latestVersion) === -1) {
-                console.log(chalk.red('There is a new version available for the bot. Visit https://github.com/simonknittel/discord-bot to download the latest version.'));
+                console.log(chalk.red('There is a new version available for the bot. Visit https://github.com/simonknittel/discord-bot-api to download the latest version.'));
                 console.log(''); // Empty line
                 console.log(chalk.yellow('Your version:', currentVersion));
                 console.log('Latest version:', latestVersion);

@@ -1,14 +1,15 @@
-Discord Bot
+Discord Bot API
 ===
 This bot is basically a API for plugins such as a music player or a raffle. You only have to add or develop your own plugins.
 
 Installing
 ---
 1. Clone this repository with `git clone <the url of this repository>` or download it manually
-1. Make sure you have installed the latest version of [Node](https://nodejs.org/en/)
-2. Install all dependencies by running `npm install`
-3. Duplicate the `config-sample.json` and rename it to `config.json` (visit https://github.com/simonknittel/discord-bot/wiki/config.json-explained for more information)
-4. Edit `config.json` to your needs
+2. Make sure you have installed the latest version of [Node](https://nodejs.org/en/)
+3. Make sure you have [FFmpeg](https://www.ffmpeg.org/) installed and available in your PATH variable
+4. Install all dependencies by running `npm install`
+5. Duplicate the `config-sample.json` and rename it to `config.json` (visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information)
+6. Edit `config.json` to your needs
 
 Start
 ---
@@ -21,7 +22,7 @@ Add plugins
 
 Update your bot
 ---
-1. Download the latest version from https://github.com/simonknittel/discord-bot
+1. Download the latest version from https://github.com/simonknittel/discord-bot-api
 
 OR
 
@@ -30,7 +31,7 @@ OR
 
 Develop your own plugins
 ---
-Visit this wiki page https://github.com/simonknittel/discord-bot/wiki/Develop-your-own-plugin
+Visit this wiki page https://github.com/simonknittel/discord-bot-api/wiki/Develop-your-own-plugin
 
 Available plugins
 ---

@@ -1,5 +1,5 @@
-import config from '../config';
-import bot from '../_modules/bot';
+import config from '../../config';
+import bot from '../../_modules/bot';
 import pully from 'pully';
 
 let playlist = [];
@@ -142,11 +142,18 @@ function addCommands() {
         });
     }, 'Stops the playlist');
 
-    bot.addCommand('current', () => {
-        bot.sendMessage({
-            to: channelID,
-            message: 'Currently playing: ' + currentSong.url,
-        });
+    bot.addCommand('current', (user, userID, channelID) => {
+        if (currentSong) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'Currently playing: ' + currentSong.url,
+            });
+        } else {
+            bot.sendMessage({
+                to: channelID,
+                message: 'There is currently no song playing.',
+            });
+        }
     }, 'Displays the current song');
 
     bot.addCommand('playlist', (user, userID, channelID) => {
