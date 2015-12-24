@@ -6,7 +6,9 @@ let playlist = [];
 
 let voiceChannelID = null;
 let currentSong = null;
+// Iterate through the playlist until there are no songs anymore
 function playLoop(channelID) {
+    // Check if the bot is in a voice channel
     if (voiceChannelID) {
         if (playlist.length < 1) {
             return false;
@@ -14,7 +16,7 @@ function playLoop(channelID) {
 
         const nextSong = playlist[0];
         currentSong = nextSong;
-        playlist.shift();
+        playlist.shift(); // Removes the now playing song from the playlist
 
         bot.sendMessage({
             to: channelID,
@@ -24,6 +26,7 @@ function playLoop(channelID) {
         bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
             stream.playAudioFile(nextSong.file);
             stream.once('fileEnd', () => {
+                // Hack required because the event fileEnd does not trigger when the file ends
                 setTimeout(() => {
                     currentSong = null;
                     playLoop(channelID);
@@ -39,6 +42,7 @@ function playLoop(channelID) {
 }
 
 function addCommand(user, userID, channelID, message) {
+    // Get the URL from the message (it should be the first element after the command)
     const url = message.split(' ')[0];
 
     bot.sendMessage({
@@ -46,6 +50,7 @@ function addCommand(user, userID, channelID, message) {
         message: 'Downloading the requested song now.',
     });
 
+    // Download the requested song
     pully({
         url: url,
         preset: 'audio',
@@ -56,6 +61,7 @@ function addCommand(user, userID, channelID, message) {
                 message: 'The download of the song <' + url + '> failed.',
             });
         } else {
+            // Add the song to the playlist
             playlist.push({
                 url: url,
                 file: filePath,
@@ -80,6 +86,7 @@ function removeCommand(user, userID, channelID, message) {
 }
 
 function skipCommand(user, userID, channelID) {
+    // Check if the bot is in a voice channel
     if (voiceChannelID) {
         bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
             stream.stopAudioFile();
@@ -99,6 +106,7 @@ function skipCommand(user, userID, channelID) {
 
 function enterCommand(user, userID, channelID, message) {
     let notFound = true;
+    // Look for the ID of the requested channel
     Object.keys(bot.servers[config.serverID].channels).forEach((id) => {
         const channel = bot.servers[config.serverID].channels[id];
 
@@ -142,6 +150,7 @@ function stopCommand() {
 }
 
 function currentCommand(user, userID, channelID) {
+    // Check if a song is playing
     if (currentSong) {
         bot.sendMessage({
             to: channelID,
@@ -156,6 +165,7 @@ function currentCommand(user, userID, channelID) {
 }
 
 function playlistCommand(user, userID, channelID) {
+    // Check if there are songs on the playlist
     if (playlist.length < 1) {
         bot.sendMessage({
             to: channelID,
