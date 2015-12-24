@@ -1,7 +1,7 @@
 // Plugins
 import './_plugins/music-player';
-import './_plugins/raffle';
-import './_plugins/announcements';
+// import './_plugins/raffle';
+// import './_plugins/announcements';
 
 import request from 'request';
 import packageJSON from './package';

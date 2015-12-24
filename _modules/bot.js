@@ -34,7 +34,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
         return false;
     }
 
-    commands[requestedCommand](user, userID, channelID, message.substring(message.split(' ')[0].length).trim(), rawEvent);
+    commands[requestedCommand].fn(user, userID, channelID, message.substring(message.split(' ')[0].length).trim(), rawEvent);
 }
 
 function addGeneralCommands() {
@@ -43,17 +43,19 @@ function addGeneralCommands() {
             to: channelID,
             message: 'Beep',
         });
-    });
+    }, 'Shows the version, description and contributors of the bot');
 
     bot.addCommand('commands', (user, userID, channelID) => {
+        let string = '';
+        Object.keys(commands).forEach(command => {
+            string += '`' + config.commandPrefix + command + '`' + (commands[command].description.length > 0 ? ' - ' + commands[command].description : '') + '\n';
+        });
+
         bot.sendMessage({
             to: channelID,
-            message: '`!commands` - Shows all available commands\n'
-                   + '`!about` - Shows the version, description and contributors of the bot\n'
-                   + '`!rename` - Renames the bot\n'
-                   + '`!kill` - Stops the bot\n',
+            message: string,
         });
-    });
+    }, 'Shows all available commands');
 
     bot.addCommand('rename', (user, userID) => {
         if (userID !== config.ownerID) {
@@ -61,7 +63,7 @@ function addGeneralCommands() {
         }
 
         setName(bot, message);
-    });
+    }, 'Renames the bot');
 
     bot.addCommand('kill', (user, userID) => {
         if (userID !== config.ownerID) {
@@ -70,18 +72,21 @@ function addGeneralCommands() {
 
         console.log('The Discord Bot got stopped through the kill command.');
         process.exit();
-    });
+    }, 'Stops the bot');
 
-    bot.addCommand('userid', (user, userID) => {
+    bot.addCommand('userid', (user, userID, channelID) => {
         bot.sendMessage({
             to: channelID,
             message: 'Your ID:' + userID,
         });
-    });
+    }, 'Displays the ID of the user');
 }
 
-bot.addCommand = (command, fn) => {
-    commands[command] = fn;
+bot.addCommand = (command, fn, description = '') => {
+    commands[command] = {
+        description,
+        fn,
+    };
 };
 
 bot.on('ready', () => {

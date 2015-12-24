@@ -35,13 +35,16 @@ Commands
 
 ### Music player
 * `!add <YouTube link>` - Adds a song to the playlist
-* `!remove <YouTube link or title>` - Removes a song to the playlist
+* `!remove <YouTube link>` - Removes a song to the playlist
 * `!skip` - Skips the current song
 * `!play` - Starts the playlist
 * `!stop` - Stops the playlist
 * `!current` - Displays the current song
 * `!playlist` - Displays all songs on the playlist
 * `!enter <Channel name>` - Let the bot enter a voice channel
+
+Planned features
+---
 
 ### Raffle
 * `!create` - Creates a new raffle
