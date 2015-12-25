@@ -5,7 +5,7 @@
         "password": ""
     },
     "ownerID": "",
-    "mentionRequired": true,
+    "mentionRequired": false,
     "globalCommandPrefix": "!",
     "serverID": "",
     "commandCooldown": 1000,
