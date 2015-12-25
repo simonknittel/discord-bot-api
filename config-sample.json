@@ -1,7 +1,7 @@
 {
     "credentials": {
-        "name": "Name of your bot",
-        "email": "email@of-the.bot",
+        "name": "",
+        "email": "",
         "password": ""
     },
     "ownerID": "",
