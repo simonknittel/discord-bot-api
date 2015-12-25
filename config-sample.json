@@ -19,5 +19,6 @@
         "music-bot": {
             "commandPrefix": "music"
         }
-    }
+    },
+    "commandCooldown": 1000
 }

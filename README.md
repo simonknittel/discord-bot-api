@@ -9,7 +9,8 @@ Installing
 3. Make sure you have [FFmpeg](https://www.ffmpeg.org/) installed and available in your PATH variable
 4. Install all dependencies by running `npm install`
 5. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
-6. Edit `config.json` to your needs (visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information)
+6. Edit `config.json` to your needs
+    * Visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information
 
 Start
 ---
@@ -49,7 +50,8 @@ General
 
 * `!commands` - Shows all available commands including the commands of the plugins
 * `!about` - Shows a short description of the bot
-* `!rename <New name>` - Renames the bot (Example: `!rename My Bot`)
+* `!rename <New name>` - Renames the bot
+    + Example: `!rename My Bot`
 * `!kill` - Stops the bot
 * `!userid` - Displays the ID of the user
 

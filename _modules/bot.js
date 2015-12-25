@@ -70,12 +70,26 @@ function setName(bot, name) {
     // Save the new name to the config.json
 }
 
+let commandHistory = {};
+
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
     // Check if the global command prefix is on the first position of the message
     if (message.indexOf(config.globalCommandPrefix) !== 0) {
         return false;
     }
+
+    // Check if the cooldown of the user is already expired
+    if (config.commandCooldown && commandHistory[userID]) {
+        console.log(commandHistory[userID]);
+        const timeDifference = new Date().getTime() - commandHistory[userID].getTime();
+        console.log(timeDifference);
+        // The cooldown is not yet expired
+        if (timeDifference < config.commandCooldown) {
+            return false;
+        }
+    }
+    commandHistory[userID] = new Date();
 
     // Remove the global command prefix from the message
     message = message.substring(config.globalCommandPrefix.length);
