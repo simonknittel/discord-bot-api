@@ -5,8 +5,10 @@
         "password": ""
     },
     "ownerID": "",
+    "mentionRequired": true,
     "globalCommandPrefix": "!",
     "serverID": "",
+    "commandCooldown": 1000,
     "operators": [
         {
             "id": "",
@@ -19,6 +21,5 @@
         "music-bot": {
             "commandPrefix": "music"
         }
-    },
-    "commandCooldown": 1000
+    }
 }

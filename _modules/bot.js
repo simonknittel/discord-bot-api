@@ -74,8 +74,27 @@ let commandHistory = {};
 
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
+    if (config.mentionRequired) {
+        // Check if the bot got mentioned
+        if (message.indexOf('<@' + bot.id + '>') !== 0) {
+            return false;
+        }
+
+        // Remove the mention from the message
+        message = message.substring(('<@' + bot.id + '>').length);
+        message = message.trim();
+    }
+
     // Check if the global command prefix is on the first position of the message
     if (message.indexOf(config.globalCommandPrefix) !== 0) {
+        return false;
+    }
+
+    // Remove the global command prefix from the message
+    message = message.substring(config.globalCommandPrefix.length);
+
+    // There is no requested command
+    if (message.length < 1) {
         return false;
     }
 
@@ -90,13 +109,6 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
         }
     }
     commandHistory[userID] = new Date();
-
-    // Remove the global command prefix from the message
-    message = message.substring(config.globalCommandPrefix.length);
-    // There is no requested command
-    if (message.length < 1) {
-        return false;
-    }
 
     // Look for the requested command
     let requestedCommand = null;
