@@ -1,7 +1,7 @@
 {
   "name": "discord-music-bot",
   "description": "This bot is a plugin for the Discord Bot API (https://github.com/simonknittel/discord-bot-api)",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
   "homepage": "https://github.com/simonknittel/discord-bot-api",
   "keywords": [

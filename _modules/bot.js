@@ -4,8 +4,8 @@ import DiscordClient from 'discord.io';
 import chalk from 'chalk';
 
 // Set a default global command prefix
-if (!config.commandPrefix) {
-    config.commandPrefix = '!';
+if (!config.globalCommandPrefix) {
+    config.globalCommandPrefix = '!';
 }
 
 // Start the discord instance
@@ -22,11 +22,18 @@ let commands = {};
 // All API endpoints will be stored in this object.
 let api = {};
 
-// API endpoint through which the plugin can add commands
-api.addCommand = (command, fn, description = '') => {
-    commands[command] = {
-        description,
-        fn,
+api.registerPlugin = function(name = null, defaultCommandPrefix = '') {
+    const pluginCommandPrefix = name && config.plugins && config.plugins[name] && config.plugins[name].commandPrefix ? config.plugins[name].commandPrefix : defaultCommandPrefix;
+
+    return {
+        // API endpoint through which the plugin can add custom commands
+        addCommand: (command, fn, description = '') => {
+            commands[pluginCommandPrefix + (pluginCommandPrefix.length > 0 ? ' ' : '') + command] = {
+                description,
+                fn,
+            };
+        },
+        prefix: config.globalCommandPrefix + pluginCommandPrefix + (pluginCommandPrefix.length > 0 ? ' ' : ''),
     };
 };
 
@@ -66,28 +73,35 @@ function setName(bot, name) {
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
     // Check if the global command prefix is on the first position of the message
-    if (message.indexOf(config.commandPrefix) !== 0) {
+    if (message.indexOf(config.globalCommandPrefix) !== 0) {
         return false;
     }
 
-    // Get the command keyword without the global command prefix
-    const requestedCommand = message.split(' ')[0].substring(config.commandPrefix.length);
-    if (requestedCommand.length < 1) {
+    // Remove the global command prefix from the message
+    message = message.substring(config.globalCommandPrefix.length);
+    // There is no requested command
+    if (message.length < 1) {
         return false;
     }
 
-    // Let only the owner control the whole bot
-    // if (userID !== config.ownerID) {
-    //     return false;
-    // }
+    // Look for the requested command
+    let requestedCommand = null;
+    Object.keys(commands).forEach(command => {
+        if (message.indexOf(command) === 0) {
+            requestedCommand = command;
+        }
+    });
 
-    // Check if the requested command is available
-    if (!commands[requestedCommand]) {
+    // The requested command could not be found
+    if (!requestedCommand) {
         return false;
     }
+
+    // Remove the requested command from the message
+    message = message.substring(requestedCommand.length).trim();
 
     // Execute the command
-    commands[requestedCommand].fn(user, userID, channelID, message.substring(message.split(' ')[0].length).trim(), rawEvent);
+    commands[requestedCommand].fn(user, userID, channelID, message, rawEvent);
 }
 
 function aboutCommand(user, userID, channelID) {
@@ -100,7 +114,7 @@ function aboutCommand(user, userID, channelID) {
 function commandsCommand(user, userID, channelID) {
     let string = '';
     Object.keys(commands).forEach(command => {
-        string += '`' + config.commandPrefix + command + '`' + (commands[command].description.length > 0 ? ' - ' + commands[command].description : '') + '\n';
+        string += '`' + config.globalCommandPrefix + command + '`' + (commands[command].description.length > 0 ? ' - ' + commands[command].description : '') + '\n';
     });
 
     bot.sendMessage({
@@ -147,11 +161,13 @@ bot.on('ready', () => {
 bot.on('message', handleMessage);
 
 // General commands
-api.addCommand('about', aboutCommand, 'Shows a short description of the bot');
-api.addCommand('commands', commandsCommand, 'Shows all available commands');
-api.addCommand('rename', renameCommand, 'Renames the bot');
-api.addCommand('kill', killCommand, 'Stops the bot');
-api.addCommand('userid', userIDCommand, 'Displays the ID of the user');
+let general = api.registerPlugin();
+
+general.addCommand('about', aboutCommand, 'Shows a short description of the bot');
+general.addCommand('commands', commandsCommand, 'Shows all available commands');
+general.addCommand('rename', renameCommand, 'Renames the bot (Example: `' + general.prefix + 'rename My Bot`)');
+general.addCommand('kill', killCommand, 'Stops the bot');
+general.addCommand('userid', userIDCommand, 'Returns the ID of the user');
 
 // Make the discord instance and API endpoints available for plugins
 export {bot, api};

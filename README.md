@@ -1,6 +1,6 @@
 Discord Bot API
 ===
-This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins.
+This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins. You do not care about the command listening, discord instance initialization etc.
 
 Installing
 ---
@@ -42,21 +42,14 @@ Contact me to get your plugins listed here.
 
 * [Music bot](./_plugins/music-bot) (enabled by default)
     + This bot will currently download the requested songs to the directory where the bot is running.
-    + `!add <YouTube link>` - Adds a song to the playlist (Example: `!add https://www.youtube.com/watch?v=iyqfHvoUtkU`)
-    + `!remove <YouTube link>` - Removes a song to the playlist (Example: `!remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)
-    + `!skip` - Skips the current song
-    + `!play` - Starts the playlist
-    + `!stop` - Stops the playlist
-    + `!current` - Displays the current song
-    + `!playlist` - Displays all songs on the playlist
-    + `!enter <Channel name>` - Let the bot enter a voice channel (Example: `!enter General`)
+    + Visit the [README.md](./_plugins/music-bot/README.md) for the commands, install instructions and more.
 
 General
 ---
 
-* `!commands` - Shows all available commands
+* `!commands` - Shows all available commands including the commands of the plugins
 * `!about` - Shows a short description of the bot
-* `!rename <New name>` - Renames the bot (Example: `!enter My Bot`)
+* `!rename <New name>` - Renames the bot (Example: `!rename My Bot`)
 * `!kill` - Stops the bot
 * `!userid` - Displays the ID of the user
 

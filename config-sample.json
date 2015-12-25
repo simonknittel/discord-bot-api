@@ -4,16 +4,20 @@
         "email": "email@of-the.bot",
         "password": ""
     },
-    "musicLibrary": "../music",
     "ownerID": "",
-    "commandPrefix": "!",
+    "globalCommandPrefix": "!",
     "serverID": "",
     "operators": [
         {
             "id": "",
             "permissions": [
-                "general:rename"
+                "music-bot:enter"
             ]
         }
-    ]
+    ],
+    "plugins": {
+        "music-bot": {
+            "commandPrefix": "music"
+        }
+    }
 }

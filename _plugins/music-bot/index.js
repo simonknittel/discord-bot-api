@@ -2,6 +2,9 @@ import config from '../../config';
 import {bot, api} from '../../_modules/bot';
 import pully from 'pully';
 
+// Register the plugin and set the default command prefix for this plugin
+let plugin = api.registerPlugin('music-bot', 'music');
+
 let playlist = [];
 
 let voiceChannelID = null;
@@ -104,7 +107,7 @@ function removeCommand(user, userID, channelID, message) {
 }
 
 function skipCommand(user, userID, channelID) {
-    // Check if the user has the permission to skip the current song
+    // Check if the user has the permission
     // if (!bot.isOperator(userID, 'music-bot:skip')) {
     //     return false;
     // }
@@ -128,6 +131,11 @@ function skipCommand(user, userID, channelID) {
 }
 
 function enterCommand(user, userID, channelID, message) {
+    // Check if the user has the permission
+    if (!bot.isOperator(userID, 'music-bot:enter')) {
+        return false;
+    }
+
     let notFound = true;
     // Look for the ID of the requested channel
     Object.keys(bot.servers[config.serverID].channels).forEach((id) => {
@@ -207,11 +215,12 @@ function playlistCommand(user, userID, channelID) {
     }
 }
 
-api.addCommand('add', addCommand, 'Adds a song to the playlist (Example: `' + config.commandPrefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
-api.addCommand('remove', removeCommand, 'Removes a song from the playlist (Example: `' + config.commandPrefix + 'remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
-api.addCommand('skip', skipCommand, 'Skips the current song');
-api.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + config.commandPrefix + 'enter General`)');
-api.addCommand('play', playCommand, 'Starts the playlist');
-api.addCommand('stop', stopCommand, 'Stops the playlist');
-api.addCommand('current', currentCommand, 'Displays the current song');
-api.addCommand('playlist', playlistCommand, 'Displays all songs on the playlist');
+// Add the plugins specific commands
+plugin.addCommand('add', addCommand, 'Adds a song to the playlist (Example: `' + plugin.prefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
+plugin.addCommand('remove', removeCommand, 'Removes a song from the playlist (Example: `' + plugin.prefix + 'remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
+plugin.addCommand('skip', skipCommand, 'Skips the current song');
+plugin.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + plugin.prefix + 'enter General`)');
+plugin.addCommand('play', playCommand, 'Starts the playlist');
+plugin.addCommand('stop', stopCommand, 'Stops the playlist');
+plugin.addCommand('current', currentCommand, 'Displays the current song');
+plugin.addCommand('playlist', playlistCommand, 'Displays all songs on the playlist');
