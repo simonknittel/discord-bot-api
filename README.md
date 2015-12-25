@@ -8,7 +8,7 @@ Installing
 2. Make sure you have installed the latest version of [Node](https://nodejs.org/en/)
 3. Make sure you have [FFmpeg](https://www.ffmpeg.org/) installed and available in your PATH variable
 4. Install all dependencies by running `npm install`
-5. Duplicate the `config-sample.json` and rename it to `config.json`
+5. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
 6. Edit `config.json` to your needs (visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information)
 
 Start
@@ -18,7 +18,8 @@ Start
 Add plugins
 ---
 1. Copy your plugin to the [_plugins](./_plugins) directory
-2. Add it to the top of the [index.js](./index.js) file
+2. Follow the install instructions of the plugin
+3. Add it to the top of the [index.js](./index.js) file
 
 Update your bot
 ---
@@ -33,7 +34,7 @@ OR
 
 Develop your own plugin
 ---
-Visit this wiki page https://github.com/simonknittel/discord-bot-api/wiki/Develop-your-own-plugin
+Visit https://github.com/simonknittel/discord-bot-api/wiki/Develop-your-own-plugin
 
 Available plugins
 ---

@@ -15,6 +15,44 @@ let bot = new DiscordClient({
     autorun: true,
 });
 
+// All commands will be stored in this object.
+// The keywords will be set as the keys so there will be no duplicates.
+let commands = {};
+
+// All API endpoints will be stored in this object.
+let api = {};
+
+// API endpoint through which the plugin can add commands
+api.addCommand = (command, fn, description = '') => {
+    commands[command] = {
+        description,
+        fn,
+    };
+};
+
+api.isOperator = (userID, requestedPermission) => {
+    if (userID === config.ownerID) {
+        return true;
+    }
+
+    if (config.operators.length > 0) {
+        for (const operator of config.operators) {
+            if (operator.id === userID) {
+                for (const permission of operator.permissions) {
+                    return permission === requestedPermission;
+                }
+            }
+        }
+    }
+
+    bot.sendMessage({
+        to: channelID,
+        message: 'You do not have the permission to run this command.',
+    });
+
+    return false;
+};
+
 // Rename the bot
 function setName(bot, name) {
     bot.editUserInfo({
@@ -24,10 +62,6 @@ function setName(bot, name) {
 
     // Save the new name to the config.json
 }
-
-// All commands will be stored in this object.
-// The keywords will be set as the keys so there will be no duplicates.
-let commands = {};
 
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
@@ -59,7 +93,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
 function aboutCommand(user, userID, channelID) {
     bot.sendMessage({
         to: channelID,
-        message: 'Hey there, I\'m a bot made by Simon Knittel (<hallo@simonknittel.de>). My functionality based on the Node.js library called discord.io (<https://github.com/izy521/discord.io>). My main feature is to offer a API for plugins that can be used with me. Visit <' + packageJSON.homepage + '> for more information. If you find bugs or have other issues please report them here <' + packageJSON.bugs.url + '>',
+        message: 'Hey there, my name is the `Discord Bot API`. I\'m made by Simon Knittel (<hallo@simonknittel.de>) and based on the Node.js library called discord.io (<https://github.com/izy521/discord.io>). My main feature is to offer a API for plugins that can be used with me. Visit <' + packageJSON.homepage + '> for more information. If you find bugs or have other issues please report them here <' + packageJSON.bugs.url + '>',
     });
 }
 
@@ -76,7 +110,7 @@ function commandsCommand(user, userID, channelID) {
 }
 
 function renameCommand(user, userID, channelID, message) {
-    if (!bot.isOperator(userID, 'general:rename')) {
+    if (!api.isOperator(userID, 'general:rename')) {
         return false;
     }
 
@@ -85,7 +119,7 @@ function renameCommand(user, userID, channelID, message) {
 
 // Stops the bot
 function killCommand(user, userID) {
-    if (!bot.isOperator(userID, 'general:kill')) {
+    if (!api.isOperator(userID, 'general:kill')) {
         return false;
     }
 
@@ -100,50 +134,24 @@ function userIDCommand(user, userID, channelID) {
     });
 }
 
-// API endpoint through which the plugin can add commands
-bot.addCommand = (command, fn, description = '') => {
-    commands[command] = {
-        description,
-        fn,
-    };
-};
-
-bot.isOperator = (userID, requestedPermission) => {
-    if (userID === config.ownerID) {
-        return true;
-    }
-
-    for (const operator of config.operators) {
-        if (operator.id === userID) {
-            for (const permission of operator.permissions) {
-                return permission === requestedPermission;
-            }
-        }
-    }
-
-    bot.sendMessage({
-        to: channelID,
-        message: 'You do not have the permission to run this command.',
-    });
-
-    return false;
-};
-
 // Discord instance is ready
 bot.on('ready', () => {
-    console.log(chalk.green('Discord Bot started.'));
-    setName(bot, config.credentials.name); // Set the name of the bot to the one defined in the config.json
+    console.log(chalk.green('Discord Bot API started.'));
+
+    if (config.credentials.name) {
+        setName(bot, config.credentials.name); // Set the name of the bot to the one defined in the config.json
+    }
 });
 
 // Trigger on incomming message
 bot.on('message', handleMessage);
 
 // General commands
-bot.addCommand('about', aboutCommand, 'Shows a short description of the bot');
-bot.addCommand('commands', commandsCommand, 'Shows all available commands');
-bot.addCommand('rename', renameCommand, 'Renames the bot');
-bot.addCommand('kill', killCommand, 'Stops the bot');
-bot.addCommand('userid', userIDCommand, 'Displays the ID of the user');
+api.addCommand('about', aboutCommand, 'Shows a short description of the bot');
+api.addCommand('commands', commandsCommand, 'Shows all available commands');
+api.addCommand('rename', renameCommand, 'Renames the bot');
+api.addCommand('kill', killCommand, 'Stops the bot');
+api.addCommand('userid', userIDCommand, 'Displays the ID of the user');
 
 // Make the discord instance and API endpoints available for plugins
-export default bot;
+export {bot, api};

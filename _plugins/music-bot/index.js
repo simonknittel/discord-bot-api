@@ -1,5 +1,5 @@
 import config from '../../config';
-import bot from '../../_modules/bot';
+import {bot, api} from '../../_modules/bot';
 import pully from 'pully';
 
 let playlist = [];
@@ -45,6 +45,15 @@ function addCommand(user, userID, channelID, message) {
     // Get the URL from the message (it should be the first element after the command)
     const url = message.split(' ')[0];
 
+    if (url.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add a YouTube link to your command.',
+        });
+
+        return false;
+    }
+
     bot.sendMessage({
         to: channelID,
         message: 'Downloading the requested song now.',
@@ -76,6 +85,15 @@ function addCommand(user, userID, channelID, message) {
 
 function removeCommand(user, userID, channelID, message) {
     const url = message.split(' ')[0];
+
+    if (url.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add a YouTube link to your command.',
+        });
+
+        return false;
+    }
 
     playlist = playlist.filter(element => element.url !== url);
 
@@ -189,11 +207,11 @@ function playlistCommand(user, userID, channelID) {
     }
 }
 
-bot.addCommand('add', addCommand, 'Adds a song to the playlist (Example: `' + config.commandPrefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
-bot.addCommand('remove', removeCommand, 'Removes a song from the playlist (Example: `' + config.commandPrefix + 'remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
-bot.addCommand('skip', skipCommand, 'Skips the current song');
-bot.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + config.commandPrefix + 'enter General`)');
-bot.addCommand('play', playCommand, 'Starts the playlist');
-bot.addCommand('stop', stopCommand, 'Stops the playlist');
-bot.addCommand('current', currentCommand, 'Displays the current song');
-bot.addCommand('playlist', playlistCommand, 'Displays all songs on the playlist');
+api.addCommand('add', addCommand, 'Adds a song to the playlist (Example: `' + config.commandPrefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
+api.addCommand('remove', removeCommand, 'Removes a song from the playlist (Example: `' + config.commandPrefix + 'remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
+api.addCommand('skip', skipCommand, 'Skips the current song');
+api.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + config.commandPrefix + 'enter General`)');
+api.addCommand('play', playCommand, 'Starts the playlist');
+api.addCommand('stop', stopCommand, 'Stops the playlist');
+api.addCommand('current', currentCommand, 'Displays the current song');
+api.addCommand('playlist', playlistCommand, 'Displays all songs on the playlist');
