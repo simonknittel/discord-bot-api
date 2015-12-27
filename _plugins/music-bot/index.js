@@ -1,5 +1,4 @@
-import config from '../../config';
-import {bot, api} from '../../_modules/bot';
+import {bot, api, config} from '../../_modules/bot';
 import pully from 'pully';
 
 // Register the plugin and set the default command prefix for this plugin

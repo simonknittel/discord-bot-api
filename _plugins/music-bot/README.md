@@ -16,7 +16,7 @@ Commands
 * `!music stop` - Stops the playlist
 * `!music current` - Displays the current song
 * `!music playlist` - Displays all songs on the playlist
-* `!music enter <Channel name>` - Let the bot enter a voice channel
+* `!music enter <Channel name>` - Let the bot enter a voice channel (`music-bot:enter` permission required)
     + Example: `!music enter General`
 
 Config

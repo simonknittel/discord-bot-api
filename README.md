@@ -1,6 +1,6 @@
 Discord Bot API
 ===
-This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins. You do not care about the command listening, discord instance initialization etc.
+This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins. You do not need to care about the command listening, discord instance initialization etc.
 
 Installing
 ---
@@ -45,15 +45,15 @@ Contact me to get your plugins listed here.
     + This bot will currently download the requested songs to the directory where the bot is running.
     + Visit the [README.md](./_plugins/music-bot/README.md) for the commands, install instructions and more.
 
-General
+General commands
 ---
 
 * `!commands` - Shows all available commands including the commands of the plugins
 * `!about` - Shows a short description of the bot
-* `!rename <New name>` - Renames the bot
-    + Example: `!rename My Bot`
-* `!kill` - Stops the bot
+* `!kill` - Stops the bot (`general:kill`permission required)
 * `!userid` - Displays the ID of the user
+* `!config` - Change the config until the next restart (`general:config` permission required)
+    + Example: `!config credentials.name The Best Bot` Changes the name of the bot to `The Best Bot`
 
 Planned features
 ---

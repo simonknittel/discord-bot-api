@@ -1,26 +1,13 @@
-import config from '../config';
 import packageJSON from '../package';
 import DiscordClient from 'discord.io';
 import chalk from 'chalk';
+import jsonfile from 'jsonfile';
 
-// Set a default global command prefix
-if (!config.globalCommandPrefix) {
-    config.globalCommandPrefix = '!';
-}
-
-// Start the discord instance
-let bot = new DiscordClient({
-    email: config.credentials.email,
-    password: config.credentials.password,
-    autorun: true,
-});
-
-// All commands will be stored in this object.
-// The keywords will be set as the keys so there will be no duplicates.
-let commands = {};
-
-// All API endpoints will be stored in this object.
-let api = {};
+let config = {}; // The config.json will be stored in this object
+let bot = null; // The Discord instance will be stored in this object
+let commandHistory = {};
+let api = {}; // All API endpoints will be stored in this object.
+let commands = {}; // All commands will be stored in this object.
 
 api.registerPlugin = function(name = null, defaultCommandPrefix = '') {
     const pluginCommandPrefix = name && config.plugins && config.plugins[name] && config.plugins[name].commandPrefix ? config.plugins[name].commandPrefix : defaultCommandPrefix;
@@ -37,7 +24,10 @@ api.registerPlugin = function(name = null, defaultCommandPrefix = '') {
     };
 };
 
+let general = api.registerPlugin();
+
 api.isOperator = (userID, requestedPermission) => {
+    // The owner has every permission
     if (userID === config.ownerID) {
         return true;
     }
@@ -57,20 +47,9 @@ api.isOperator = (userID, requestedPermission) => {
         message: 'You do not have the permission to run this command.',
     });
 
+    // The user does not have the permission
     return false;
 };
-
-// Rename the bot
-function setName(bot, name) {
-    bot.editUserInfo({
-        password: config.credentials.password,
-        username: name,
-    });
-
-    // Save the new name to the config.json
-}
-
-let commandHistory = {};
 
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
@@ -149,12 +128,78 @@ function commandsCommand(user, userID, channelID) {
     });
 }
 
-function renameCommand(user, userID, channelID, message) {
-    if (!api.isOperator(userID, 'general:rename')) {
+// http://stackoverflow.com/a/171256/3942401
+function mergeObjects(obj1, obj2) {
+    let obj3 = {};
+
+    for (const attr in obj1) { obj3[attr] = obj1[attr]; }
+    for (const attr in obj2) { obj3[attr] = obj2[attr]; }
+
+    return obj3;
+}
+
+function configCommand(user, userID, channelID, message) {
+    if (!api.isOperator(userID, 'general:config')) {
         return false;
     }
 
-    setName(bot, message);
+    message = message.split(' ');
+
+    // Check if a property and a new value is present
+    if (message.length < 2) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'Example use of this command: `' + general.prefix + 'config credentials.name The Best Bot`',
+        });
+
+        return false;
+    }
+
+    let changingProperty = message[0].split('.');
+    message.shift(); // Remove the property from the message
+    let newValue = message.join(' ');
+    if (newValue === 'true') { // Make a boolean to a true boolean type
+        newValue = true;
+    } else if (newValue === 'false') { // Make a boolean to a true boolean type
+        newValue = false;
+    } else if (isNaN(newValue)) { // Make a number to a true number type
+        newValue = newValue;
+    } else {
+        newValue = Number(newValue);
+    }
+
+    // Create a object
+    let newConfig = {};
+    for (let i = changingProperty.length - 1; i >= 0; i--) {
+        if (i === changingProperty.length - 1) {
+            newConfig[changingProperty[i]] = newValue;
+        } else {
+            let lastSegment = JSON.parse(JSON.stringify(newConfig));
+            newConfig = {};
+            newConfig[changingProperty[i]] = lastSegment;
+        }
+    }
+
+    // Merge the old config with the new one
+    config = mergeObjects(config, newConfig);
+
+    // Save the new config
+    jsonfile.writeFile('./config.json', config, {spaces: 4}, error => {
+        if (error) {
+            console.error(error);
+            bot.sendMessage({
+                to: channelID,
+                message: 'There was a problem with saving the new config.',
+            });
+
+            return false;
+        }
+
+        bot.sendMessage({
+            to: channelID,
+            message: 'The new config got successfully saved.',
+        });
+    });
 }
 
 // Stops the bot
@@ -174,26 +219,53 @@ function userIDCommand(user, userID, channelID) {
     });
 }
 
-// Discord instance is ready
-bot.on('ready', () => {
-    console.log(chalk.green('Discord Bot API started.'));
+// Rename the bot
+function setName(name) {
+    bot.editUserInfo({
+        password: config.credentials.password,
+        username: name,
+    });
+}
 
-    if (config.credentials.name) {
-        setName(bot, config.credentials.name); // Set the name of the bot to the one defined in the config.json
+// Load config and initialize the bot
+jsonfile.readFile('./config.json', (error, json) => {
+    if (error) {
+        console.error(error);
     }
+
+    config = json;
+
+    // Set a default global command prefix
+    if (!config.globalCommandPrefix) {
+        config.globalCommandPrefix = '!';
+    }
+
+    // Start the discord instance
+    bot = new DiscordClient({
+        email: config.credentials.email,
+        password: config.credentials.password,
+        autorun: true,
+    });
+
+    // Discord instance is ready
+    bot.on('ready', () => {
+        console.log(chalk.green('Discord Bot API started.'));
+
+        if (config.credentials.name) {
+            setName(config.credentials.name); // Set the name of the bot to the one defined in the config.json
+        }
+    });
+
+    // Trigger on incomming message
+    bot.on('message', handleMessage);
+
+    // General commands
+    general.addCommand('about', aboutCommand, 'Shows a short description of the bot');
+    general.addCommand('commands', commandsCommand, 'Shows all available commands');
+    general.addCommand('config', configCommand, 'Change the config until the next restart (Example: `' + general.prefix + 'credentials.name The Best Bot`)');
+    general.addCommand('kill', killCommand, 'Stops the bot');
+    general.addCommand('userid', userIDCommand, 'Returns the ID of the user');
 });
 
-// Trigger on incomming message
-bot.on('message', handleMessage);
-
-// General commands
-let general = api.registerPlugin();
-
-general.addCommand('about', aboutCommand, 'Shows a short description of the bot');
-general.addCommand('commands', commandsCommand, 'Shows all available commands');
-general.addCommand('rename', renameCommand, 'Renames the bot (Example: `' + general.prefix + 'rename My Bot`)');
-general.addCommand('kill', killCommand, 'Stops the bot');
-general.addCommand('userid', userIDCommand, 'Returns the ID of the user');
-
-// Make the discord instance and API endpoints available for plugins
-export {bot, api};
+// Make the discord instance, API endpoints and config available for plugins
+export {bot, api, config};
