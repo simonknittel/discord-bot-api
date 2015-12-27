@@ -4,10 +4,10 @@ import pully from 'pully';
 // Register the plugin and set the default command prefix for this plugin
 let plugin = api.registerPlugin('music-bot', 'music');
 
-let playlist = [];
+let playlist = []; // All requested songs will be saved in this array
+let voiceChannelID = null; // The ID of the voice channel the bot has entered will be saved in this variable
+let currentSong = null; // The current song will be saved in this variable
 
-let voiceChannelID = null;
-let currentSong = null;
 // Iterate through the playlist until there are no songs anymore
 function playLoop(channelID) {
     // Check if the bot is in a voice channel
@@ -16,7 +16,7 @@ function playLoop(channelID) {
             return false;
         }
 
-        const nextSong = playlist[0];
+        const nextSong = playlist[0]; // Get the first song of the playlist
         currentSong = nextSong;
         playlist.shift(); // Removes the now playing song from the playlist
 

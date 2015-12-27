@@ -8,48 +8,7 @@ let bot = null; // The Discord instance will be stored in this object
 let commandHistory = {};
 let api = {}; // All API endpoints will be stored in this object.
 let commands = {}; // All commands will be stored in this object.
-
-api.registerPlugin = function(name = null, defaultCommandPrefix = '') {
-    const pluginCommandPrefix = name && config.plugins && config.plugins[name] && config.plugins[name].commandPrefix ? config.plugins[name].commandPrefix : defaultCommandPrefix;
-
-    return {
-        // API endpoint through which the plugin can add custom commands
-        addCommand: (command, fn, description = '') => {
-            commands[pluginCommandPrefix + (pluginCommandPrefix.length > 0 ? ' ' : '') + command] = {
-                description,
-                fn,
-            };
-        },
-        prefix: config.globalCommandPrefix + pluginCommandPrefix + (pluginCommandPrefix.length > 0 ? ' ' : ''),
-    };
-};
-
-let general = api.registerPlugin();
-
-api.isOperator = (userID, requestedPermission) => {
-    // The owner has every permission
-    if (userID === config.ownerID) {
-        return true;
-    }
-
-    if (config.operators.length > 0) {
-        for (const operator of config.operators) {
-            if (operator.id === userID) {
-                for (const permission of operator.permissions) {
-                    return permission === requestedPermission;
-                }
-            }
-        }
-    }
-
-    bot.sendMessage({
-        to: channelID,
-        message: 'You do not have the permission to run this command.',
-    });
-
-    // The user does not have the permission
-    return false;
-};
+let general = {};
 
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
@@ -197,7 +156,7 @@ function configCommand(user, userID, channelID, message) {
 
         bot.sendMessage({
             to: channelID,
-            message: 'The new config got successfully saved.',
+            message: 'Config successfully changed.',
         });
     });
 }
@@ -228,44 +187,79 @@ function setName(name) {
 }
 
 // Load config and initialize the bot
-jsonfile.readFile('./config.json', (error, json) => {
-    if (error) {
-        console.error(error);
+config = jsonfile.readFileSync('./config.json');
+
+// Set a default global command prefix
+if (!config.globalCommandPrefix) {
+    config.globalCommandPrefix = '!';
+}
+
+api.registerPlugin = function(name = null, defaultCommandPrefix = '') {
+    const pluginCommandPrefix = name && config.plugins && config.plugins[name] && config.plugins[name].commandPrefix ? config.plugins[name].commandPrefix : defaultCommandPrefix;
+
+    return {
+        // API endpoint through which the plugin can add custom commands
+        addCommand: (command, fn, description = '') => {
+            commands[pluginCommandPrefix + (pluginCommandPrefix.length > 0 ? ' ' : '') + command] = {
+                description,
+                fn,
+            };
+        },
+        prefix: config.globalCommandPrefix + pluginCommandPrefix + (pluginCommandPrefix.length > 0 ? ' ' : ''),
+    };
+};
+
+api.isOperator = (userID, requestedPermission) => {
+    // The owner has every permission
+    if (userID === config.ownerID) {
+        return true;
     }
 
-    config = json;
-
-    // Set a default global command prefix
-    if (!config.globalCommandPrefix) {
-        config.globalCommandPrefix = '!';
-    }
-
-    // Start the discord instance
-    bot = new DiscordClient({
-        email: config.credentials.email,
-        password: config.credentials.password,
-        autorun: true,
-    });
-
-    // Discord instance is ready
-    bot.on('ready', () => {
-        console.log(chalk.green('Discord Bot API started.'));
-
-        if (config.credentials.name) {
-            setName(config.credentials.name); // Set the name of the bot to the one defined in the config.json
+    if (config.operators.length > 0) {
+        for (const operator of config.operators) {
+            if (operator.id === userID) {
+                for (const permission of operator.permissions) {
+                    return permission === requestedPermission;
+                }
+            }
         }
+    }
+
+    bot.sendMessage({
+        to: channelID,
+        message: 'You do not have the permission to run this command.',
     });
 
-    // Trigger on incomming message
-    bot.on('message', handleMessage);
+    // The user does not have the permission
+    return false;
+};
 
-    // General commands
-    general.addCommand('about', aboutCommand, 'Shows a short description of the bot');
-    general.addCommand('commands', commandsCommand, 'Shows all available commands');
-    general.addCommand('config', configCommand, 'Change the config until the next restart (Example: `' + general.prefix + 'credentials.name The Best Bot`)');
-    general.addCommand('kill', killCommand, 'Stops the bot');
-    general.addCommand('userid', userIDCommand, 'Returns the ID of the user');
+// Start the discord instance
+bot = new DiscordClient({
+    email: config.credentials.email,
+    password: config.credentials.password,
+    autorun: true,
 });
+
+// Discord instance is ready
+bot.on('ready', () => {
+    console.log(chalk.green('Discord Bot API started.'));
+
+    if (config.credentials.name) {
+        setName(config.credentials.name); // Set the name of the bot to the one defined in the config.json
+    }
+});
+
+// Trigger on incomming message
+bot.on('message', handleMessage);
+
+// General commands
+general = api.registerPlugin();
+general.addCommand('about', aboutCommand, 'Shows a short description of the bot');
+general.addCommand('commands', commandsCommand, 'Shows all available commands');
+general.addCommand('config', configCommand, 'Change the config until the next restart (Example: `' + general.prefix + 'config credentials.name The Best Bot`)');
+general.addCommand('kill', killCommand, 'Stops the bot');
+general.addCommand('userid', userIDCommand, 'Returns the ID of the user');
 
 // Make the discord instance, API endpoints and config available for plugins
 export {bot, api, config};
