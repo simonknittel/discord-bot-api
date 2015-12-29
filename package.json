@@ -1,7 +1,7 @@
 {
   "name": "discord-bot-api",
   "description": "This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
   "homepage": "https://github.com/simonknittel/discord-bot-api",
   "keywords": [

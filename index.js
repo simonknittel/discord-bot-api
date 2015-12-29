@@ -1,10 +1,12 @@
-// Plugins
-import './_plugins/music-bot';
-
 import request from 'request';
 import packageJSON from './package';
 import cmp from 'semver-compare'; // Compare semver versions
 import chalk from 'chalk'; // Coloring console logs
+
+import './_modules/plugins';
+
+console.log(chalk.green('Need help? Join our Discord server: https://discord.gg/0jV29zKlvdJbDx3f'));
+console.log(''); // Empty line
 
 // Checks the GitHub releases for the latest version and notifies the owner if a new release is available
 function checkForUpdates() {

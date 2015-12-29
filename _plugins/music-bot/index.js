@@ -1,8 +1,10 @@
-import {bot, api, config} from '../../_modules/bot';
-import pully from 'pully';
+// Discord Bot API
+import configModule from '../../_modules/config';
+import bot from '../../_modules/bot';
+// import api from '../../_modules/api';
 
-// Register the plugin and set the default command prefix for this plugin
-let plugin = api.registerPlugin('music-bot', 'music');
+// Other
+import pully from 'pully';
 
 let playlist = []; // All requested songs will be saved in this array
 let voiceChannelID = null; // The ID of the voice channel the bot has entered will be saved in this variable
@@ -17,8 +19,12 @@ function playLoop(channelID) {
         }
 
         const nextSong = playlist[0]; // Get the first song of the playlist
-        currentSong = nextSong;
         playlist.shift(); // Removes the now playing song from the playlist
+        currentSong = nextSong;
+
+        bot.setPresence({
+            game: 'test',
+        });
 
         bot.sendMessage({
             to: channelID,
@@ -31,6 +37,9 @@ function playLoop(channelID) {
                 // Hack required because the event fileEnd does not trigger when the file ends
                 setTimeout(() => {
                     currentSong = null;
+                    bot.setPresence({
+                        game: null,
+                    });
                     playLoop(channelID);
                 }, 2000);
             });
@@ -116,6 +125,9 @@ function skipCommand(user, userID, channelID) {
         bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
             stream.stopAudioFile();
             currentSong = null;
+            bot.setPresence({
+                game: null,
+            });
         });
 
         setTimeout(() => {
@@ -131,14 +143,14 @@ function skipCommand(user, userID, channelID) {
 
 function enterCommand(user, userID, channelID, message) {
     // Check if the user has the permission
-    if (!bot.isOperator(userID, 'music-bot:enter')) {
-        return false;
-    }
+    // if (!api.isOperator(userID, 'music-bot:enter')) {
+    //     return false;
+    // }
 
     let notFound = true;
     // Look for the ID of the requested channel
-    Object.keys(bot.servers[config.serverID].channels).forEach((id) => {
-        const channel = bot.servers[config.serverID].channels[id];
+    Object.keys(bot.servers[configModule.get().serverID].channels).forEach((id) => {
+        const channel = bot.servers[configModule.get().serverID].channels[id];
 
         if (channel.name === message && channel.type === 'voice') {
             voiceChannelID = id;
@@ -176,6 +188,9 @@ function stopCommand() {
     bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
         stream.stopAudioFile();
         currentSong = null;
+        bot.setPresence({
+            game: null,
+        });
     });
 }
 
@@ -214,12 +229,43 @@ function playlistCommand(user, userID, channelID) {
     }
 }
 
-// Add the plugins specific commands
-plugin.addCommand('add', addCommand, 'Adds a song to the playlist (Example: `' + plugin.prefix + 'add https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
-plugin.addCommand('remove', removeCommand, 'Removes a song from the playlist (Example: `' + plugin.prefix + 'remove https://www.youtube.com/watch?v=iyqfHvoUtkU`)');
-plugin.addCommand('skip', skipCommand, 'Skips the current song');
-plugin.addCommand('enter', enterCommand, 'Let the bot enter a voice channel (Example: `' + plugin.prefix + 'enter General`)');
-plugin.addCommand('play', playCommand, 'Starts the playlist');
-plugin.addCommand('stop', stopCommand, 'Stops the playlist');
-plugin.addCommand('current', currentCommand, 'Displays the current song');
-plugin.addCommand('playlist', playlistCommand, 'Displays all songs on the playlist');
+let plugin = {
+    name: 'music-bot',
+    defaultCommandPrefix: 'music',
+    commands: {
+        add: {
+            fn: addCommand,
+            description: 'Adds a song to the playlist',
+        },
+        remove: {
+            fn: removeCommand,
+            description: 'Removes a song from the playlist',
+        },
+        skip: {
+            fn: skipCommand,
+            description: 'Skips the current song',
+        },
+        enter: {
+            fn: enterCommand,
+            description: 'Let the bot enter a voice channel',
+        },
+        play: {
+            fn: playCommand,
+            description: 'Starts the playlist',
+        },
+        stop: {
+            fn: stopCommand,
+            description: 'Stops the playlist',
+        },
+        current: {
+            fn: currentCommand,
+            description: 'Displays the current song',
+        },
+        playlist: {
+            fn: playlistCommand,
+            description: 'Displays all songs on the playlist',
+        },
+    },
+};
+
+export default plugin;

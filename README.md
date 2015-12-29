@@ -2,6 +2,10 @@ Discord Bot API
 ===
 This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins. You do not need to care about the command listening, discord instance initialization etc.
 
+Need help?
+---
+Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
+
 Installing
 ---
 1. Clone this repository with `git clone <the url of this repository>` or download it manually
@@ -20,7 +24,7 @@ Add plugins
 ---
 1. Copy your plugin to the [_plugins](./_plugins) directory
 2. Follow the install instructions of the plugin
-3. Add it to the top of the [index.js](./index.js) file
+3. Add it to the top of the [plugins.js](./_modules/plugins.js) file
 
 Update your bot
 ---
