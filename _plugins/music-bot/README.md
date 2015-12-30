@@ -27,7 +27,8 @@ With `library` you can define where the songs should be downloaded to.
 ```json
 "plugins": {
     "music-bot": {
-        "commandPrefix": "custom-command-prefix"
+        "commandPrefix": "custom-command-prefix",
+        "library": "../music"
     }
 }
 ```
