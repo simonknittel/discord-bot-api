@@ -13,7 +13,7 @@
         {
             "id": "",
             "permissions": [
-                "music-bot:enter"
+                "general:kill"
             ]
         }
     ],
