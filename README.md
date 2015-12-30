@@ -57,7 +57,7 @@ General commands
 * `!kill` - Stops the bot _(`general:kill` permission required)_
 * `!userid` - Displays the ID of the user
 * `!config` - Change the config until the next restart _(`general:config` permission required)_
-    + Example: `!config credentials.name The Best Bot` Changes the name of the bot to `The Best Bot`
+    + Example: `!config globalCommandPrefix $` The bot now listens to the prefix `$`
 
 Planned features
 ---
