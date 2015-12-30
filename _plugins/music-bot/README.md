@@ -3,7 +3,12 @@ Install
 1. Copy the plugin to the `_plugins` directory.
 2. Run `npm install` in the plugin directory itself
 3. Configure the plugin by adding [config code](#config) to the `config.json`
-4. Add it to the top of the `plugins.js` file in the `_modules` directory
+4. Add the following to the top of the `plugins.js` file in the `_modules` directory
+
+```javascript
+import musicBot from '../_plugins/music-bot';
+plugins.musicBot = musicBot;
+```
 
 Commands
 ---
@@ -23,14 +28,16 @@ Config
 ---
 With `commandPrefix` you can set a custom command prefix for this plugin (optional). It defaults to `music`  
 With `library` you can define where the songs should be downloaded to.  
-With `skipLimit` you can define how many users you need to skip the current song (optional). It defaults to 1  
+With `skipLimit` you can define how many users you need to skip the current song (optional). It defaults to `1`  
+With `announceSongs` you can enable or disable the announcing of the current song (optional). It defaults to `true`
 
 ```json
 "plugins": {
     "music-bot": {
         "commandPrefix": "custom-command-prefix",
         "library": "../music",
-        "skipLimit": 1
+        "skipLimit": 1,
+        "announceSongs": true
     }
 }
 ```

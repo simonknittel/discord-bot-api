@@ -21,7 +21,8 @@
         "music-bot": {
             "commandPrefix": "music",
             "library": "../music",
-            "skipLimit": 1
+            "skipLimit": 1,
+            "announceSongs": true
         }
     }
 }

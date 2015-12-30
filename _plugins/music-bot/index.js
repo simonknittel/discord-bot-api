@@ -63,10 +63,13 @@ function playLoop(channelID) {
             game: nextSong.title,
         });
 
-        bot.sendMessage({
-            to: channelID,
-            message: 'Now playing: ' + nextSong.url,
-        });
+        const announceSongs = configModule.get().plugins['music-bot'].announceSongs === false ? false : true;
+        if (announceSongs) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'Now playing: ' + nextSong.url,
+            });
+        }
 
         bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
             stream.playAudioFile(nextSong.file);
