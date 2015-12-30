@@ -6,7 +6,7 @@ Need help?
 ---
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
 
-Installing
+Install
 ---
 1. Clone this repository with `git clone <the url of this repository>` or download it manually
 2. Make sure you have installed the latest version of [Node](https://nodejs.org/en/)
@@ -22,7 +22,7 @@ Start
 
 Add plugins
 ---
-1. Copy your plugin to the [_plugins](./_plugins) directory
+1. Copy the plugin to the [_plugins](./_plugins) directory
 2. Follow the install instructions of the plugin
 3. Add it to the top of the [plugins.js](./_modules/plugins.js) file
 

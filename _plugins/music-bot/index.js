@@ -4,12 +4,47 @@ import bot from '../../_modules/bot';
 // import api from '../../_modules/api';
 
 // Other
-import pully from 'pully';
 import fetchVideoInfo from 'youtube-info';
+import YoutubeMp3Downloader from 'youtube-mp3-downloader';
+import mkdirp from 'mkdirp';
+import fs from 'fs';
+
+const YD = new YoutubeMp3Downloader({
+    outputPath: configModule.get().plugins['music-bot'].library + '/youtube',
+    queueParallelism: 5,
+});
 
 let playlist = []; // All requested songs will be saved in this array
 let voiceChannelID = null; // The ID of the voice channel the bot has entered will be saved in this variable
 let currentSong = null; // The current song will be saved in this variable
+let downloadQueue = {};
+
+// Add the song to the playlist
+function pushToPlaylist(data) {
+    playlist.push({
+        youtubeID: data.videoId,
+        url: data.youtubeUrl,
+        title: data.videoTitle,
+        file: data.file,
+    });
+}
+
+YD.on('finished', data => {
+    pushToPlaylist(data);
+    bot.sendMessage({
+        to: downloadQueue['yt:' + data.videoId].channelID,
+        message: '`' + data.videoTitle + '` added to the playlist. Position: ' + playlist.length,
+    });
+    delete downloadQueue['yt:' + data.videoId];
+});
+
+YD.on('error', error => {
+    bot.sendMessage({
+        to: downloadQueue['yt:' + error.videoId].channelID,
+        message: 'The download of <' + error.youtubeURL + '> failed.',
+    });
+    delete downloadQueue['yt:' + data.videoId];
+});
 
 // Iterate through the playlist until there are no songs anymore
 function playLoop(channelID) {
@@ -86,36 +121,38 @@ function addCommand(user, userID, channelID, message) {
         return false;
     }
 
-    bot.sendMessage({
-        to: channelID,
-        message: 'Downloading the requested video ...',
-    });
-
     // Fetch meta data from YouTube video
     fetchVideoInfo(youtubeID).then(videoInfo => {
-        // Download the requested song
-        pully({
-            url: videoInfo.url,
-            preset: 'audio',
-        }, (error, info, filePath) => {
-            if (error) {
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'The download of <' + videoInfo.url + '> failed.',
-                });
-            } else {
-                // Add the song to the playlist
-                playlist.push({
-                    youtubeID: videoInfo.videoId,
-                    url: videoInfo.url,
-                    title: videoInfo.title,
-                    owner: videoInfo.owner,
-                    duration: videoInfo.duration,
-                    file: filePath,
-                });
-                bot.sendMessage({
-                    to: channelID,
-                    message: '`' + videoInfo.title + '` added to the playlist. Position: ' + playlist.length,
+        // Create download directory
+        mkdirp(configModule.get().plugins['music-bot'].library + '/youtube', error => {
+            if (!error) {
+                // Check if already downloaded
+                fs.access(configModule.get().plugins['music-bot'].library + '/youtube/' + videoInfo.videoId + '.mp3', fs.F_OK, error => {
+                    if (error) {
+                        bot.sendMessage({
+                            to: channelID,
+                            message: 'Downloading the requested video ...',
+                        });
+
+                        downloadQueue['yt:' + videoInfo.videoId] = {
+                            channelID,
+                        };
+
+                        // Download the requested song
+                        YD.download(videoInfo.videoId, videoInfo.videoId + '.mp3');
+                    } else {
+                        pushToPlaylist({
+                            videoId: videoInfo.videoId,
+                            youtubeUrl: videoInfo.url,
+                            videoTitle: videoInfo.title,
+                            file: configModule.get().plugins['music-bot'].library + '/youtube/' + videoInfo.videoId + '.mp3',
+                        });
+
+                        bot.sendMessage({
+                            to: channelID,
+                            message: '`' + videoInfo.title + '` added to the playlist. Position: ' + playlist.length,
+                        });
+                    }
                 });
             }
         });

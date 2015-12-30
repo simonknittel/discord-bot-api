@@ -5,9 +5,9 @@
         "password": ""
     },
     "ownerID": "",
+    "serverID": "",
     "mentionRequired": false,
     "globalCommandPrefix": "!",
-    "serverID": "",
     "commandCooldown": 1000,
     "operators": [
         {
@@ -19,7 +19,8 @@
     ],
     "plugins": {
         "music-bot": {
-            "commandPrefix": "music"
+            "commandPrefix": "music",
+            "library": "../music"
         }
     }
 }
