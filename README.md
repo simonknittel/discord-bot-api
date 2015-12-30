@@ -54,9 +54,9 @@ General commands
 
 * `!commands` - Shows all available commands including the commands of the plugins
 * `!about` - Shows a short description of the bot
-* `!kill` - Stops the bot (`general:kill`permission required)
+* `!kill` - Stops the bot _(`general:kill` permission required)_
 * `!userid` - Displays the ID of the user
-* `!config` - Change the config until the next restart (`general:config` permission required)
+* `!config` - Change the config until the next restart _(`general:config` permission required)_
     + Example: `!config credentials.name The Best Bot` Changes the name of the bot to `The Best Bot`
 
 Planned features

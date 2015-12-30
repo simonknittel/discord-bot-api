@@ -18,6 +18,7 @@
   },
   "main": "index.js",
   "dependencies": {
-    "pully": "^1.1.0"
+    "pully": "^1.1.0",
+    "youtube-info": "^1.1.0"
   }
 }

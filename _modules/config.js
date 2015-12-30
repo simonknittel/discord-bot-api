@@ -19,6 +19,10 @@ function get() {
 
 config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
 
+if (!config.globalCommandPrefix) {
+    config.globalCommandPrefix = '!';
+}
+
 let configModule = {
     save,
     get,

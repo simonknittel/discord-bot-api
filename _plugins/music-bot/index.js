@@ -5,6 +5,7 @@ import bot from '../../_modules/bot';
 
 // Other
 import pully from 'pully';
+import fetchVideoInfo from 'youtube-info';
 
 let playlist = []; // All requested songs will be saved in this array
 let voiceChannelID = null; // The ID of the voice channel the bot has entered will be saved in this variable
@@ -23,7 +24,7 @@ function playLoop(channelID) {
         currentSong = nextSong;
 
         bot.setPresence({
-            game: 'test',
+            game: nextSong.title,
         });
 
         bot.sendMessage({
@@ -31,7 +32,7 @@ function playLoop(channelID) {
             message: 'Now playing: ' + nextSong.url,
         });
 
-        bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
+        bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
             stream.playAudioFile(nextSong.file);
             stream.once('fileEnd', () => {
                 // Hack required because the event fileEnd does not trigger when the file ends
@@ -52,6 +53,20 @@ function playLoop(channelID) {
     }
 }
 
+function extractYouTubeID(url, channelID) {
+    const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const matches = url.match(regExp);
+    if (matches && matches[2].length === 11) {
+        return matches[2];
+    } else {
+        bot.sendMessage({
+            to: channelID,
+            message: 'This seems to be an invalid link.',
+        });
+        return false;
+    }
+}
+
 function addCommand(user, userID, channelID, message) {
     // Get the URL from the message (it should be the first element after the command)
     const url = message.split(' ')[0];
@@ -59,38 +74,51 @@ function addCommand(user, userID, channelID, message) {
     if (url.length < 1) {
         bot.sendMessage({
             to: channelID,
-            message: 'You have to add a YouTube link to your command.',
+            message: 'You have to add a link to your command.',
         });
 
         return false;
     }
 
+    // Extract YouTube ID
+    const youtubeID = extractYouTubeID(url, channelID);
+    if (!youtubeID) {
+        return false;
+    }
+
     bot.sendMessage({
         to: channelID,
-        message: 'Downloading the requested song now.',
+        message: 'Downloading the requested video ...',
     });
 
-    // Download the requested song
-    pully({
-        url: url,
-        preset: 'audio',
-    }, (error, info, filePath) => {
-        if (error) {
-            bot.sendMessage({
-                to: channelID,
-                message: 'The download of the song <' + url + '> failed.',
-            });
-        } else {
-            // Add the song to the playlist
-            playlist.push({
-                url: url,
-                file: filePath,
-            });
-            bot.sendMessage({
-                to: channelID,
-                message: 'The song <' + url + '> downloaded and added to the playlist. It\'s now on position ' + playlist.length + '.',
-            });
-        }
+    // Fetch meta data from YouTube video
+    fetchVideoInfo(youtubeID).then(videoInfo => {
+        // Download the requested song
+        pully({
+            url: videoInfo.url,
+            preset: 'audio',
+        }, (error, info, filePath) => {
+            if (error) {
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'The download of <' + videoInfo.url + '> failed.',
+                });
+            } else {
+                // Add the song to the playlist
+                playlist.push({
+                    youtubeID: videoInfo.videoId,
+                    url: videoInfo.url,
+                    title: videoInfo.title,
+                    owner: videoInfo.owner,
+                    duration: videoInfo.duration,
+                    file: filePath,
+                });
+                bot.sendMessage({
+                    to: channelID,
+                    message: '`' + videoInfo.title + '` added to the playlist. Position: ' + playlist.length,
+                });
+            }
+        });
     });
 }
 
@@ -100,17 +128,23 @@ function removeCommand(user, userID, channelID, message) {
     if (url.length < 1) {
         bot.sendMessage({
             to: channelID,
-            message: 'You have to add a YouTube link to your command.',
+            message: 'You have to add a link to your command.',
         });
 
         return false;
     }
 
-    playlist = playlist.filter(element => element.url !== url);
+    // Extract YouTube ID
+    const youtubeID = extractYouTubeID(url, channelID);
+    if (!youtubeID) {
+        return false;
+    }
+
+    playlist = playlist.filter(element => element.youtubeID !== youtubeID);
 
     bot.sendMessage({
         to: channelID,
-        message: 'Song removed from the playlist.',
+        message: 'Successfully removed from the playlist.',
     });
 }
 
@@ -177,7 +211,7 @@ function playCommand(user, userID, channelID) {
     } else if (playlist.length <= 0) {
         bot.sendMessage({
             to: channelID,
-            message: 'There are currently no songs on the playlist.',
+            message: 'There are currently no entries on the playlist.',
         });
     } else {
         playLoop(channelID);
@@ -204,7 +238,7 @@ function currentCommand(user, userID, channelID) {
     } else {
         bot.sendMessage({
             to: channelID,
-            message: 'There is currently no song playing.',
+            message: 'There is currently nothing playing.',
         });
     }
 }
@@ -214,7 +248,7 @@ function playlistCommand(user, userID, channelID) {
     if (playlist.length < 1) {
         bot.sendMessage({
             to: channelID,
-            message: 'There are currently no songs on the playlist.',
+            message: 'There are currently no entries on the playlist.',
         });
     } else {
         let string = '';
