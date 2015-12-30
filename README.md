@@ -6,10 +6,6 @@ Need help?
 ---
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
 
-Need help?
----
-Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
-
 Installing
 ---
 1. Clone this repository with `git clone <the url of this repository>` or download it manually
