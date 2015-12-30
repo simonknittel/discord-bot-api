@@ -18,6 +18,7 @@ let playlist = []; // All requested songs will be saved in this array
 let voiceChannelID = null; // The ID of the voice channel the bot has entered will be saved in this variable
 let currentSong = null; // The current song will be saved in this variable
 let downloadQueue = {};
+let usersWantToSkip = []; // The id of the users that want to skip the current song will be stored in this array
 
 // Add the song to the playlist
 function pushToPlaylist(data) {
@@ -57,7 +58,7 @@ function playLoop(channelID) {
         const nextSong = playlist[0]; // Get the first song of the playlist
         playlist.shift(); // Removes the now playing song from the playlist
         currentSong = nextSong;
-
+        usersWantToSkip = [];
         bot.setPresence({
             game: nextSong.title,
         });
@@ -186,24 +187,31 @@ function removeCommand(user, userID, channelID, message) {
 }
 
 function skipCommand(user, userID, channelID) {
-    // Check if the user has the permission
-    // if (!bot.isOperator(userID, 'music-bot:skip')) {
-    //     return false;
-    // }
-
     // Check if the bot is in a voice channel
     if (voiceChannelID) {
-        bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
-            stream.stopAudioFile();
-            currentSong = null;
-            bot.setPresence({
-                game: null,
-            });
-        });
+        if (usersWantToSkip.indexOf(userID) === -1) {
+            usersWantToSkip.push(userID);
+        }
 
-        setTimeout(() => {
-            playLoop(channelID);
-        }, 2000);
+        const skipLimit = configModule.get().plugins['music-bot'].skipLimit ? configModule.get().plugins['music-bot'].skipLimit : 1;
+        if (usersWantToSkip.length >= skipLimit) {
+            bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
+                stream.stopAudioFile();
+                currentSong = null;
+                bot.setPresence({
+                    game: null,
+                });
+            });
+
+            setTimeout(() => {
+                playLoop(channelID);
+            }, 2000);
+        } else {
+            bot.sendMessage({
+                to: channelID,
+                message: 'You need ' + (skipLimit - usersWantToSkip.length) + ' more to skip the current song.',
+            });
+        }
     } else {
         bot.sendMessage({
             to: channelID,
@@ -256,7 +264,7 @@ function playCommand(user, userID, channelID) {
 }
 
 function stopCommand() {
-    bot.testAudio({channel: voiceChannelID, stereo: true}, stream => {
+    bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
         stream.stopAudioFile();
         currentSong = null;
         bot.setPresence({

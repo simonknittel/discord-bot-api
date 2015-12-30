@@ -21,14 +21,16 @@ Commands
 
 Config
 ---
-With `commandPrefix` you can set a custom command prefix for this plugin.  
+With `commandPrefix` you can set a custom command prefix for this plugin (optional). It defaults to `music`  
 With `library` you can define where the songs should be downloaded to.  
+With `skipLimit` you can define how many users you need to skip the current song (optional). It defaults to 1  
 
 ```json
 "plugins": {
     "music-bot": {
         "commandPrefix": "custom-command-prefix",
-        "library": "../music"
+        "library": "../music",
+        "skipLimit": 1
     }
 }
 ```

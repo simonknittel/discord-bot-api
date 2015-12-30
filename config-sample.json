@@ -20,7 +20,8 @@
     "plugins": {
         "music-bot": {
             "commandPrefix": "music",
-            "library": "../music"
+            "library": "../music",
+            "skipLimit": 1
         }
     }
 }
