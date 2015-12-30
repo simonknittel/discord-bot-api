@@ -8,7 +8,7 @@ Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
 
 Install
 ---
-1. Clone this repository with `git clone <the url of this repository>` or download it manually
+1. Clone this repository with `git clone https://github.com/simonknittel/discord-bot-api` or download it manually
 2. Make sure you have installed the latest version of [Node](https://nodejs.org/en/)
 3. Make sure you have [FFmpeg](https://www.ffmpeg.org/) installed and available in your PATH variable
 4. Install all dependencies by running `npm install`
