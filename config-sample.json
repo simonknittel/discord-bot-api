@@ -6,6 +6,9 @@
     },
     "ownerID": "",
     "serverID": "",
+    "invites": [
+        ""
+    ],
     "mentionRequired": false,
     "globalCommandPrefix": "!",
     "commandCooldown": 1000,

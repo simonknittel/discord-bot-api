@@ -20,18 +20,14 @@ let currentSong = null; // The current song will be saved in this variable
 let downloadQueue = {};
 let usersWantToSkip = []; // The id of the users that want to skip the current song will be stored in this array
 
-// Add the song to the playlist
-function pushToPlaylist(data) {
+YD.on('finished', data => {
+    // Add the song to the playlist
     playlist.push({
         youtubeID: data.videoId,
         url: data.youtubeUrl,
         title: data.videoTitle,
         file: data.file,
     });
-}
-
-YD.on('finished', data => {
-    pushToPlaylist(data);
     bot.sendMessage({
         to: downloadQueue['yt:' + data.videoId].channelID,
         message: '`' + data.videoTitle + '` added to the playlist. Position: ' + playlist.length,
@@ -40,11 +36,12 @@ YD.on('finished', data => {
 });
 
 YD.on('error', error => {
-    bot.sendMessage({
-        to: downloadQueue['yt:' + error.videoId].channelID,
-        message: 'The download of <' + error.youtubeURL + '> failed.',
-    });
-    delete downloadQueue['yt:' + data.videoId];
+    console.error(error);
+    // bot.sendMessage({
+    //     to: downloadQueue['yt:' + error.videoId].channelID,
+    //     message: 'The download of <' + error.youtubeURL + '> failed. Check out terminal of the bot to get more information.',
+    // });
+    // delete downloadQueue['yt:' + error.videoId];
 });
 
 // Iterate through the playlist until there are no songs anymore
@@ -126,39 +123,56 @@ function addCommand(user, userID, channelID, message) {
     }
 
     // Fetch meta data from YouTube video
-    fetchVideoInfo(youtubeID).then(videoInfo => {
+    fetchVideoInfo(youtubeID, (error, videoInfo) => {
+        if (error) {
+            console.error(error);
+            bot.sendMessage({
+                to: channelID,
+                message: 'This seems to be an invalid link.',
+            });
+            return false;
+        }
+
         // Create download directory
         mkdirp(configModule.get().plugins['music-bot'].library + '/youtube', error => {
-            if (!error) {
-                // Check if already downloaded
-                fs.access(configModule.get().plugins['music-bot'].library + '/youtube/' + videoInfo.videoId + '.mp3', fs.F_OK, error => {
-                    if (error) {
-                        bot.sendMessage({
-                            to: channelID,
-                            message: 'Downloading the requested video ...',
-                        });
-
-                        downloadQueue['yt:' + videoInfo.videoId] = {
-                            channelID,
-                        };
-
-                        // Download the requested song
-                        YD.download(videoInfo.videoId, videoInfo.videoId + '.mp3');
-                    } else {
-                        pushToPlaylist({
-                            videoId: videoInfo.videoId,
-                            youtubeUrl: videoInfo.url,
-                            videoTitle: videoInfo.title,
-                            file: configModule.get().plugins['music-bot'].library + '/youtube/' + videoInfo.videoId + '.mp3',
-                        });
-
-                        bot.sendMessage({
-                            to: channelID,
-                            message: '`' + videoInfo.title + '` added to the playlist. Position: ' + playlist.length,
-                        });
-                    }
+            if (error) {
+                console.error(error);
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'There was a problem with downloading the video. Check out terminal of the bot to get more information.',
                 });
+                return false;
             }
+
+            // Check if already downloaded
+            fs.access(configModule.get().plugins['music-bot'].library + '/youtube/' + videoInfo.videoId + '.mp3', fs.F_OK, error => {
+                if (error) {
+                    bot.sendMessage({
+                        to: channelID,
+                        message: 'Downloading the requested video ...',
+                    });
+
+                    downloadQueue['yt:' + videoInfo.videoId] = {
+                        channelID,
+                    };
+
+                    // Download the requested song
+                    YD.download(videoInfo.videoId, videoInfo.videoId + '.mp3');
+                } else {
+                    // Add the song to the playlist
+                    playlist.push({
+                        youtubeID: videoInfo.videoId,
+                        url: videoInfo.url,
+                        title: videoInfo.title,
+                        file: configModule.get().plugins['music-bot'].library + '/youtube/' + videoInfo.videoId + '.mp3',
+                    });
+
+                    bot.sendMessage({
+                        to: channelID,
+                        message: '`' + videoInfo.title + '` added to the playlist. Position: ' + playlist.length,
+                    });
+                }
+            });
         });
     });
 }

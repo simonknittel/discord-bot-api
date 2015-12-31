@@ -109,6 +109,18 @@ bot.on('ready', () => {
             username: configModule.get().credentials.name,
         });
     }
+
+    // Accept the invites defined in the config.json
+    if (configModule.get().invites) {
+        for (const invite of configModule.get().invites) {
+            const inviteID = invite.replace('https://discord.gg/', '');
+            if (inviteID.length <= 0) {
+                continue;
+            }
+
+            bot.acceptInvite(inviteID);
+        }
+    }
 });
 
 // Trigger on incomming message
