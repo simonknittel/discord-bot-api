@@ -4,7 +4,8 @@ This bot is basically a API for plugins such as a music bot or a raffle bot. You
 
 Need help?
 ---
-Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
+Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f  
+Visit the [FAQ](https://github.com/simonknittel/discord-bot-api/wiki/FAQ)  
 
 Install
 ---
