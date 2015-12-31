@@ -54,10 +54,10 @@ General commands
 
 * `!commands` - Shows all available commands including the commands of the plugins
 * `!about` - Shows a short description of the bot
-* `!kill` - Stops the bot _(`general:kill` permission required)_
+* `!kill` - Stops the bot
 * `!userid` - Displays the ID of the user
-* `!config` - Change the config until the next restart _(`general:config` permission required)_
-    + Example: `!config globalCommandPrefix $` The bot now listens to the prefix `$`
+* `!config` - Change the config until the next restart
+    + Example: `!config globalCommandPrefix $` The bot now listens to the prefix `$` (without restarting the bot)
 
 Planned features
 ---

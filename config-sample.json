@@ -12,15 +12,24 @@
     "mentionRequired": false,
     "globalCommandPrefix": "!",
     "commandCooldown": 1000,
-    "operators": [
-        {
-            "id": "",
+    "operators": {
+        "": {
             "permissions": [
                 "general:kill"
             ]
         }
-    ],
+    },
     "plugins": {
+        "general": {
+            "commands": {
+                "kill": {
+                    "requirePermission": true
+                },
+                "config": {
+                    "requirePermission": true
+                }
+            }
+        },
         "music-bot": {
             "commandPrefix": "music",
             "library": "../music",

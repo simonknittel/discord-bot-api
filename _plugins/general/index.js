@@ -1,6 +1,6 @@
 // Discord Bot API
 import configModule from '../../_modules/config';
-import api from '../../_modules/api';
+// import api from '../../_modules/api';
 import bot from '../../_modules/bot';
 import plugins from '../../_modules/plugins';
 
@@ -51,10 +51,6 @@ function commandsCommand(user, userID, channelID) {
 }
 
 function configCommand(user, userID, channelID, message) {
-    if (!api.isOperator(userID, 'general:config')) {
-        return false;
-    }
-
     message = message.split(' ');
 
     // Check if a property and a new value is present
@@ -112,10 +108,6 @@ function configCommand(user, userID, channelID, message) {
 }
 
 function killCommand(user, userID) {
-    if (!api.isOperator(userID, 'general:kill')) {
-        return false;
-    }
-
     console.log(chalk.yellow('The Discord Bot API got stopped through the kill command.'));
     console.log(''); // Empty line
     process.exit();
@@ -124,7 +116,7 @@ function killCommand(user, userID) {
 function userIDCommand(user, userID, channelID) {
     bot.sendMessage({
         to: channelID,
-        message: 'Your ID:' + userID,
+        message: 'Your ID: `' + userID + '`',
     });
 }
 

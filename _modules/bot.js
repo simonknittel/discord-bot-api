@@ -1,6 +1,7 @@
 // Discord Bot API
 import configModule from './config';
 import plugins from './plugins';
+import api from './api';
 
 // Other
 import DiscordClient from 'discord.io';
@@ -76,6 +77,18 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                             // Remove the requested command from the message
                             message.shift();
 
+                            // Check the permissions of the command
+                            if (
+                                configModule.get().plugins
+                                && configModule.get().plugins[plugin.name]
+                                && configModule.get().plugins[plugin.name].commands
+                                && configModule.get().plugins[plugin.name].commands[command]
+                            ) {
+                                if (!api.isOperator(userID, plugin.name + ':' + command, channelID)) {
+                                    return false;
+                                }
+                            }
+
                             //
                             message = message.join(' ');
 
@@ -88,6 +101,8 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
             }
         }
     }
+
+    return false;
 }
 
 // Start the discord instance
