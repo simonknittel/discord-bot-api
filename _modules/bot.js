@@ -10,6 +10,7 @@ import packageJSON from '../package';
 
 let bot = null; // The Discord instance will be stored in this object
 let commandHistory = {};
+let reconnectInterval = null;
 
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
@@ -119,6 +120,8 @@ bot.on('ready', () => {
     console.log('v' + packageJSON.version);
     console.log(''); // Empty line
 
+    reconnectInterval = null;
+
     // Set the name of the bot to the one defined in the configModule.json
     if (configModule.get().credentials.name) {
         bot.editUserInfo({
@@ -138,6 +141,21 @@ bot.on('ready', () => {
             bot.acceptInvite(inviteID);
         }
     }
+
+    setTimeout(() => {
+        bot.disconnect();
+    }, 5000);
+});
+
+// Try to reconnect
+bot.on('disconnected', () => {
+    console.log(chalk.red('Discord Bot API disconnected.'));
+    console.log('Trying to reconnect ...');
+    console.log('');
+
+    reconnectInterval = setInterval(() => {
+        bot.connect();
+    }, 5000);
 });
 
 // Trigger on incomming message

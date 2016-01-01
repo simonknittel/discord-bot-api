@@ -5,11 +5,6 @@ Install
 3. Configure the plugin by adding [config code](#config) to the `config.json`
     * Give it at least an empty object (`{}`) to enable the plugin
 
-```javascript
-import musicBot from '../_plugins/music-bot';
-plugins.musicBot = musicBot;
-```
-
 Commands
 ---
 * `!music add <link>` - Adds a song to the playlist (currently only YouTube supported)

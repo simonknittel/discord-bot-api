@@ -1,3 +1,12 @@
+v0.6.7
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.7
+
+Changes
+---
+* The bot tries to reconnect now if it gets disconnected from Discord.
+* Bumped version of discord.io
+
 v0.6.6
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.6
@@ -8,12 +17,11 @@ Important changes
 
 v0.6.5
 ===
-Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.5
 
 Important changes
 ---
 
-* You do not have to add plugins to the top of the [plugins.js](./_modules/plugin.js) anymore to enable them. You have to enable them in your `config.json` now. You have to give them at least an empty object like `"music-bot": {}`. Example:
+* You do not have to add plugins to the top of the [plugins.js](./_modules/plugin.js) anymore to enable them. You have to enable them in your `config.json` now. You have to give them at least an empty object like `"music-bot": {}`. Make sure to have `general` enabled to get the general commands like `!kill`, `!config`, `!commands`, ... Example:
 
 ```json
 "plugins": {
@@ -66,7 +74,6 @@ Important changes
 
 v0.6.3
 ===
-Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.3
 
 Important changes
 ---
