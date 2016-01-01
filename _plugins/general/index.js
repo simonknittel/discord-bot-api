@@ -57,7 +57,7 @@ function configCommand(user, userID, channelID, message) {
     if (message.length < 2) {
         bot.sendMessage({
             to: channelID,
-            message: 'Example use of this command: `' + general.prefix + 'config credentials.name The Best Bot`',
+            message: 'Example use of this command: `!config credentials.name The Best Bot`',
         });
 
         return false;

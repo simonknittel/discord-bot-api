@@ -11,6 +11,7 @@ Important changes
         "autoJoinVoiceChannel": "General"
     }
     ```
+* You can give an operator a wildcard `*` as permission to grant him all permissions
 
 v0.7.0
 ===

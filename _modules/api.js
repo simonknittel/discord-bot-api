@@ -14,7 +14,7 @@ function isOperator(userID, requestedPermission, channelID) {
         && configModule.get().operators[userID]
     ) {
         for (const permission of configModule.get().operators[userID].permissions) {
-            return permission === requestedPermission;
+            return permission === requestedPermission || permission === '*';
         }
     }
 
