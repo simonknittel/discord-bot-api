@@ -11,7 +11,17 @@ Important changes
         "autoJoinVoiceChannel": "General"
     }
     ```
-* You can give an operator a wildcard `*` as permission to grant him all permissions
+* You can give an operator a wildcard `*` as permission to grant him all permissions.
+    Example:
+    ```json
+    "operators": {
+        "user id here": {
+            "permissions": [
+                "*"
+            ]
+        }
+    }
+    ```
 
 v0.7.0
 ===
