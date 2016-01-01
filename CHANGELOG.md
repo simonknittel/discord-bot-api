@@ -12,7 +12,7 @@ Important changes
     }
     ```
 * You can give an operator a wildcard `*` as permission to grant him all permissions.
-    Example:
+    + Example:
     ```json
     "operators": {
         "user id here": {
