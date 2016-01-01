@@ -34,7 +34,8 @@
             "commandPrefix": "music",
             "library": "../music",
             "skipLimit": 1,
-            "announceSongs": true
+            "announceSongs": true,
+            "autoJoinVoiceChannel": ""
         },
         "dice": {}
     }

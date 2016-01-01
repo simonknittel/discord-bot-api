@@ -1,3 +1,17 @@
+v0.7.1
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.1
+
+Important changes
+---
+* [music-bot plugin] You can now define a channel which the bot should automatically join when started.
+    + Example:
+    ```json
+    "music-bot": {
+        "autoJoinVoiceChannel": "General"
+    }
+    ```
+
 v0.7.0
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.0

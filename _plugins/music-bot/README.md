@@ -24,7 +24,8 @@ Config
 With `commandPrefix` you can set a custom command prefix for this plugin (optional). It defaults to `music`  
 With `library` you can define where the songs should be downloaded to.  
 With `skipLimit` you can define how many users you need to skip the current song (optional). It defaults to `1`  
-With `announceSongs` you can enable or disable the announcing of the current song (optional). It defaults to `true`
+With `announceSongs` you can enable or disable the announcing of the current song (optional). It defaults to `true`  
+With `autoJoinVoiceChannel` you can define a voice channel which the bot trys to enter when it starts up.
 
 ```json
 "plugins": {
@@ -32,7 +33,8 @@ With `announceSongs` you can enable or disable the announcing of the current son
         "commandPrefix": "custom-command-prefix",
         "library": "../music",
         "skipLimit": 1,
-        "announceSongs": true
+        "announceSongs": true,
+        "autoJoinVoiceChannel": ""
     }
 }
 ```

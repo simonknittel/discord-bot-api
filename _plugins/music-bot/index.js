@@ -244,7 +244,7 @@ function skipCommand(user, userID, channelID) {
     }
 }
 
-function enterCommand(user, userID, channelID, message) {
+function enter(message, callback) {
     let notFound = true;
     // Look for the ID of the requested channel
     Object.keys(bot.servers[configModule.get().serverID].channels).forEach((id) => {
@@ -257,13 +257,27 @@ function enterCommand(user, userID, channelID, message) {
     });
 
     if (notFound) {
+        callback();
+    } else {
+        bot.joinVoiceChannel(voiceChannelID);
+    }
+}
+
+bot.on('ready', () => {
+    if (configModule.get().plugins['music-bot'].autoJoinVoiceChannel && configModule.get().plugins['music-bot'].autoJoinVoiceChannel.length > 0) {
+        enter(configModule.get().plugins['music-bot'].autoJoinVoiceChannel, () => {
+            console.log(chalk.red('The voice channel defined in autoJoinVoiceChannel could not be found.'));
+        });
+    }
+});
+
+function enterCommand(user, userID, channelID, message) {
+    enter(message, () => {
         bot.sendMessage({
             to: channelID,
             message: 'There is no channel named ' + message + '.',
         });
-    } else {
-        bot.joinVoiceChannel(voiceChannelID);
-    }
+    })
 }
 
 function playCommand(user, userID, channelID) {
