@@ -35,7 +35,7 @@
             "library": "../music",
             "skipLimit": 1,
             "announceSongs": true,
-            "autoJoinVoiceChannel": ""
+            "autoJoinVoiceChannel": "General"
         },
         "dice": {}
     }
