@@ -24,7 +24,7 @@ function checkForUpdates() {
 
             // Compares the latest release with local one
             if (cmp(currentVersion, latestVersion) === -1) {
-                console.log(chalk.red('There is a new version available for the bot. Visit https://github.com/simonknittel/discord-bot-api to download the latest version.'));
+                console.log(chalk.red('There is a new version available for the bot. Visit https://github.com/simonknittel/discord-bot-api to download the latest version. Check out the CHANGELOG.md file for important changes.'));
                 console.log(''); // Empty line
                 console.log(chalk.yellow('Your version:', currentVersion));
                 console.log('Latest version:', latestVersion);
