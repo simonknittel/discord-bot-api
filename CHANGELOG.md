@@ -1,3 +1,12 @@
+v0.7.0
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.0
+
+Important changes
+---
+* You can now roll a dice with the new `dice` plugin
+    + Example: `!dice roll 6` Rolls a dice with 6 faces
+
 v0.6.9
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.9

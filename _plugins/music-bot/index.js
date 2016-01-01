@@ -76,9 +76,9 @@ function playLoop(channelID) {
         }
 
         bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
-            stream.playAudioFile(nextSong.file);
+            stream.playAudioFile(currentSong.file);
             stream.once('fileEnd', () => {
-                // Hack required because the event fileEnd does not trigger when the file ends
+                // Hack required because the event fileEnd does not trigger when the file ends ...
                 setTimeout(() => {
                     currentSong = null;
                     bot.setPresence({
@@ -225,11 +225,11 @@ function skipCommand(user, userID, channelID) {
                 bot.setPresence({
                     game: null,
                 });
-            });
 
-            setTimeout(() => {
-                playLoop(channelID);
-            }, 2000);
+                setTimeout(() => {
+                    playLoop(channelID);
+                }, 2000);
+            });
         } else {
             bot.sendMessage({
                 to: channelID,

@@ -49,6 +49,8 @@ Contact me to get your plugins listed here.
 
 * [Music bot](./_plugins/music-bot) (enabled by default)
     + Visit the [README.md](./_plugins/music-bot/README.md) for the commands, install instructions and more.
+* [Dice](./_plugins/dice) (enabled by default)
+    + Visit the [README.md](./_plugins/music-bot/README.md) for the commands, install instructions and more.
 
 General commands
 ---
