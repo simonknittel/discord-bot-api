@@ -8,6 +8,13 @@ import fetchVideoInfo from 'youtube-info';
 import YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import mkdirp from 'mkdirp';
 import fs from 'fs';
+import chalk from 'chalk';
+
+if (!configModule.get().plugins['music-bot'].library) {
+    console.log(chalk.red('You have to set the library property for the music-bot plugin in your config.json to enable the music-bot plugin.'));
+    console.log(''); // Empty line
+    process.exit();
+}
 
 const YD = new YoutubeMp3Downloader({
     outputPath: configModule.get().plugins['music-bot'].library + '/youtube',

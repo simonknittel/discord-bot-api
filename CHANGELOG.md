@@ -1,3 +1,12 @@
+v0.6.9
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.9
+
+Changes
+---
+* Changed the style of the update notification.
+* You will now get notified when required properties are not set in your config.json.
+
 v0.6.8
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.8
