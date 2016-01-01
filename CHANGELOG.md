@@ -7,6 +7,12 @@ Important changes
 * You can now roll a dice with the new `dice` plugin
     + Example: `!dice roll 6` Rolls a dice with 6 faces
 
+Changes
+---
+* Bumped version of discord.io to 1.6.2
+* The music-bot plugin is playing sound again
+* Removed some deprecated code
+
 v0.6.9
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.9
@@ -14,7 +20,7 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6
 Changes
 ---
 * Changed the style of the update notification.
-* You will now get notified when required properties are not set in your config.json.
+* You will now get notified when required properties like the bot credentials are not set in your config.json.
 
 v0.6.8
 ===
@@ -30,7 +36,7 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6
 
 Important changes
 ---
-* Bumped version of discord.io
+* Bumped version of discord.io to 1.6.1
     + You have to remove the `node_modules` directory and reinstall the dependencies with `npm install` again to get the update
 
 Changes

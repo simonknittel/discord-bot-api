@@ -245,11 +245,6 @@ function skipCommand(user, userID, channelID) {
 }
 
 function enterCommand(user, userID, channelID, message) {
-    // Check if the user has the permission
-    // if (!api.isOperator(userID, 'music-bot:enter')) {
-    //     return false;
-    // }
-
     let notFound = true;
     // Look for the ID of the requested channel
     Object.keys(bot.servers[configModule.get().serverID].channels).forEach((id) => {
