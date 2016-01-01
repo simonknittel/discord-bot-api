@@ -25,7 +25,8 @@ Add plugins
 ---
 1. Copy the plugin to the [_plugins](./_plugins) directory
 2. Follow the install instructions of the plugin
-3. Add it to the top of the [plugins.js](./_modules/plugins.js) file
+3. Add it to the `plugins` in your `config.json`
+    * Give it at least an empty object (`{}`) to enable the plugin
 
 Update your bot
 ---

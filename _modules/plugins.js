@@ -1,10 +1,14 @@
+// Discord Bot API
+import configModule from './config';
+
 let plugins = {};
 
 // Plugins
-import general from '../_plugins/general';
-plugins.general = general;
-
-import musicBot from '../_plugins/music-bot';
-plugins.musicBot = musicBot;
+for (let pluginName in configModule.get().plugins) {
+    if (configModule.get().plugins.hasOwnProperty(pluginName)) {
+        let plugin = require('../_plugins/' + pluginName);
+        plugins[pluginName] = plugin.default;
+    }
+}
 
 export default plugins;

@@ -6,6 +6,7 @@ import api from './api';
 // Other
 import DiscordClient from 'discord.io';
 import chalk from 'chalk';
+import packageJSON from '../package';
 
 let bot = null; // The Discord instance will be stored in this object
 let commandHistory = {};
@@ -115,6 +116,7 @@ bot = new DiscordClient({
 // Discord instance is ready
 bot.on('ready', () => {
     console.log(chalk.green('Discord Bot API started.'));
+    console.log('v' + packageJSON.version);
     console.log(''); // Empty line
 
     // Set the name of the bot to the one defined in the configModule.json

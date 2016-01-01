@@ -3,7 +3,7 @@ Install
 1. Copy the plugin to the `_plugins` directory.
 2. Run `npm install` in the plugin directory itself
 3. Configure the plugin by adding [config code](#config) to the `config.json`
-4. Add the following to the top of the `plugins.js` file in the `_modules` directory
+    * Give it at least an empty object (`{}`) to enable the plugin
 
 ```javascript
 import musicBot from '../_plugins/music-bot';
