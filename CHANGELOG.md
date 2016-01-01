@@ -13,7 +13,7 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6
 Important changes
 ---
 
-* You do not have to add plugins to the top of the [plugins.js](./_modules/plugin.js) anymore to enable them. You have to enable them in your `config.json` now. You have to give them at least an empty object like `"music-bot": {}`. Example:
+* You do not have to add plugins to the top of the [plugins.js](./_modules/plugin.js) anymore to enable them. You have to enable them in your `config.json` now. You have to give them at least an empty object like `"music-bot": {}`. Make sure to have `general` enabled to get the general commands like `!kill`, `!config`, `!commands`, ... Example:
 
 ```json
 "plugins": {
