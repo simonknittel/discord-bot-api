@@ -1,11 +1,23 @@
+v0.6.8
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.8
+
+Changes
+---
+* Removed code used for testing ...
+
 v0.6.7
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.7
 
+Important changes
+---
+* Bumped version of discord.io
+    + You have to remove the `node_modules` directory and reinstall the dependencies with `npm install` again to get the update
+
 Changes
 ---
 * The bot tries to reconnect now if it gets disconnected from Discord.
-* Bumped version of discord.io
 
 v0.6.6
 ===

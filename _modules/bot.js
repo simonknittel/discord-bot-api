@@ -141,10 +141,6 @@ bot.on('ready', () => {
             bot.acceptInvite(inviteID);
         }
     }
-
-    setTimeout(() => {
-        bot.disconnect();
-    }, 5000);
 });
 
 // Try to reconnect
@@ -155,7 +151,7 @@ bot.on('disconnected', () => {
 
     reconnectInterval = setInterval(() => {
         bot.connect();
-    }, 5000);
+    }, 600000);
 });
 
 // Trigger on incomming message
