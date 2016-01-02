@@ -39,7 +39,6 @@
             "skipLimit": 1,
             "announceSongs": true,
             "autoJoinVoiceChannel": "General"
-        },
-        "dice": {}
+        }
     }
 }
