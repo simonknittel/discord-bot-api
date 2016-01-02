@@ -12,7 +12,7 @@ Changes
 ---
 * Removed `enablePlugin` from the `!commands` output
 
-v0.7.2 _(latest release)_
+v0.7.2
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.2
 
