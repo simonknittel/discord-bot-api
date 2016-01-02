@@ -1,18 +1,41 @@
+v0.7.2
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.2
+
+Changes
+---
+* [music-bot plugin] When you leave out the channel in the `!music enter Channel` command and you are in a voice channel right now, it will try to join your voice channel
+* You can now give an operator a wildcard for each plugin to grant him all permissions of this plugin.
+    + Example:
+    ```json
+    "operators": {
+        "user id here": {
+            "permissions": [
+                "music-bot:*"
+            ]
+        }
+    }
+    ```
+* Added internal event system
+* The bot will now notify the owner through a direct message if a new version is available.
+
 v0.7.1
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.1
 
-Important changes
+Changes
 ---
 * [music-bot plugin] You can now define a channel which the bot should automatically join when started.
     + Example:
     ```json
-    "music-bot": {
-        "autoJoinVoiceChannel": "General"
+    "plugins": {
+        "music-bot": {
+            "autoJoinVoiceChannel": "General"
+        }
     }
     ```
-* You can give an operator a wildcard `*` as permission to grant him all permissions.
-    Example:
+* You can now give an operator a wildcard as permission to grant him all permissions.
+    + Example:
     ```json
     "operators": {
         "user id here": {

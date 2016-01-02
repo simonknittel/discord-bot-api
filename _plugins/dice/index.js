@@ -1,7 +1,5 @@
 // Discord Bot API
-// import configModule from '../../_modules/config';
 import bot from '../../_modules/bot';
-// import api from '../../_modules/api';
 
 function rollCommand(user, userID, channelID, message) {
     message = message.split(' ');

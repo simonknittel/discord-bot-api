@@ -1,6 +1,5 @@
 // Discord Bot API
 import configModule from '../../_modules/config';
-// import api from '../../_modules/api';
 import bot from '../../_modules/bot';
 import plugins from '../../_modules/plugins';
 

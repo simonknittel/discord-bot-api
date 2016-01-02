@@ -1,7 +1,6 @@
 // Discord Bot API
 import configModule from '../../_modules/config';
 import bot from '../../_modules/bot';
-// import api from '../../_modules/api';
 
 // Other
 import fetchVideoInfo from 'youtube-info';
@@ -244,7 +243,19 @@ function skipCommand(user, userID, channelID) {
     }
 }
 
-function enter(message, callback) {
+function leave() {
+    if (bot.servers[configModule.get().serverID].members[bot.id].voice_channel_id) {
+        bot.leaveVoiceChannel(bot.servers[configModule.get().serverID].members[bot.id].voice_channel_id);
+    }
+}
+
+function enter(message, isID, callback) {
+    if (isID) {
+        leave();
+        bot.joinVoiceChannel(message);
+        return true;
+    }
+
     let notFound = true;
     // Look for the ID of the requested channel
     Object.keys(bot.servers[configModule.get().serverID].channels).forEach((id) => {
@@ -259,25 +270,41 @@ function enter(message, callback) {
     if (notFound) {
         callback();
     } else {
+        leave();
         bot.joinVoiceChannel(voiceChannelID);
     }
 }
 
 bot.on('ready', () => {
     if (configModule.get().plugins['music-bot'].autoJoinVoiceChannel && configModule.get().plugins['music-bot'].autoJoinVoiceChannel.length > 0) {
-        enter(configModule.get().plugins['music-bot'].autoJoinVoiceChannel, () => {
+        enter(configModule.get().plugins['music-bot'].autoJoinVoiceChannel, false, () => {
             console.log(chalk.red('The voice channel defined in autoJoinVoiceChannel could not be found.'));
         });
     }
 });
 
 function enterCommand(user, userID, channelID, message) {
-    enter(message, () => {
+    let isID = false;
+    if (
+        message.length < 1
+        && bot.servers[configModule.get().serverID].members[userID].voice_channel_id
+    ) {
+        isID = true;
+        message = bot.servers[configModule.get().serverID].members[userID].voice_channel_id;
+    } else if (message.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add the channel name which the bot should join.',
+        });
+        return false;
+    }
+
+    enter(message, isID, () => {
         bot.sendMessage({
             to: channelID,
             message: 'There is no channel named ' + message + '.',
         });
-    })
+    });
 }
 
 function playCommand(user, userID, channelID) {

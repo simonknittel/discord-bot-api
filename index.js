@@ -1,3 +1,7 @@
+// Discord Bot API
+import events from './_modules/events';
+
+// Other
 import request from 'request';
 import packageJSON from './package';
 import cmp from 'semver-compare'; // Compare semver versions
@@ -31,6 +35,11 @@ function checkForUpdates() {
                 console.log(chalk.yellow('Your version:', currentVersion));
                 console.log('Latest version:', latestVersion);
                 console.log(''); // Empty line
+
+                events.emit('update', {
+                    currentVersion,
+                    latestVersion,
+                });
             }
         } else {
             console.error('error:', error);

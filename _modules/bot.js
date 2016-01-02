@@ -2,6 +2,7 @@
 import configModule from './config';
 import plugins from './plugins';
 import api from './api';
+import events from './events';
 
 // Other
 import DiscordClient from 'discord.io';
@@ -85,6 +86,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                 && configModule.get().plugins[plugin.name]
                                 && configModule.get().plugins[plugin.name].commands
                                 && configModule.get().plugins[plugin.name].commands[command]
+                                && configModule.get().plugins[plugin.name].commands[command].requirePermission
                             ) {
                                 if (!api.isOperator(userID, plugin.name + ':' + command, channelID)) {
                                     return false;
@@ -141,6 +143,21 @@ bot.on('ready', () => {
             bot.acceptInvite(inviteID);
         }
     }
+
+    // Listen for update events
+    events.on('update', data => {
+        // Send private message to owner
+        if (configModule.get().ownerID) {
+            bot.sendMessage({
+                to: configModule.get().ownerID,
+                message: 'There is a new version available for the bot.\n\n'
+                    + 'Visit <https://github.com/simonknittel/discord-bot-api> to download the latest version.\n'
+                    + 'Check out the CHANGELOG.md file for important changes.\n\n'
+                    + 'Your version: ' + data.currentVersion + '\n'
+                    + 'Latest version: ' + data.latestVersion + '\n',
+            });
+        }
+    });
 });
 
 // Try to reconnect
