@@ -1,7 +1,7 @@
 // Discord Bot API
 import configModule from '../../_modules/config';
 import bot from '../../_modules/bot';
-import plugins from '../../_modules/plugins';
+import {plugins} from '../../_modules/plugins';
 
 // Other
 import chalk from 'chalk';
@@ -130,7 +130,7 @@ function enableCommand(user, userID, channelID, message) {
         return false;
     }
 
-    plugins.enablePlugin(pluginName, error => {
+    enablePlugin(pluginName, error => {
         if (error === 'failed to load') {
             bot.sendMessage({
                 to: channelID,

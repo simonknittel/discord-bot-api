@@ -1,6 +1,6 @@
 // Discord Bot API
 import configModule from './config';
-import plugins from './plugins';
+import {plugins} from './plugins';
 import api from './api';
 import events from './events';
 

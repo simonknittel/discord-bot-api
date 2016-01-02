@@ -1,3 +1,17 @@
+Planned
+---
+* Send update notifications through direct messages to the owner only once for each version
+* Fix `!config`
+* Add `!install <plugin>`
+
+v0.7.3
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.3
+
+Changes
+---
+* Removed `enablePlugin` from the `!commands` output
+
 v0.7.2
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.2

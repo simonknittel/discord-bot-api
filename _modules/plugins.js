@@ -25,8 +25,6 @@ function enablePlugin(name, callback) {
     }
 }
 
-plugins.enablePlugin = enablePlugin;
-
 // Plugins
 for (let pluginName in configModule.get().plugins) {
     if (configModule.get().plugins.hasOwnProperty(pluginName)) {
@@ -35,4 +33,4 @@ for (let pluginName in configModule.get().plugins) {
     }
 }
 
-export default plugins;
+export {plugins, enablePlugin};
