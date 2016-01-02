@@ -106,7 +106,7 @@ function configCommand(user, userID, channelID, message) {
     });
 }
 
-function killCommand(user, userID) {
+function killCommand() {
     console.log(chalk.yellow('The Discord Bot API got stopped through the kill command.'));
     console.log(''); // Empty line
     process.exit();
@@ -116,6 +116,44 @@ function userIDCommand(user, userID, channelID) {
     bot.sendMessage({
         to: channelID,
         message: 'Your ID: `' + userID + '`',
+    });
+}
+
+function enableCommand(user, userID, channelID, message) {
+    const pluginName = message.split(' ')[0].toLowerCase();
+
+    if (pluginName.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to provide the name of the plugin.',
+        });
+        return false;
+    }
+
+    plugins.enablePlugin(pluginName, error => {
+        if (error === 'failed to load') {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The plugin `' + pluginName + '` could not be enabled.',
+            });
+            console.log(chalk.red('Plugin ' + pluginName + ' failed to load'));
+            console.log(''); // Empty line
+            return false;
+        } else if (error === 'already enabled') {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The plugin is already enabled.',
+            });
+            return false;
+        }
+
+        bot.sendMessage({
+            to: channelID,
+            message: 'Plugin successfully enabled.',
+        });
+        console.log('Plugin ' + pluginName + ' loaded');
+        console.log(''); // Empty line
+        return true;
     });
 }
 
@@ -130,10 +168,10 @@ let plugin = {
             fn: commandsCommand,
             description: 'Shows all available commands',
         },
-        config: {
-            fn: configCommand,
-            description: 'Change the config until the next restart _(requires permission)_',
-        },
+        // config: {
+        //     fn: configCommand,
+        //     description: 'Change the config until the next restart _(requires permission)_',
+        // },
         kill: {
             fn: killCommand,
             description: 'Stops the bot _(requires permission)_',
@@ -141,6 +179,10 @@ let plugin = {
         userid: {
             fn: userIDCommand,
             description: 'Returns the ID of the user',
+        },
+        enable: {
+            fn: enableCommand,
+            discription: 'Enables a plugin',
         },
     },
 };

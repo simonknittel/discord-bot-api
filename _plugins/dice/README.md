@@ -1,8 +1,7 @@
 Install
 ---
 1. Copy the plugin to the `_plugins` directory.
-2. Configure the plugin by adding [config code](#config) to the `config.json`
-    * Give it at least an empty object (`{}`) to enable the plugin
+2. Start up your bot and enable the plugin with `!enable dice`
 
 Commands
 ---

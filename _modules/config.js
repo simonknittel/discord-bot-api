@@ -9,13 +9,20 @@ let config = {}; // The config.json will be stored in this object
 
 // Save the new config
 function save(newConfig, callback) {
-    config = helpers.mergeObjects(config, newConfig);
+    if (newConfig) {
+        config = helpers.mergeObjects(config, newConfig);
+    }
 
     jsonfile.writeFile('./config.json', config, {spaces: 4}, callback);
 }
 
 function get() {
     return config;
+}
+
+function enablePlugin(name, callback) {
+    config.plugins[name] = {};
+    save(null, callback);
 }
 
 config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
@@ -61,6 +68,7 @@ if (!config.ownerID) {
 let configModule = {
     save,
     get,
+    enablePlugin,
 };
 
 export default configModule; // Make the config available for everyone

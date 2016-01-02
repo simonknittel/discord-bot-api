@@ -2,6 +2,12 @@ v0.7.2
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.2
 
+Important changes
+---
+* You can now enable plugins without having to restart with `!enable <name>`
+    + Example: `!enable dice`
+* `!config` is temporarily disabled, because it does not work as expected and can overrite parts of your `config.json`
+
 Changes
 ---
 * [music-bot plugin] When you leave out the channel in the `!music enter Channel` command and you are in a voice channel right now, it will try to join your voice channel
@@ -18,7 +24,7 @@ Changes
     ```
 * Added internal event system
 * The bot will now notify the owner through a direct message if a new version is available.
-* The bot will now show the enabled plugins on start-up
+* The bot will now show the enabled plugins on start-up.
 
 v0.7.1
 ===

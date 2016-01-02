@@ -23,10 +23,13 @@ Start
 
 Add plugins
 ---
+1. Follow the install instructions of the plugin
+
+OR
+
 1. Copy the plugin to the [_plugins](./_plugins) directory
-2. Follow the install instructions of the plugin
-3. Add it to the `plugins` in your `config.json`
-    * Give it at least an empty object (`{}`) to enable the plugin
+2. Start up your bot and enable the plugin with `!enable <name>`
+    * Example: `!enable dice`
 
 Update your bot
 ---
@@ -49,7 +52,7 @@ Contact me to get your plugins listed here.
 
 * [Music bot](./_plugins/music-bot) (enabled by default)
     + Visit the [README.md](./_plugins/music-bot/README.md) for the commands, install instructions and more.
-* [Dice](./_plugins/dice) (enabled by default)
+* [Dice](./_plugins/dice)
     + Visit the [README.md](./_plugins/dice/README.md) for the commands, install instructions and more.
 
 General commands
@@ -61,6 +64,8 @@ General commands
 * `!userid` - Displays the ID of the user
 * `!config` - Change the config until the next restart
     + Example: `!config globalCommandPrefix $` The bot now listens to the prefix `$` (without restarting the bot)
+* `!enable` - Enables a plugin without having to restart
+    + Example: `!enable dice`
 
 Planned features
 ---

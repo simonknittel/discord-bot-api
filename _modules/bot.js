@@ -121,7 +121,12 @@ bot.on('ready', () => {
     console.log(chalk.green('Plugins'));
     for (const name in configModule.get().plugins) {
         if (configModule.get().plugins.hasOwnProperty(name)) {
-            console.log(name);
+            if (!plugins.hasOwnProperty(name)) {
+                console.log(chalk.red(name + ' failed to load'));
+                continue;
+            }
+
+            console.log(name + ' loaded');
         }
     }
     console.log(''); // Empty line

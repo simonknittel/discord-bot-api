@@ -2,8 +2,7 @@ Install
 ---
 1. Copy the plugin to the `_plugins` directory.
 2. Run `npm install` in the plugin directory itself
-3. Configure the plugin by adding [config code](#config) to the `config.json`
-    * Give it at least an empty object (`{}`) to enable the plugin
+3. Start up the your bot and enable the plugin with `!enable music-bot`
 
 Commands
 ---
@@ -21,12 +20,16 @@ Commands
 
 Config
 ---
+You can configure the `music-bot` by extending your `config.json` with the following:
+
 With `commandPrefix` you can set a custom command prefix for this plugin (optional). It defaults to `music`  
 With `library` you can define where the songs should be downloaded to.  
 With `skipLimit` you can define how many users you need to skip the current song (optional). It defaults to `1`  
 With `announceSongs` you can enable or disable the announcing of the current song (optional). It defaults to `true`  
 With `autoJoinVoiceChannel` you can define a voice channel which the bot trys to enter when it starts up.
 
+Example
+---
 ```json
 "plugins": {
     "music-bot": {
@@ -34,7 +37,7 @@ With `autoJoinVoiceChannel` you can define a voice channel which the bot trys to
         "library": "../music",
         "skipLimit": 1,
         "announceSongs": true,
-        "autoJoinVoiceChannel": ""
+        "autoJoinVoiceChannel": "Channel name"
     }
 }
 ```
