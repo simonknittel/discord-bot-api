@@ -18,6 +18,7 @@ Changes
     ```
 * Added internal event system
 * The bot will now notify the owner through a direct message if a new version is available.
+* The bot will now show the enabled plugins on start-up
 
 v0.7.1
 ===

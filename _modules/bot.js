@@ -118,6 +118,14 @@ bot = new DiscordClient({
 
 // Discord instance is ready
 bot.on('ready', () => {
+    console.log(chalk.green('Plugins'));
+    for (const name in configModule.get().plugins) {
+        if (configModule.get().plugins.hasOwnProperty(name)) {
+            console.log(name);
+        }
+    }
+    console.log(''); // Empty line
+
     console.log(chalk.green('Discord Bot API started.'));
     console.log('v' + packageJSON.version);
     console.log(''); // Empty line
