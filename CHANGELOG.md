@@ -4,15 +4,15 @@ Planned
 * Fix `!config`
 * Add `!install <plugin>`
 
-v0.7.3
+v0.7.3 _(not released yet)_
 ===
-Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.3
+<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.2 -->
 
 Changes
 ---
 * Removed `enablePlugin` from the `!commands` output
 
-v0.7.2
+v0.7.2 _(latest release)_
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.2
 
