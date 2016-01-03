@@ -57,5 +57,4 @@ function checkForUpdates() {
 }
 
 checkForUpdates();
-// setInterval(checkForUpdates, 3600000); // Check for updates all 60 minutes
-setInterval(checkForUpdates, 10000); // Check for updates all 60 minutes
+setInterval(checkForUpdates, 3600000); // Check for updates all 60 minutes
