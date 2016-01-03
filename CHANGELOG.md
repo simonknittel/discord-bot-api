@@ -10,7 +10,7 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7
 
 Important changes
 ---
-* Fixed issue that will check for updates in a high rate and will get blocked by the Discord API because of that
+* Fixed issue that will check for updates in a high rate and will get blocked by the GitHub API because of that
 
 v0.7.4
 ===
