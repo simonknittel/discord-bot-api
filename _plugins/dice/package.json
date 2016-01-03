@@ -1,13 +1,11 @@
 {
-  "name": "discord-music-bot",
-  "description": "This is a music bot for Discord based on the Discord Bot API (https://github.com/simonknittel/discord-bot-api)",
+  "name": "discord-dice",
+  "description": "This let's your users roll a dice. This plugin is based the Discord Bot API (https://github.com/simonknittel/discord-bot-api)",
   "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
   "homepage": "https://github.com/simonknittel/discord-bot-api",
   "keywords": [
     "discord",
-    "music",
-    "bot",
-    "youtube"
+    "dice"
   ],
   "repository": {
     "type": "git",
@@ -16,10 +14,5 @@
   "bugs": {
     "url": "https://github.com/simonknittel/discord-bot-api/issues"
   },
-  "main": "index.js",
-  "dependencies": {
-    "mkdirp": "^0.5.1",
-    "youtube-info": "^1.1.0",
-    "youtube-mp3-downloader": "^0.4.1"
-  }
+  "main": "index.js"
 }

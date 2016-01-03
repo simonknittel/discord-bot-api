@@ -2,6 +2,7 @@ Planned
 ---
 * Add `!install <plugin>`
 * Add `!restart`
+* Add `!update`
 * Require for some commands permissions by default
 
 v0.7.5
@@ -52,12 +53,12 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7
 
 Important changes
 ---
-* You can now enable plugins without having to restart with `!enable <name>`
-    + Example: `!enable dice`
 * `!config` is temporarily disabled, because it does not work as expected and can overrite parts of your `config.json`
 
 Changes
 ---
+* You can now enable plugins without having to restart with `!enable <name>`
+    + Example: `!enable dice`
 * [music-bot plugin] When you leave out the channel in the `!music enter Channel` command and you are in a voice channel right now, it will try to join your voice channel
 * You can now give an operator a wildcard for each plugin to grant him all permissions of this plugin.
     + Example:
@@ -107,12 +108,13 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7
 
 Important changes
 ---
-* You can now roll a dice with the new `dice` plugin
-    + Example: `!dice roll 6` Rolls a dice with 6 faces
+* Bumped the version of `discord.io` to 1.6.2
+    + Remove the `node_modules` directory and install all dependencies again with `npm install`
 
 Changes
 ---
-* Bumped version of discord.io to 1.6.2
+* You can now roll a dice with the new `dice` plugin
+    + Example: `!dice roll 6` Rolls a dice with 6 faces
 * The music-bot plugin is playing sound again
 * Removed some deprecated code
 
@@ -139,8 +141,8 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6
 
 Important changes
 ---
-* Bumped version of discord.io to 1.6.1
-    + You have to remove the `node_modules` directory and reinstall the dependencies with `npm install` again to get the update
+* Bumped the version of `discord.io` to 1.6.2
+    + Remove the `node_modules` directory and install all dependencies again with `npm install`
 
 Changes
 ---
