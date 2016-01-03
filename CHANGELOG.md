@@ -2,16 +2,16 @@ Planned
 ---
 * Add `!install <plugin>`
 * Add `!restart`
-* Add `!update`
 * Require for some commands permissions by default
 
-v0.7.5
+v0.8.0 _(not released yet)_
 ===
-Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.5
+<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.8.0 -->
 
 Important changes
 ---
-* Fixed issue that will check for updates in a high rate and will get blocked by the GitHub API because of that
+* You can now update your bot with `!update`
+    + It will downlaod the latest release, installs new dependnecies and migrates your `config.json` if needed
 
 v0.7.4
 ===
