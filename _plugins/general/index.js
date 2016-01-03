@@ -276,6 +276,33 @@ function prefixCommand(user, userID, channelID, message) {
     });
 }
 
+function ownerCommand(user, userID, channelID, message) {
+    const newOwner = message.split(' ')[0];
+    if (newOwner.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add the user id of the new owner.',
+        });
+        return false;
+    }
+
+    configModule.prefix(newOwner, error => {
+        if (error) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'There was an error with saving the new owner to your config.json.',
+            });
+            return false;
+        }
+
+        bot.sendMessage({
+            to: channelID,
+            message: 'Owner successfully changed.',
+        });
+        return true;
+    });
+}
+
 let plugin = {
     name: 'general',
     commands: {
@@ -318,6 +345,10 @@ let plugin = {
         prefix: {
             fn: prefixCommand,
             description: 'Changes to global command prefix',
+        },
+        owner: {
+            fn: ownerCommand,
+            description: 'Changes the owner of the bot',
         },
     },
 };

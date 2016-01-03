@@ -104,6 +104,20 @@ function prefix(newPrefix, callback) {
     });
 }
 
+function owner(newOwner, callback) {
+    config.ownerID = newOwner;
+
+    save(error => {
+        if (error) {
+            callback(error);
+            return false;
+        }
+
+        callback();
+        return true;
+    });
+}
+
 config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
 
 if (!config.globalCommandPrefix) {
@@ -152,6 +166,7 @@ let configModule = {
     op,
     deop,
     prefix,
+    owner,
 };
 
 export default configModule; // Make the config available for everyone

@@ -5,15 +5,24 @@ Planned
 * Add `!restart`
 * Require for some commands permissions by default
 
+v0.7.4 _(not released yet)_
+===
+<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.4 -->
+
+Important changes
+---
+* Added `!owner <user id>` to change the owner of the bot
+    + Make sure to require permissions for this in your `config.json`. In the future commands like this will require permissions by default.
+
 v0.7.3
 ===
-<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.3 -->
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.3
 
 Important changes
 ---
 * Bumped the version of `discord.io` to 1.6.3
     + Remove the `node_modules` directory and install all dependencies again with `npm install`
-* Removed `!config` completly. In addition to that: Added multiple specific commands to change the `config.json`
+* Removed `!config` completely. In addition to that: Added multiple specific commands to change the `config.json`
     + `!rename <name>` Renames the bot
     + `!op <user id> <permission>` Adds a permission to a user
     + `!deop <user id> <permission>` Removes a permission from a user

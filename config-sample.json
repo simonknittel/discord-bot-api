@@ -45,6 +45,9 @@
                 },
                 "prefix": {
                     "requirePermission": true
+                },
+                "owner": {
+                    "requirePermission": true
                 }
             }
         },
