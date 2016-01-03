@@ -5,7 +5,7 @@ Planned
 * Add `!restart`
 * Require for some commands permissions by default
 
-v0.7.3 _(not released yet)_
+v0.7.3
 ===
 <!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.3 -->
 
