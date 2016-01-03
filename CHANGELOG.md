@@ -18,7 +18,7 @@ Important changes
     + `!op <user id> <permission>` Adds a permission to a user
     + `!deop <user id> <permission>` Removes a permission from a user
     + `!prefix <new prefix>` Changes the global command prefix
-    + Make sure to require permissions for them in your `config.json`. In the commands like this will require permissions by default.
+    + Make sure to require permissions for them in your `config.json`. In the future commands like this will require permissions by default.
 
 Changes
 ---
