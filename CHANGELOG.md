@@ -14,6 +14,10 @@ Important changes
 * Added `!owner <user id>` to change the owner of the bot
     + Make sure to require permissions for this in your `config.json`. In the future commands like this will require permissions by default.
 
+Changes
+---
+* Added `!reload` to reload your `config.json`
+
 v0.7.3
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.3

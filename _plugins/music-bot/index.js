@@ -1,6 +1,7 @@
 // Discord Bot API
 import configModule from '../../_modules/config';
 import bot from '../../_modules/bot';
+import events from '../../_modules/events';
 
 // Other
 import fetchVideoInfo from 'youtube-info';
@@ -15,9 +16,16 @@ if (!configModule.get().plugins['music-bot'].library) {
     process.exit();
 }
 
-const YD = new YoutubeMp3Downloader({
+let YD = new YoutubeMp3Downloader({
     outputPath: configModule.get().plugins['music-bot'].library + '/youtube',
     queueParallelism: 5,
+});
+
+events.on('config reloaded', () => {
+    YD = new YoutubeMp3Downloader({
+        outputPath: configModule.get().plugins['music-bot'].library + '/youtube',
+        queueParallelism: 5,
+    });
 });
 
 let playlist = []; // All requested songs will be saved in this array

@@ -1,3 +1,6 @@
+// Discord Bot API
+import events from './events';
+
 // Other
 import chalk from 'chalk';
 import jsonfile from 'jsonfile';
@@ -118,7 +121,14 @@ function owner(newOwner, callback) {
     });
 }
 
-config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
+function reload(callback) {
+    config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
+    events.emit('config reloaded');
+    if (callback) {
+        callback();
+    }
+}
+reload();
 
 if (!config.globalCommandPrefix) {
     config.globalCommandPrefix = '!';
@@ -167,6 +177,7 @@ let configModule = {
     deop,
     prefix,
     owner,
+    reload,
 };
 
 export default configModule; // Make the config available for everyone

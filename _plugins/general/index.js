@@ -172,7 +172,7 @@ function renameCommand(user, userID, channelID, message) {
         if (error) {
             bot.sendMessage({
                 to: channelID,
-                message: 'There was an error with saving the new name to your config.json.',
+                message: 'There was an error with saving the new name to your `config.json`.',
             });
             return false;
         }
@@ -203,7 +203,7 @@ function opCommand(user, userID, channelID, message) {
         if (error) {
             bot.sendMessage({
                 to: channelID,
-                message: 'There was an error with saving the new permission to your config.json.',
+                message: 'There was an error with saving the new permission to your `config.json`.',
             });
             return false;
         }
@@ -236,7 +236,7 @@ function deopCommand(user, userID, channelID, message) {
         } else if (error) {
             bot.sendMessage({
                 to: channelID,
-                message: 'There was an error with saving the removal of the permission to your config.json.',
+                message: 'There was an error with saving the removal of the permission to your `config.json`.',
             });
             return false;
         }
@@ -263,7 +263,7 @@ function prefixCommand(user, userID, channelID, message) {
         if (error) {
             bot.sendMessage({
                 to: channelID,
-                message: 'There was an error with saving the new prefix to your config.json.',
+                message: 'There was an error with saving the new prefix to your `config.json`.',
             });
             return false;
         }
@@ -290,7 +290,7 @@ function ownerCommand(user, userID, channelID, message) {
         if (error) {
             bot.sendMessage({
                 to: channelID,
-                message: 'There was an error with saving the new owner to your config.json.',
+                message: 'There was an error with saving the new owner to your `config.json`.',
             });
             return false;
         }
@@ -298,6 +298,24 @@ function ownerCommand(user, userID, channelID, message) {
         bot.sendMessage({
             to: channelID,
             message: 'Owner successfully changed.',
+        });
+        return true;
+    });
+}
+
+function reloadCommand(user, userID, channelID) {
+    configModule.reload(error => {
+        if (error) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'There was an error with loading your `config.json`.',
+            });
+            return false;
+        }
+
+        bot.sendMessage({
+            to: channelID,
+            message: '`config.json` successfully reloaded.',
         });
         return true;
     });
@@ -349,6 +367,10 @@ let plugin = {
         owner: {
             fn: ownerCommand,
             description: 'Changes the owner of the bot',
+        },
+        reload: {
+            fn: reloadCommand,
+            description: 'Reloads the `config.json`',
         },
     },
 };

@@ -48,6 +48,9 @@
                 },
                 "owner": {
                     "requirePermission": true
+                },
+                "reload": {
+                    "requirePermission": true
                 }
             }
         },
