@@ -157,6 +157,125 @@ function enableCommand(user, userID, channelID, message) {
     });
 }
 
+// function restartCommand() {}
+
+function renameCommand(user, userID, channelID, message) {
+    if (message.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add the new name.',
+        });
+        return false;
+    }
+
+    configModule.rename(message, error => {
+        if (error) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'There was an error with saving the new name to your config.json.',
+            });
+            return false;
+        }
+
+        bot.editUserInfo({
+            username: message,
+            password: configModule.get().credentials.password,
+        }, () => {
+            bot.sendMessage({
+                to: channelID,
+                message: 'Bot successfully renamed.',
+            });
+        });
+    });
+}
+
+function opCommand(user, userID, channelID, message) {
+    message = message.split(' ');
+    if (message.length < 2) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add the user ID and the permission.',
+        });
+        return false;
+    }
+
+    configModule.op(message[0], message[1], error => {
+        if (error) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'There was an error with saving the new permission to your config.json.',
+            });
+            return false;
+        }
+
+        bot.sendMessage({
+            to: channelID,
+            message: 'Permission successfully given.',
+        });
+        return true;
+    });
+}
+
+function deopCommand(user, userID, channelID, message) {
+    message = message.split(' ');
+    if (message.length < 2) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add the user ID and the permission.',
+        });
+        return false;
+    }
+
+    configModule.deop(message[0], message[1], error => {
+        if (error === 'no such permission') {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The user does not have such a permission.',
+            });
+            return false;
+        } else if (error) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'There was an error with saving the removal of the permission to your config.json.',
+            });
+            return false;
+        }
+
+        bot.sendMessage({
+            to: channelID,
+            message: 'Permission successfully removed.',
+        });
+        return true;
+    });
+}
+
+function prefixCommand(user, userID, channelID, message) {
+    const newPrefix = message.split(' ')[0];
+    if (newPrefix.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add the new prefix.',
+        });
+        return false;
+    }
+
+    configModule.prefix(newPrefix, error => {
+        if (error) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'There was an error with saving the new prefix to your config.json.',
+            });
+            return false;
+        }
+
+        bot.sendMessage({
+            to: channelID,
+            message: 'Prefix successfully set.',
+        });
+        return true;
+    });
+}
+
 let plugin = {
     name: 'general',
     commands: {
@@ -168,13 +287,9 @@ let plugin = {
             fn: commandsCommand,
             description: 'Shows all available commands',
         },
-        // config: {
-        //     fn: configCommand,
-        //     description: 'Change the config until the next restart _(requires permission)_',
-        // },
         kill: {
             fn: killCommand,
-            description: 'Stops the bot _(requires permission)_',
+            description: 'Stops the bot',
         },
         userid: {
             fn: userIDCommand,
@@ -182,7 +297,27 @@ let plugin = {
         },
         enable: {
             fn: enableCommand,
-            discription: 'Enables a plugin',
+            description: 'Enables a plugin',
+        },
+        // restart: {
+        //     fn: restartCommand,
+        //     description: 'Restarts the bot',
+        // },
+        rename: {
+            fn: renameCommand,
+            description: 'Renames the bot',
+        },
+        op: {
+            fn: opCommand,
+            description: 'Adds a permission to a user',
+        },
+        deop: {
+            fn: deopCommand,
+            description: 'Removes a permission from a user',
+        },
+        prefix: {
+            fn: prefixCommand,
+            description: 'Changes to global command prefix',
         },
     },
 };

@@ -1,6 +1,3 @@
-// Discord Bot API
-import * as helpers from './helpers';
-
 // Other
 import chalk from 'chalk';
 import jsonfile from 'jsonfile';
@@ -8,12 +5,16 @@ import jsonfile from 'jsonfile';
 let config = {}; // The config.json will be stored in this object
 
 // Save the new config
-function save(newConfig, callback) {
-    if (newConfig) {
-        config = helpers.mergeObjects(config, newConfig);
-    }
+function save(callback) {
+    jsonfile.writeFile('./config.json', config, {spaces: 4}, (error) => {
+        if (error) {
+            console.log(chalk.red(error));
+            console.log(''); // Empty line
+            callback(error);
+        }
 
-    jsonfile.writeFile('./config.json', config, {spaces: 4}, callback);
+        callback();
+    });
 }
 
 function get() {
@@ -23,6 +24,84 @@ function get() {
 function enablePlugin(name, callback) {
     config.plugins[name] = {};
     save(null, callback);
+}
+
+function rename(name, callback) {
+    config.credentials.name = name;
+
+    save(error => {
+        if (error) {
+            callback(error);
+            return false;
+        }
+
+        callback();
+        return true;
+    });
+}
+
+function op(userID, permission, callback) {
+    if (!config.hasOwnProperty('operators')) {
+        config.operators = {};
+    }
+
+    if (!config.operators.hasOwnProperty(userID)) {
+        config.operators[userID] = {
+            permissions: [],
+        };
+    }
+
+    if (config.operators[userID].permissions.indexOf(permission) < 0) {
+        config.operators[userID].permissions.push(permission);
+    }
+
+    save(error => {
+        if (error) {
+            callback(error);
+            return false;
+        }
+
+        callback();
+        return true;
+    });
+}
+
+function deop(userID, permission, callback) {
+    if (
+        !config.operators
+        || !config.operators[userID]
+        || !config.operators[userID].permissions
+        || config.operators[userID].permissions.indexOf(permission) < 0
+    ) {
+        callback('no such permission');
+        return false;
+    }
+
+    config.operators[userID].permissions.splice(config.operators[userID].permissions.indexOf(permission), 1);
+
+    save(error => {
+        if (error) {
+            callback(error);
+            return false;
+        }
+
+        callback();
+        return true;
+    });
+}
+
+function prefix(newPrefix, callback) {
+    config.globalCommandPrefix = newPrefix;
+
+    save(error => {
+        if (error) {
+            callback(error);
+            return false;
+        }
+
+        callback();
+        return true;
+    });
 }
 
 config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
@@ -69,6 +148,10 @@ let configModule = {
     save,
     get,
     enablePlugin,
+    rename,
+    op,
+    deop,
+    prefix,
 };
 
 export default configModule; // Make the config available for everyone

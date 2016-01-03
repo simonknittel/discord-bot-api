@@ -30,6 +30,21 @@
                 },
                 "enable": {
                     "requirePermission": true
+                },
+                "restart": {
+                    "requirePermission": true
+                },
+                "rename": {
+                    "requirePermission": true
+                },
+                "op": {
+                    "requirePermission": true
+                },
+                "deop": {
+                    "requirePermission": true
+                },
+                "prefix": {
+                    "requirePermission": true
                 }
             }
         },
