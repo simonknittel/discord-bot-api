@@ -1,13 +1,12 @@
 Planned
 ---
-* Send update notifications through direct messages to the owner only once for each version
 * Add `!install <plugin>`
 * Add `!restart`
 * Require for some commands permissions by default
 
-v0.7.4 _(not released yet)_
+v0.7.4
 ===
-<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.4 -->
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.4
 
 Important changes
 ---
@@ -17,6 +16,7 @@ Important changes
 Changes
 ---
 * Added `!reload` to reload your `config.json`
+* Send update notifications through direct messages to the owner only once for each version
 
 v0.7.3
 ===

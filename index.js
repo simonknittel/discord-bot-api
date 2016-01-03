@@ -12,6 +12,8 @@ console.log(''); // Empty line
 
 import './_modules/plugins';
 
+let newVersions = [];
+
 // Checks the GitHub releases for the latest version and notifies the owner if a new release is available
 function checkForUpdates() {
     // Request the GitHub API
@@ -28,18 +30,22 @@ function checkForUpdates() {
 
             // Compares the latest release with local one
             if (cmp(currentVersion, latestVersion) === -1) {
-                console.log(chalk.red('There is a new version available for the bot.'));
-                console.log('Visit https://github.com/simonknittel/discord-bot-api to download the latest version.');
-                console.log('Check out the CHANGELOG.md file for important changes.');
-                console.log(''); // Empty line
-                console.log(chalk.yellow('Your version:', currentVersion));
-                console.log('Latest version:', latestVersion);
-                console.log(''); // Empty line
+                if (newVersions.indexOf(latestVersion) < 0) {
+                    newVersions.push(latestVersion);
 
-                events.emit('update', {
-                    currentVersion,
-                    latestVersion,
-                });
+                    console.log(chalk.red('There is a new version available for the bot.'));
+                    console.log('Visit https://github.com/simonknittel/discord-bot-api to download the latest version.');
+                    console.log('Check out the CHANGELOG.md file for important changes.');
+                    console.log(''); // Empty line
+                    console.log(chalk.yellow('Your version:', currentVersion));
+                    console.log('Latest version:', latestVersion);
+                    console.log(''); // Empty line
+
+                    events.emit('update', {
+                        currentVersion,
+                        latestVersion,
+                    });
+                }
             }
         } else {
             console.error('error:', error);
@@ -51,4 +57,5 @@ function checkForUpdates() {
 }
 
 checkForUpdates();
-setInterval(checkForUpdates, 3600000); // Check for updates all 60 minutes
+// setInterval(checkForUpdates, 3600000); // Check for updates all 60 minutes
+setInterval(checkForUpdates, 10000); // Check for updates all 60 minutes
