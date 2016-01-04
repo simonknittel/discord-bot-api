@@ -3,6 +3,7 @@ v0.7.6 _(not released yet)_
 <!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.6 -->
 
 Important changes
+---
 * **[music-bot plugin]** You can now define the max length of a song (in minutes). It defaults to `15` minutes. `0` minutes will be endless.
     + Example:
     ```json
