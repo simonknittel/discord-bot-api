@@ -85,14 +85,16 @@ function playLoop(channelID) {
         bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
             stream.playAudioFile(currentSong.file);
             stream.once('fileEnd', () => {
-                // Hack required because the event fileEnd does not trigger when the file ends ...
-                setTimeout(() => {
-                    currentSong = null;
-                    bot.setPresence({
-                        game: null,
-                    });
-                    playLoop(channelID);
-                }, 2000);
+                if (currentSong) {
+                    // Hack required because the event fileEnd does not trigger when the file ends ...
+                    setTimeout(() => {
+                        currentSong = null;
+                        bot.setPresence({
+                            game: null,
+                        });
+                        playLoop(channelID);
+                    }, 2000);
+                }
             });
         });
     } else {
@@ -332,6 +334,7 @@ function playCommand(user, userID, channelID) {
 }
 
 function stopCommand() {
+    events.emit('stop music');
     bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
         stream.stopAudioFile();
         currentSong = null;

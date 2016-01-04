@@ -7,6 +7,7 @@ Changes
 * Renamed some directories
 * Added missing information to the install instruction
 * Added a license
+* **[music-bot plugin]** Fixed `!music stop` command (issue #33)
 
 v0.7.5
 ===
