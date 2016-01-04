@@ -149,6 +149,31 @@ function addCommand(user, userID, channelID, message) {
             return false;
         }
 
+        // Check length of video
+        let maxLength = configModule.get().plugins['music-bot'].maxLength;
+        if (maxLength && isNaN(maxLength)) {
+            console.log(chalk.styles.red.open + 'The max length of a song defined in your "config.json" is invalid. Therefore the download of ' + chalk.styles.red.close + videoInfo.url + chalk.styles.red.open + ' will be stopped.' + chalk.styles.red.close);
+            bot.sendMessage({
+                to: channelID,
+                message: 'The max length of a song defined in your "config.json" is invalid. Therefore the download will be stopped.',
+            });
+            return false;
+        } else if (Math.ceil(maxLength) === 0) {
+
+        } else if (videoInfo.duration / 60 > Math.ceil(maxLength)) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The video is too long. Only videos up to ' + Math.round(maxLength) + ' minutes are allowed.',
+            });
+            return false;
+        } else if (videoInfo.duration / 60 > 15) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The video is too long. Only videos up to 15 minutes are allowed.',
+            });
+            return false;
+        }
+
         // Create download directory
         mkdirp(configModule.get().plugins['music-bot'].library + '/youtube', error => {
             if (error) {

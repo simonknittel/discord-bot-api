@@ -27,6 +27,7 @@ With `library` you can define where the songs should be downloaded to.
 With `skipLimit` you can define how many users you need to skip the current song (optional). It defaults to `1`  
 With `announceSongs` you can enable or disable the announcing of the current song (optional). It defaults to `true`  
 With `autoJoinVoiceChannel` you can define a voice channel which the bot trys to enter when it starts up.
+With `maxLength` you can define what should be the max length (in minutes!) of a song (optional). It defaults to `15` minutes. `0` will be endless. Numbers with decimals will be rounded up.
 
 Example
 ---
@@ -37,7 +38,8 @@ Example
         "library": "../music",
         "skipLimit": 1,
         "announceSongs": true,
-        "autoJoinVoiceChannel": "Channel name"
+        "autoJoinVoiceChannel": "Channel name",
+        "maxLength": 15
     }
 }
 ```

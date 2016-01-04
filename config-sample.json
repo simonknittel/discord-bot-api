@@ -59,7 +59,8 @@
             "library": "../music",
             "skipLimit": 1,
             "announceSongs": true,
-            "autoJoinVoiceChannel": "General"
+            "autoJoinVoiceChannel": "General",
+            "maxLength": 15
         }
     }
 }
