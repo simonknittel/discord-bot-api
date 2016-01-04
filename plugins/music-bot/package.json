@@ -9,6 +9,7 @@
     "bot",
     "youtube"
   ],
+  "license": "GNU GPL v3",
   "repository": {
     "type": "git",
     "url": "https://github.com/simonknittel/discord-bot-api"

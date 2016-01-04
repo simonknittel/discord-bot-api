@@ -1,3 +1,13 @@
+v0.7.6 _(not released yet)_
+===
+<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.6 -->
+
+Changes
+---
+* Renamed some directories
+* Added missing information to the install instruction
+* Added a license
+
 v0.7.5
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.5

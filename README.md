@@ -10,11 +10,15 @@ Visit the [FAQ / Known issues](https://github.com/simonknittel/discord-bot-api/w
 Install
 ---
 1. Clone this repository with `git clone https://github.com/simonknittel/discord-bot-api` or download it manually
-2. Make sure you have installed the latest version of [Node](https://nodejs.org/en/)
+2. Make sure you have [Node](https://nodejs.org/en/) installed and available in your PATH variable
 3. Make sure you have [FFmpeg](https://www.ffmpeg.org/) installed and available in your PATH variable
-4. Install all dependencies by running `npm install`
-5. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
-6. Edit `config.json` to your needs
+4. Make sure you have [Python](https://www.python.org/) installed and available in your PATH variable
+    * Run `npm config set python python2.7`
+5. **[Windows]** Make sure you have [Microsoft Visual C++ Build Tools 2015](https://www.microsoft.com/en-us/download/details.aspx?id=49983) installed
+    * Run `npm config set msvs_version 2015 --global`
+6. Install all dependencies by running `npm install`
+7. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
+8. Edit `config.json` to your needs
     * Visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information
 
 Start
@@ -68,3 +72,24 @@ General commands
 Planned features
 ---
 Visit https://github.com/simonknittel/discord-bot-api/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement
+
+Thanks
+---
+Thanks to everyone who reports me bugs, gives me feedback or tries to figure out the cause of an issues. Without them the Discord Bot API wouldn't be so stable.
+
+License
+---
+Copyright (C) 2016  Simon Knittel <hallo@simonknittel.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
