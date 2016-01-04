@@ -40,6 +40,8 @@ Update your bot
 The bot will notify the owner if there is a new version available. It will check the version on the start and every 60 minutes after that.
 
 1. Download the latest version from https://github.com/simonknittel/discord-bot-api
+2. Copy over your old `config.json`.
+    * Make sure to read the changelog for any important changes
 
 OR
 
