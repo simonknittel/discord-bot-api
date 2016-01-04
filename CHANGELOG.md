@@ -1,10 +1,3 @@
-Planned
----
-* Add `!install <plugin>`
-* Add `!restart`
-* Add `!update`
-* Require for some commands permissions by default
-
 v0.7.5
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.5
