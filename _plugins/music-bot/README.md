@@ -1,8 +1,8 @@
 Install
 ---
 1. Copy the plugin to the `_plugins` directory.
-2. Run `npm install` in the plugin directory itself
-3. Start up the your bot and enable the plugin with `!enable music-bot`
+2. Run `npm install` in the directory of the plugin
+3. Start up your bot and enable the plugin with `!enable music-bot`
 
 Commands
 ---
