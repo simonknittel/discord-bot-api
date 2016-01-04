@@ -1,5 +1,5 @@
 // Discord Bot API
-import events from './_modules/events';
+import events from './modules/events';
 
 // Other
 import request from 'request';
@@ -10,7 +10,7 @@ import chalk from 'chalk'; // Coloring console logs
 console.log(chalk.styles.blue.open + 'Need help? Join our Discord server: ' + chalk.styles.blue.close + 'https://discord.gg/0jV29zKlvdJbDx3f');
 console.log(''); // Empty line
 
-import './_modules/plugins';
+import './modules/plugins';
 
 let newVersions = [];
 

@@ -1,7 +1,7 @@
 // Discord Bot API
-import configModule from '../../_modules/config';
-import bot from '../../_modules/bot';
-import events from '../../_modules/events';
+import configModule from '../../modules/config';
+import bot from '../../modules/bot';
+import events from '../../modules/events';
 
 // Other
 import fetchVideoInfo from 'youtube-info';
