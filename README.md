@@ -1,6 +1,6 @@
 Discord Bot API
 ===
-This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins. You do not need to care about the command listening, discord instance initialization etc.
+This bot for Discord is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins. You do not need to care about the command listening, discord instance initialization etc.
 
 Need help?
 ---
@@ -28,7 +28,7 @@ Add plugins
 OR
 
 1. Copy the plugin to the [_plugins](./_plugins) directory
-2. Start up your bot and enable the plugin with `!enable <name>`
+2. Start up your bot and enable the plugin with `!enable <plugin>`
     * Example: `!enable dice`
 
 Update your bot
@@ -62,9 +62,7 @@ General commands
 * `!about` - Shows a short description of the bot
 * `!kill` - Stops the bot
 * `!userid` - Displays the ID of the user
-* `!config` - Change the config until the next restart
-    + Example: `!config globalCommandPrefix $` The bot now listens to the prefix `$` (without restarting the bot)
-* `!enable` - Enables a plugin without having to restart
+* `!enable <plugin>` - Enables a plugin without having to restart
     + Example: `!enable dice`
 
 Planned features
