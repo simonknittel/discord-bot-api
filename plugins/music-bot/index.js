@@ -11,12 +11,6 @@ import fs from 'fs';
 import chalk from 'chalk';
 import os from 'os';
 
-// if (!configModule.get().plugins['music-bot'].library) {
-//     console.log(chalk.red('You have to set the library property for the music-bot plugin in your config.json to enable the music-bot plugin.'));
-//     console.log(''); // Empty line
-//     process.exit();
-// }
-
 let YD = new YoutubeMp3Downloader({
     outputPath: configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube'),
     queueParallelism: 5,
