@@ -24,6 +24,7 @@ Changes
 * **[music-bot plugin]** Fixed `!music stop` command (issue #33)
 * Added missing commands to the [README.md](./README.md)
 * Fixed directory names
+* **[music-bot plugin]** You don't need to set a library anymore. It will default to the OS specific temp directories
 
 v0.7.5
 ===
