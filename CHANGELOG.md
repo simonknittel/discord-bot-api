@@ -13,6 +13,8 @@ Important changes
         }
     }
     ```
+* Bumped the version of `discord.io` to 1.6.5
+    + Run `npm install discord.io` to install the new version
 
 Changes
 ---
@@ -20,6 +22,8 @@ Changes
 * Added missing information to the install instruction
 * Added a license
 * **[music-bot plugin]** Fixed `!music stop` command (issue #33)
+* Added missing commands to the [README.md](./README.md)
+* Fixed directory names
 
 v0.7.5
 ===

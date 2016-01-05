@@ -1,6 +1,6 @@
 Install
 ---
-1. Copy the plugin to the `_plugins` directory.
+1. Copy the plugin to the `plugins` directory.
 2. Start up your bot and enable the plugin with `!enable dice`
 
 Commands

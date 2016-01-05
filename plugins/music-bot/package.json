@@ -21,6 +21,6 @@
   "dependencies": {
     "mkdirp": "^0.5.1",
     "youtube-info": "^1.1.0",
-    "youtube-mp3-downloader": "^0.4.1"
+    "youtube-mp3-downloader": "^0.4.2"
   }
 }

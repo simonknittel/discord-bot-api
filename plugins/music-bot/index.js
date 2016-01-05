@@ -9,21 +9,22 @@ import YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import mkdirp from 'mkdirp';
 import fs from 'fs';
 import chalk from 'chalk';
+import os from 'os';
 
-if (!configModule.get().plugins['music-bot'].library) {
-    console.log(chalk.red('You have to set the library property for the music-bot plugin in your config.json to enable the music-bot plugin.'));
-    console.log(''); // Empty line
-    process.exit();
-}
+// if (!configModule.get().plugins['music-bot'].library) {
+//     console.log(chalk.red('You have to set the library property for the music-bot plugin in your config.json to enable the music-bot plugin.'));
+//     console.log(''); // Empty line
+//     process.exit();
+// }
 
 let YD = new YoutubeMp3Downloader({
-    outputPath: configModule.get().plugins['music-bot'].library + '/youtube',
+    outputPath: configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube'),
     queueParallelism: 5,
 });
 
 events.on('config reloaded', () => {
     YD = new YoutubeMp3Downloader({
-        outputPath: configModule.get().plugins['music-bot'].library + '/youtube',
+        outputPath: configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube'),
         queueParallelism: 5,
     });
 });
@@ -141,7 +142,7 @@ function addCommand(user, userID, channelID, message) {
     // Fetch meta data from YouTube video
     fetchVideoInfo(youtubeID, (error, videoInfo) => {
         if (error) {
-            console.error(error);
+            console.error(error, youtubeID);
             bot.sendMessage({
                 to: channelID,
                 message: 'This seems to be an invalid link.',
@@ -175,7 +176,7 @@ function addCommand(user, userID, channelID, message) {
         }
 
         // Create download directory
-        mkdirp(configModule.get().plugins['music-bot'].library + '/youtube', error => {
+        mkdirp(configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube'), error => {
             if (error) {
                 console.error(error);
                 bot.sendMessage({
@@ -186,7 +187,7 @@ function addCommand(user, userID, channelID, message) {
             }
 
             // Check if already downloaded
-            fs.access(configModule.get().plugins['music-bot'].library + '/youtube/' + videoInfo.videoId + '.mp3', fs.F_OK, error => {
+            fs.access((configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube')) + '/' + videoInfo.videoId + '.mp3', fs.F_OK, error => {
                 if (error) {
                     bot.sendMessage({
                         to: channelID,
