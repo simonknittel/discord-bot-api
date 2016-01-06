@@ -1,6 +1,6 @@
-v0.7.6 _(not released yet)_
+v0.7.6
 ===
-<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.6 -->
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.6
 
 Important changes
 ---
