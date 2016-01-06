@@ -107,6 +107,8 @@ function configCommand(user, userID, channelID, message) {
 }
 
 function killCommand() {
+    bot.disconnect();
+
     console.log(chalk.yellow('The Discord Bot API got stopped through the kill command.'));
     console.log(''); // Empty line
     process.exit();

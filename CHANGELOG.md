@@ -25,6 +25,7 @@ Changes
 * Added missing commands to the [README.md](./README.md)
 * Fixed directory names
 * **[music-bot plugin]** You don't need to set a library anymore. It will default to the OS specific temp directories
+* Disconnect the bot before killing the process. The bot should now log out everytime when using `!kill`.
 
 v0.7.5
 ===

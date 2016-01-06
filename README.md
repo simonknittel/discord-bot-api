@@ -75,6 +75,7 @@ General commands
 * `!prefix <new prefix>` - Change the global command prefix
 * `!owner <user id>` - Change the owner of the bot
 * `!rename <new name>` - Rename the bot
+* `!reload` - Reloads the config
 
 Planned features
 ---
@@ -82,7 +83,7 @@ Visit https://github.com/simonknittel/discord-bot-api/issues?q=is%3Aopen+is%3Ais
 
 Thanks
 ---
-Thanks to everyone who reports me bugs, gives me feedback or tries to figure out the cause of an issues. Without them the Discord Bot API wouldn't be so stable.
+Thanks to everyone who reports me bugs, gives me feedback or tries to figure out the cause of an issues. Without them the Discord Bot API wouldn't be so cool.
 
 License
 ---

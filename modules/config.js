@@ -129,6 +129,9 @@ function reload(callback) {
     }
 }
 reload();
+// setInterval(() => {
+//     reload();
+// }, 5000);
 
 if (!config.globalCommandPrefix) {
     config.globalCommandPrefix = '!';
