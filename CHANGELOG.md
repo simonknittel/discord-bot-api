@@ -15,7 +15,7 @@ Important changes
     ```
 * Bumped the version of `discord.io` to 1.6.5
     + Run `npm install discord.io` to install the new version
-* You can now define how fast your `config.json` will be reloaded automatically without restarting the bot. It's into seconds. It's optional and will default to every 5 seconds. Settings it to `0` disables it. Example: `"reloadConfig": 10`.
+* You can now define how fast (in seconds) your `config.json` will be reloaded automatically without restarting the bot (optional).It default to every 5 seconds. Settings it to `0` disables it. Example: `"reloadConfig": 10`.
 
 Changes
 ---
