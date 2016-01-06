@@ -56,6 +56,11 @@
             }
         },
         "music-bot": {
+            "commands": {
+                "add": {
+                    "channel": "#music"
+                }
+            },
             "commandPrefix": "music",
             "library": "../music",
             "skipLimit": 1,

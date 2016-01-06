@@ -93,6 +93,31 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                 }
                             }
 
+                            // Check the command requires an channel
+                            if (
+                                configModule.get().plugins
+                                && configModule.get().plugins[plugin.name]
+                                && configModule.get().plugins[plugin.name].commands
+                                && configModule.get().plugins[plugin.name].commands[command]
+                                && configModule.get().plugins[plugin.name].commands[command].channel
+                            ) {
+                                let requestChannel = configModule.get().plugins[plugin.name].commands[command].channel.replace('#', '');
+
+                                for (let id in bot.servers[configModule.get().serverID].channels) {
+                                    if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
+                                        const channel = bot.servers[configModule.get().serverID].channels[id];
+
+                                        if (channel.name === requestChannel && channel.id !== channelID) {
+                                            bot.sendMessage({
+                                                to: channelID,
+                                                message: 'You have to request this command in the channel <#' + channel.id + '>',
+                                            });
+                                            return false;
+                                        }
+                                    }
+                                }
+                            }
+
                             //
                             message = message.join(' ');
 

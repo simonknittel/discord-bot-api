@@ -1,3 +1,23 @@
+v0.7.7
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.7
+
+Changes
+---
+* You can now specify a channel which is required to request a command
+    + Example:
+    ```json
+    "plugins": {
+        "music-bot": {
+            "commands": {
+                "add": {
+                    "channel": "#music"
+                }
+            }
+        }
+    }
+    ```
+
 v0.7.6
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.6
