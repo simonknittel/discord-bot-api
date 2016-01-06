@@ -11,6 +11,7 @@
     ],
     "mentionRequired": false,
     "globalCommandPrefix": "!",
+    "reloadConfig": 5,
     "commandCooldown": 1000,
     "operators": {
         "": {

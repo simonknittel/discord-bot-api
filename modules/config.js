@@ -6,6 +6,7 @@ import chalk from 'chalk';
 import jsonfile from 'jsonfile';
 
 let config = {}; // The config.json will be stored in this object
+let reloadConfig = null;
 
 // Save the new config
 function save(callback) {
@@ -124,14 +125,36 @@ function owner(newOwner, callback) {
 function reload(callback) {
     config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
     events.emit('config reloaded');
+    automaticReload();
     if (callback) {
         callback();
     }
 }
 reload();
-// setInterval(() => {
-//     reload();
-// }, 5000);
+
+function automaticReload() {
+    clearInterval(reloadConfig);
+
+    if (!config.reloadConfig && config.reloadConfig !== 0) {
+        reloadConfig = setInterval(() => {
+            reload();
+        }, 5000);
+        return true;
+    }
+
+    if (Math.ceil(config.reloadConfig) === 0) {
+        return false;
+    }
+
+    if (isNaN(config.reloadConfig)) {
+        console.log(chalk.red('The reload time of the config defined in your "config.json" is invalid. Therefore it defaults to 5 seconds.'));
+        return false;
+    }
+
+    reloadConfig = setInterval(() => {
+        reload();
+    }, Math.ceil(config.reloadConfig) * 1000);
+}
 
 if (!config.globalCommandPrefix) {
     config.globalCommandPrefix = '!';
