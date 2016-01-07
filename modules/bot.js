@@ -107,10 +107,14 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                     if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
                                         const channel = bot.servers[configModule.get().serverID].channels[id];
 
+                                        if (channel.type !== 'text') {
+                                            continue;
+                                        }
+
                                         if (channel.name === requestChannel && channel.id !== channelID) {
                                             bot.sendMessage({
                                                 to: channelID,
-                                                message: 'You have to request this command in the channel <#' + channel.id + '>',
+                                                message: 'You can request this command only here <#' + channel.id + '>',
                                             });
                                             return false;
                                         }
