@@ -23,8 +23,11 @@
     "plugins": {
         "general": {
             "commands": {
-                "commands": {
+                "about": {
                     "requirePermission": false
+                },
+                "kill": {
+                    "requirePermission": true
                 }
             }
         },
