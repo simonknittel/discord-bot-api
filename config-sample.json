@@ -21,7 +21,13 @@
         }
     },
     "plugins": {
-        "general": {},
+        "general": {
+            "commands": {
+                "commands": {
+                    "requirePermission": false
+                }
+            }
+        },
         "music-bot": {
             "commands": {
                 "add": {
