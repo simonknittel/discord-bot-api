@@ -21,40 +21,7 @@
         }
     },
     "plugins": {
-        "general": {
-            "commands": {
-                "kill": {
-                    "requirePermission": true
-                },
-                "config": {
-                    "requirePermission": true
-                },
-                "enable": {
-                    "requirePermission": true
-                },
-                "restart": {
-                    "requirePermission": true
-                },
-                "rename": {
-                    "requirePermission": true
-                },
-                "op": {
-                    "requirePermission": true
-                },
-                "deop": {
-                    "requirePermission": true
-                },
-                "prefix": {
-                    "requirePermission": true
-                },
-                "owner": {
-                    "requirePermission": true
-                },
-                "reload": {
-                    "requirePermission": true
-                }
-            }
-        },
+        "general": {},
         "music-bot": {
             "commands": {
                 "add": {

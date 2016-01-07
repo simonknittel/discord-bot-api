@@ -337,6 +337,7 @@ let plugin = {
         kill: {
             fn: killCommand,
             description: 'Stops the bot',
+            requirePermission: true,
         },
         userid: {
             fn: userIDCommand,
@@ -345,34 +346,42 @@ let plugin = {
         enable: {
             fn: enableCommand,
             description: 'Enables a plugin',
+            requirePermission: true,
         },
         // restart: {
         //     fn: restartCommand,
         //     description: 'Restarts the bot',
+        //     requirePermission: true,
         // },
         rename: {
             fn: renameCommand,
             description: 'Renames the bot',
+            requirePermission: true,
         },
         op: {
             fn: opCommand,
             description: 'Adds a permission to a user',
+            requirePermission: true,
         },
         deop: {
             fn: deopCommand,
             description: 'Removes a permission from a user',
+            requirePermission: true,
         },
         prefix: {
             fn: prefixCommand,
             description: 'Changes to global command prefix',
+            requirePermission: true,
         },
         owner: {
             fn: ownerCommand,
             description: 'Changes the owner of the bot',
+            requirePermission: true,
         },
         reload: {
             fn: reloadCommand,
             description: 'Reloads the `config.json`',
+            requirePermission: true,
         },
     },
 };

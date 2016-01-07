@@ -81,6 +81,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                             message.shift();
 
                             // Check the permissions of the command
+                            let permissionRequiredByConfig = null;
                             if (
                                 configModule.get().plugins
                                 && configModule.get().plugins[plugin.name]
@@ -88,9 +89,23 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                 && configModule.get().plugins[plugin.name].commands[command]
                                 && configModule.get().plugins[plugin.name].commands[command].requirePermission
                             ) {
-                                if (!api.isOperator(userID, plugin.name + ':' + command, channelID)) {
+                                permissionRequiredByConfig = true;
+                            } else if (
+                                configModule.get().plugins
+                                && configModule.get().plugins[plugin.name]
+                                && configModule.get().plugins[plugin.name].commands
+                                && configModule.get().plugins[plugin.name].commands[command]
+                                && configModule.get().plugins[plugin.name].commands[command].requirePermission === false
+                            ) {
+                                permissionRequiredByConfig = false;
+                            }
+
+                            if (permissionRequiredByConfig !== null) {
+                                if (permissionRequiredByConfig && !api.isOperator(userID, plugin.name + ':' + command, channelID)) {
                                     return false;
                                 }
+                            } else if (plugin.commands[command].requirePermission && !api.isOperator(userID, plugin.name + ':' + command, channelID)) {
+                                return false;
                             }
 
                             // Check the command requires an channel

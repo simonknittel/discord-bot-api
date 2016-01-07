@@ -1,3 +1,23 @@
+v0.7.8
+===
+<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.8 -->
+
+Important changes
+---
+* You don't have to require permissions anymore in your `config.json` for specific commands (defined by the plugin). These command will require permissions by default. The following commands will now require permissions by default:
+    + `!kill`
+    + `!owner`
+    + `!prefix`
+    + `!op`
+    + `!deop`
+    + `!enable`
+    + `!rename`
+    + `!reload`
+
+Changes
+---
+* Fixed permission system
+
 v0.7.7
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.7
