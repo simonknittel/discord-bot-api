@@ -64,10 +64,10 @@ Contact me to get your plugins listed here.
 General commands
 ---
 
-* `!commands` - Shows all available commands including the commands of the plugins
+* `!commands` (or `!help`) - Shows all available commands including the commands of the plugins
 * `!about` - Shows a short description of the bot
-* `!kill` - Stops the bot
-* `!userid` - Displays the ID of the user
+* `!kill` (or `!stop`) - Stops the bot
+* `!userid` (or `!me`) - Displays the ID of the user
 * `!enable <plugin>` - Enables a plugin without having to restart
     + Example: `!enable dice`
 * `!op <user id> <permission>` - Give an user a permission
@@ -75,7 +75,7 @@ General commands
 * `!prefix <new prefix>` - Change the global command prefix
 * `!owner <user id>` - Change the owner of the bot
 * `!rename <new name>` - Rename the bot
-* `!reload` - Reloads the config
+* `!reload` (or `!refresh`) - Reloads the config
 
 Planned features
 ---

@@ -333,15 +333,24 @@ let plugin = {
         commands: {
             fn: commandsCommand,
             description: 'Shows all available commands',
+            synonyms: [
+                'help',
+            ],
         },
         kill: {
             fn: killCommand,
             description: 'Stops the bot',
             requirePermission: true,
+            synonyms: [
+                'stop',
+            ],
         },
         userid: {
             fn: userIDCommand,
             description: 'Returns the ID of the user',
+            synonyms: [
+                'me',
+            ],
         },
         enable: {
             fn: enableCommand,
@@ -382,6 +391,9 @@ let plugin = {
             fn: reloadCommand,
             description: 'Reloads the `config.json`',
             requirePermission: true,
+            synonyms: [
+                'refresh',
+            ],
         },
     },
 };

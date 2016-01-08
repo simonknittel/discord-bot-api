@@ -6,16 +6,16 @@ Install
 
 Commands
 ---
-* `!music add <link>` - Adds a song to the playlist (currently only YouTube supported)
+* `!music add <link>` (or `!music new <link>`) - Adds a song to the playlist (currently only YouTube supported)
     + Example: `!music add https://www.youtube.com/watch?v=iyqfHvoUtkU`
 * `!music remove <link>` - Removes a song to the playlist
     + Example: `!music remove https://www.youtube.com/watch?v=iyqfHvoUtkU`
 * `!music skip` - Skips the current song
-* `!music play` - Starts the playlist
+* `!music play` (or `!music start`) - Starts the playlist
 * `!music stop` - Stops the playlist
-* `!music current` - Displays the current song
+* `!music current` (or `!music now`) - Displays the current song
 * `!music playlist` - Displays all songs on the playlist
-* `!music enter <Channel name>` - Let the bot enter a voice channel
+* `!music enter <Channel name>` (or `!music join <Channel name>`) - Let the bot enter a voice channel. If you leave the channel name empty, it will join your current voice channel
     + Example: `!music enter General`
 
 Config

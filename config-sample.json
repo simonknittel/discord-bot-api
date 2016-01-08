@@ -24,7 +24,12 @@
         "general": {
             "commands": {
                 "about": {
-                    "requirePermission": false
+                    "requirePermission": false,
+                    "synonyms": {
+                        "help": {
+                            "enabled": true
+                        }
+                    }
                 },
                 "kill": {
                     "requirePermission": true

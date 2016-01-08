@@ -76,7 +76,44 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
 
                 for (let command in plugin.commands) {
                     if (plugin.commands.hasOwnProperty(command)) {
-                        if (message[0] === command) {
+                        // Create a list will all enabled synonyms
+                        let synonyms = [];
+
+                        // Check plugins default synonyms
+                        if (plugin.commands[command].synonyms) {
+                            synonyms = plugin.commands[command].synonyms;
+                        }
+
+                        if (synonyms.indexOf(command) < 0) {
+                            synonyms.push(command);
+                        }
+
+                        // Check config.json for synonyms
+                        if (
+                            configModule.get().plugins
+                            && configModule.get().plugins[plugin.name]
+                            && configModule.get().plugins[plugin.name].commands
+                            && configModule.get().plugins[plugin.name].commands[command]
+                            && configModule.get().plugins[plugin.name].commands[command].synonyms
+                        ) {
+                            for (let synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
+                                if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
+                                    if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
+                                        if (synonyms.indexOf(synonym) < 0) {
+                                            synonyms.push(synonym);
+                                        }
+                                    } else if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled === false) {
+                                        const index = synonyms.indexOf(synonym);
+                                        if (index >= 0) {
+                                            synonyms.splice(index, 1);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // if (message[0] === command || synonyms.indexOf(command) >= 0) {
+                        if (synonyms.indexOf(message[0]) >= 0) {
                             // Remove the requested command from the message
                             message.shift();
 

@@ -1,3 +1,30 @@
+v0.7.9 _(not released yet)_
+===
+<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.9 -->
+
+Changes
+---
+* Every command can now have synonyms. The plugins can define synonyms itself, but you can also add your custom ones or disable by the plugin defined ones with your `config.json`.
+    + Example:
+    ```json
+    "plugins": {
+        "general": {
+            "commands": {
+                "about": {
+                    "synonyms": {
+                        "help": {
+                            "enabled": true
+                        },
+                        "about": {
+                            "enabled": false
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ```
+
 v0.7.8
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.8

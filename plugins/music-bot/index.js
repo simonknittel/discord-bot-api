@@ -406,6 +406,9 @@ let plugin = {
         add: {
             fn: addCommand,
             description: 'Adds a song to the playlist',
+            synonyms: [
+                'new',
+            ],
         },
         remove: {
             fn: removeCommand,
@@ -418,10 +421,16 @@ let plugin = {
         enter: {
             fn: enterCommand,
             description: 'Let the bot enter a voice channel',
+            synonyms: [
+                'join',
+            ],
         },
         play: {
             fn: playCommand,
             description: 'Starts the playlist',
+            synonyms: [
+                'start',
+            ],
         },
         stop: {
             fn: stopCommand,
@@ -430,6 +439,9 @@ let plugin = {
         current: {
             fn: currentCommand,
             description: 'Displays the current song',
+            synonyms: [
+                'now',
+            ],
         },
         playlist: {
             fn: playlistCommand,
