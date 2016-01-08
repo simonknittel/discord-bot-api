@@ -7,7 +7,9 @@
     "discord",
     "music",
     "bot",
-    "youtube"
+    "youtube",
+    "play",
+    "stream"
   ],
   "license": "GNU GPL v3",
   "repository": {

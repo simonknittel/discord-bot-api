@@ -4,7 +4,7 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7
 
 Important changes
 ---
-* You don't have to require permissions anymore in your `config.json` for specific commands (defined by the plugin). These command will require permissions by default. You can set it to false if they sould not require permissions. The following commands will now require permissions by default:
+* You don't have to require permissions anymore in your `config.json` for specific commands (defined by the plugin). Some commands will now require permissions by default. You can set it to false if they sould not require permissions. The following commands will now require permissions by default:
     + `!kill`
     + `!owner`
     + `!prefix`

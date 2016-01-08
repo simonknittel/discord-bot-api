@@ -1,13 +1,17 @@
 {
   "name": "discord-bot-api",
-  "description": "This bot is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins.",
+  "description": "This is a heavily plugin based and highly configurable Discord bot. You can use plugins to play music, do a raffle or other things. You can even easily create your own ones!",
   "version": "0.7.8",
   "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
   "homepage": "https://github.com/simonknittel/discord-bot-api",
   "keywords": [
     "discord",
     "bot",
-    "api"
+    "api",
+    "plugins",
+    "configurable",
+    "self hosted",
+    "permission system"
   ],
   "license": "GNU GPL v3",
   "repository": {
