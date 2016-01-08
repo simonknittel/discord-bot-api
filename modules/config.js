@@ -44,7 +44,7 @@ function rename(name, callback) {
     });
 }
 
-function op(userID, permission, callback) {
+function op(userID, permissions, callback) {
     if (!config.hasOwnProperty('operators')) {
         config.operators = {};
     }
@@ -55,8 +55,14 @@ function op(userID, permission, callback) {
         };
     }
 
-    if (config.operators[userID].permissions.indexOf(permission) < 0) {
-        config.operators[userID].permissions.push(permission);
+    if (!config.operators[userID].hasOwnProperty('permissions')) {
+        config.operators[userID].permissions = [];
+    }
+
+    for (const permission of permissions) {
+        if (config.operators[userID].permissions.indexOf(permission) < 0) {
+            config.operators[userID].permissions.push(permission);
+        }
     }
 
     save(error => {
@@ -70,18 +76,24 @@ function op(userID, permission, callback) {
     });
 }
 
-function deop(userID, permission, callback) {
-    if (
-        !config.operators
-        || !config.operators[userID]
-        || !config.operators[userID].permissions
-        || config.operators[userID].permissions.indexOf(permission) < 0
-    ) {
-        callback('no such permission');
-        return false;
+function deop(userID, permissions, callback) {
+    for (const permission of permissions) {
+        if (
+            !config.operators
+            || !config.operators[userID]
+            || !config.operators[userID].permissions
+            || config.operators[userID].permissions.indexOf(permission) < 0
+        ) {
+            callback('no such permission');
+            return false;
+        }
+
+        config.operators[userID].permissions.splice(config.operators[userID].permissions.indexOf(permission), 1);
     }
 
-    config.operators[userID].permissions.splice(config.operators[userID].permissions.indexOf(permission), 1);
+    if (config.operators[userID].permissions.length === 0) {
+        delete config.operators[userID].permissions;
+    }
 
     save(error => {
         if (error) {

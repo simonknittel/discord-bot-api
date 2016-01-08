@@ -24,6 +24,8 @@ Changes
         }
     }
     ```
+* You can now add or remove multiple permissions at the same time with `!op` and `!deop`
+    + Example: `!op <user id> general:kill general:reload`
 
 v0.7.8
 ===

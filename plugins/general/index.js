@@ -246,7 +246,10 @@ function opCommand(user, userID, channelID, message) {
         return false;
     }
 
-    configModule.op(message[0], message[1], error => {
+    const operatorID = message[0];
+    message.shift();
+
+    configModule.op(operatorID, message, error => {
         if (error) {
             bot.sendMessage({
                 to: channelID,
@@ -273,7 +276,10 @@ function deopCommand(user, userID, channelID, message) {
         return false;
     }
 
-    configModule.deop(message[0], message[1], error => {
+    const operatorID = message[0];
+    message.shift();
+
+    configModule.deop(operatorID, message, error => {
         if (error === 'no such permission') {
             bot.sendMessage({
                 to: channelID,
