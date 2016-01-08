@@ -76,7 +76,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
 
                 for (let command in plugin.commands) {
                     if (plugin.commands.hasOwnProperty(command)) {
-                        // Create a list will all enabled synonyms
+                        // Create a list with enabled synonyms for this command
                         let synonyms = [];
 
                         // Check plugins default synonyms
@@ -85,7 +85,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                         }
 
                         if (synonyms.indexOf(command) < 0) {
-                            synonyms.push(command);
+                            synonyms.unshift(command);
                         }
 
                         // Check config.json for synonyms

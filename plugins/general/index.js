@@ -31,11 +31,56 @@ function commandsCommand(user, userID, channelID) {
 
             for (let command in plugin.commands) {
                 if (plugin.commands.hasOwnProperty(command)) {
+                    // Create a list with enabled synonyms for this command
+                    let synonyms = [];
+
+                    // Check plugins default synonyms
+                    if (plugin.commands[command].synonyms) {
+                        synonyms = plugin.commands[command].synonyms;
+                    }
+
+                    if (synonyms.indexOf(command) < 0) {
+                        synonyms.unshift(command);
+                    }
+
+                    // Check config.json for synonyms
+                    if (
+                        configModule.get().plugins
+                        && configModule.get().plugins[plugin.name]
+                        && configModule.get().plugins[plugin.name].commands
+                        && configModule.get().plugins[plugin.name].commands[command]
+                        && configModule.get().plugins[plugin.name].commands[command].synonyms
+                    ) {
+                        for (let synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
+                            if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
+                                if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
+                                    if (synonyms.indexOf(synonym) < 0) {
+                                        synonyms.push(synonym);
+                                    }
+                                } else if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled === false) {
+                                    const index = synonyms.indexOf(synonym);
+                                    if (index >= 0) {
+                                        synonyms.splice(index, 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Compile string
                     string += '`' + configModule.get().globalCommandPrefix
                         + (pluginCommandPrefix ? pluginCommandPrefix + ' ' : '')
-                        + command + '`'
-                        + ' ' + plugin.commands[command].description
-                        + '\n';
+                        + synonyms[0] + '`'
+                        + ' ' + plugin.commands[command].description;
+
+                    synonyms.shift();
+
+                    if (synonyms.length > 0) {
+                        string += ' (synonyms: `' + synonyms.join('`, `') + '`)'
+                            + '\n';
+                    } else {
+                        string += '\n';
+                    }
                 }
             }
 
