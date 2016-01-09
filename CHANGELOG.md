@@ -1,4 +1,4 @@
-v0.7.10
+v0.7.10 _(not released yet)_
 ===
 <!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10 -->
 
