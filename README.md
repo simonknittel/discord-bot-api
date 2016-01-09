@@ -9,7 +9,7 @@ Visit the [FAQ / Known issues](https://github.com/simonknittel/discord-bot-api/w
 
 Install
 ---
-1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases
+1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
 2. Make sure you have [Node](https://nodejs.org/en/) installed and available in your PATH variable
 3. Make sure you have [FFmpeg](https://www.ffmpeg.org/) installed and available in your PATH variable
 4. Make sure you have [Python](https://www.python.org/) installed and available in your PATH variable
@@ -39,7 +39,7 @@ Update your bot
 ---
 The bot will notify the owner if there is a new version available. It will check the version on the start and every 60 minutes after that.
 
-1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases
+1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
 2. Copy over your old `config.json`.
     * Make sure to read the changelog for any important changes
 
