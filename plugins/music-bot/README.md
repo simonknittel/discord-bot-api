@@ -2,43 +2,62 @@ Install
 ---
 1. Copy the plugin to the `plugins` directory.
 2. Run `npm install` in the directory of the plugin
-3. Start up your bot and enable the plugin with `!enable music-bot`
+3. Start your bot and enable the plugin with `!enable music-bot`
 
 Commands
 ---
-* `!music add <link>` (or `!music new <link>`) - Adds a song to the playlist (currently only YouTube supported)
+* `!music add <link>` - Adds a song to the playlist
+    + Currently only YouTube supported
     + Example: `!music add https://www.youtube.com/watch?v=iyqfHvoUtkU`
-* `!music remove <link>` - Removes a song to the playlist
+    + Synonyms: `!music new <link>`
+* `!music remove <link>` - Removes a song from the playlist
     + Example: `!music remove https://www.youtube.com/watch?v=iyqfHvoUtkU`
 * `!music skip` - Skips the current song
-* `!music play` (or `!music start`) - Starts the playlist
+* `!music play` - Starts the playlist
+    + Synonyms: `!music start`
 * `!music stop` - Stops the playlist
-* `!music current` (or `!music now`) - Displays the current song
+* `!music current` - Displays the current song
+    + Synonyms: `!music now`
 * `!music playlist` - Displays all songs on the playlist
-* `!music enter <Channel name>` (or `!music join <Channel name>`) - Let the bot enter a voice channel. If you leave the channel name empty, it will join your current voice channel
-    + Example: `!music enter General`
+* `!music join <Channel name>` - Lets the bot enter a voice channel.
+    + If you leave the channel name empty, it will join your current voice channel
+    + Example: `!music join General`
+    + Synonyms: `!music enter <Channel name>`
 
 Config
 ---
 You can configure the `music-bot` by extending your `config.json` with the following:
 
-With `commandPrefix` you can set a custom command prefix for this plugin (optional). It defaults to `music`  
-With `library` you can define where the songs should be downloaded to (optional). It defaults to `C:/Windows/Temp` (Windows) or `/tmp` (Unix)  
-With `skipLimit` you can define how many users you need to skip the current song (optional). It defaults to `1`  
-With `announceSongs` you can enable or disable the announcing of the current song (optional). It defaults to `true`  
-With `autoJoinVoiceChannel` you can define a voice channel which the bot trys to enter when it starts up.
-With `maxLength` you can define what should be the max length (in minutes!) of a song (optional). It defaults to `15` minutes. `0` will be endless. Numbers with decimals will be rounded up.
+* `commandPrefix` With this you can set a custom command prefix for this plugin.
+    + Optional
+    + Default: `music`  
+* `library` With this you can define where the songs should be downloaded to.
+    + Optional
+    + Default: `C:/Windows/Temp` (Windows) or `/tmp` (Unix)  
+* `skipLimit` With this you can define how many users you need to skip the current song.
+    + Optional
+    + Default: `1`
+* `announceSongs` With this you can enable or disable the announcing of the current song.
+    + Optional
+    + Default: `true`
+* `autoJoinVoiceChannel` With this you can define a voice channel which the bot trys to join when it starts.
+    + Optional
+* `maxLength` With this you can define what should be the max length (in minutes!) of a song.
+    + If set to `0` there will be no limit.
+    + Numbers with decimals will be rounden up.
+    + Optional
+    + Default: `15`
 
 Example
 ---
 ```json
 "plugins": {
     "music-bot": {
-        "commandPrefix": "custom-command-prefix",
+        "commandPrefix": "music",
         "library": "../music",
         "skipLimit": 1,
         "announceSongs": true,
-        "autoJoinVoiceChannel": "Channel name",
+        "autoJoinVoiceChannel": "General",
         "maxLength": 15
     }
 }

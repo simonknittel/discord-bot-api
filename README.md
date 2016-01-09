@@ -16,14 +16,14 @@ Install
     * Run `npm config set python python2.7`
 5. **[Windows]** Make sure you have [Microsoft Visual C++ Build Tools 2015](https://www.microsoft.com/en-us/download/details.aspx?id=49983) installed
     * Run `npm config set msvs_version 2015 --global`
-6. Install all dependencies by running `npm install`
+6. Install dependencies by running `npm install`
 7. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
 8. Edit `config.json` to your needs
     * Visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information
 
 Start
 ---
-1. Start the bot by running `npm start`
+1. Run `npm start`
 
 Add plugins
 ---
@@ -32,16 +32,16 @@ Add plugins
 OR
 
 1. Copy the plugin to the [plugins](./plugins) directory
-2. Start up your bot and enable the plugin with `!enable <plugin>`
+2. Start your bot and enable the plugin with `!enable <plugin>`
     * Example: `!enable dice`
 
 Update your bot
 ---
-The bot will notify the owner if there is a new version available. It will check the version on the start and every 60 minutes after that.
+The bot will notify the owner if there is a new release available. It will check the version on the start and every 60 minutes after that.
 
 1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
-2. Copy over your old `config.json`.
-    * Make sure to read the changelog for any important changes
+2. Keep your old `config.json`
+    * Make sure to read the changelog for important changes
 
 Develop your own plugin
 ---
@@ -52,26 +52,31 @@ Available plugins
 Contact me to get your plugins listed here.
 
 * [Music bot](./plugins/music-bot) (enabled by default)
-    + Visit the [README.md](./plugins/music-bot/README.md) for the commands, install instructions and more.
+    + Visit the [README.md](./plugins/music-bot/README.md) of the plugin for the commands, install instructions and more.
 * [Dice](./plugins/dice)
-    + Visit the [README.md](./plugins/dice/README.md) for the commands, install instructions and more.
+    + Visit the [README.md](./plugins/dice/README.md) of the plugin for the commands, install instructions and more.
 
 General commands
 ---
-
-* `!commands` (or `!help`) - Shows all available commands including the commands of the plugins
+* `!commands` - Shows all available commands
+    + Synonyms: `!help`
 * `!about` - Shows a short description of the bot
-* `!kill` (or `!stop`) - Stops the bot
-* `!userid` (or `!me`) - Displays the ID of the user
-* `!enable <plugin>` - Enables a plugin without having to restart
+* `!kill` - Stops the bot
+    + Synonyms: `!stop`
+* `!me` - Shows the ID of the user
+    + Synonyms: `!userid`
+* `!enable <plugin>` - Enables a plugin
     + Example: `!enable dice`
-* `!op <user id> <permission>` - Give an user a permission
-* `!deop <user id> <permission>` - Remove a permission from an user
-* `!prefix <new prefix>` - Change the global command prefix
-* `!owner <user id>` - Change the owner of the bot
-* `!rename <new name>` - Rename the bot
-* `!reload` (or `!refresh`) - Reloads the config
-* `!avatar <url or relative path>` - Give the bot an avatar. Setting it to `null` will remove the avatar.
+* `!op <user id> <permission>` - Gives an user a permission
+* `!deop <user id> <permission>` - Removes a permission from an user
+* `!prefix <new prefix>` - Changes the global command prefix
+    + Example: `!prefix $`
+* `!owner <user id>` - Changes the owner of the bot
+* `!rename <new name>` - Renames the bot
+* `!reload` - Reloads the config
+    + Synonyms: `!refresh`
+* `!avatar <url or relative path>` - Gives the bot an avatar
+    + Setting it to `null` will remove the avatar.
 
 Planned features
 ---

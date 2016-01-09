@@ -1,20 +1,12 @@
 Install
 ---
 1. Copy the plugin to the `plugins` directory.
-2. Start up your bot and enable the plugin with `!enable dice`
+2. Start your bot and enable the plugin with `!enable dice`
 
 Commands
 ---
-* `!dice roll <number>` Rolls a dice with `<number>` faces.
-    + Example: `!dice roll 5` Rolls a dice with 5 faces
-
-Config
----
-```json
-"plugins": {
-    "dice": {}
-}
-```
+* `!dice roll <number>` - Rolls a dice with `<number>` faces.
+    + Example: `!dice roll 5` - Rolls a dice with 5 faces
 
 Need help?
 ---

@@ -1,3 +1,11 @@
+v0.7.10
+===
+<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10 -->
+
+Changes
+---
+* Fix for issue #45
+
 v0.7.9
 ===
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.9
@@ -29,8 +37,10 @@ Changes
 * You can now give the bot an avatar with `!avatar <url or relative path>` or by setting it in your `config.json`. Setting it to `null` will remove the avatar.
     + Example:
     ```json
-    "credentials": {
-        "avatar": "url or relative path"
+    {
+        "credentials": {
+            "avatar": "url or relative path"
+        }
     }
     ```
 * You can now let your bot ignore channels defined by your `config.json`.
