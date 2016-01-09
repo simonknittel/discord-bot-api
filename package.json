@@ -1,6 +1,6 @@
 {
   "name": "discord-bot-api",
-  "description": "This is a heavily plugin based and highly configurable Discord bot. You can use plugins to play music, do a raffle or other things. You can even easily create your own ones!",
+  "description": "This is a plugin based and configurable Discord bot. You can use plugins to play music, do a raffle or other things. You can even create your own ones!",
   "version": "0.7.9",
   "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
   "homepage": "https://github.com/simonknittel/discord-bot-api",

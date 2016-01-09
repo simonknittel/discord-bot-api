@@ -1,6 +1,6 @@
 Discord Bot API
 ===
-This bot for Discord is basically a API for plugins such as a music bot or a raffle bot. You only have to add or develop your own plugins. You do not need to care about the command listening, discord instance initialization etc.
+This is a plugin based and configurable Discord bot. You can use plugins to play music, do a raffle or other things. You can even create your own ones!
 
 Need help?
 ---
