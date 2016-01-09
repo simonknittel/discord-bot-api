@@ -8,6 +8,8 @@ import events from './events';
 import DiscordClient from 'discord.io';
 import chalk from 'chalk';
 import packageJSON from '../package';
+import fs from 'fs';
+import request from 'request';
 
 let bot = null; // The Discord instance will be stored in this object
 let commandHistory = {};
@@ -190,6 +192,13 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     return false;
 }
 
+function setAvatar(base64) {
+    bot.editUserInfo({
+        avatar: base64,
+        password: configModule.get().credentials.password,
+    });
+}
+
 // Start the discord instance
 bot = new DiscordClient({
     email: configModule.get().credentials.email,
@@ -223,6 +232,30 @@ bot.on('ready', () => {
         bot.editUserInfo({
             password: configModule.get().credentials.password,
             username: configModule.get().credentials.name,
+        });
+    }
+
+    // Set the avatar of the bot to the one defined in the configModule.json
+    if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
+        const reg = new RegExp(/^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
+        if (reg.test(configModule.get().credentials.avatar)) {
+            request({
+                url: configModule.get().credentials.avatar,
+                encoding: null,
+            }, (error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                    setAvatar(new Buffer(body).toString('base64'));
+                } else {
+                    console.log(chalk.red('The avatar could not be set. Make sure the path is correct.'));
+                }
+            });
+        } else {
+            setAvatar(fs.readFileSync(configModule.get().credentials.avatar, 'base64'));
+        }
+    } else if (configModule.get().credentials.avatar === null) {
+        bot.editUserInfo({
+            avatar: null,
+            password: configModule.get().credentials.password,
         });
     }
 

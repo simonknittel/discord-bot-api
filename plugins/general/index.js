@@ -6,6 +6,8 @@ import {plugins} from '../../modules/plugins';
 // Other
 import chalk from 'chalk';
 import packageJSON from '../../package';
+import request from 'request';
+import fs from 'fs';
 
 function aboutCommand(user, userID, channelID) {
     bot.sendMessage({
@@ -374,6 +376,68 @@ function reloadCommand(user, userID, channelID) {
     });
 }
 
+function setAvatar(base64, channelID) {
+    bot.editUserInfo({
+        avatar: base64,
+        password: configModule.get().credentials.password,
+    }, () => {
+        bot.sendMessage({
+            to: channelID,
+            message: 'Avatar successfully changed.',
+        });
+    });
+}
+
+function avatarCommand(user, userID, channelID, message) {
+    const path = message.split(' ')[0];
+    if (path.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'You have to add a relative path or an url to the new avatar.',
+        });
+        return false;
+    }
+
+    configModule.avatar(path, error => {
+        if (error) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'There was an error with saving the new avatar to your `config.json`.',
+            });
+            return false;
+        }
+
+        // Set the avatar of the bot to the one defined in the configModule.json
+        if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
+            const reg = new RegExp(/^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
+            if (reg.test(configModule.get().credentials.avatar)) {
+                request({
+                    url: configModule.get().credentials.avatar,
+                    encoding: null,
+                }, (error, response, body) => {
+                    if (!error && response.statusCode == 200) {
+                        setAvatar(new Buffer(body).toString('base64'), channelID);
+                    } else {
+                        console.log(chalk.red('The avatar could not be set. Make sure the path is correct.'));
+                    }
+                });
+            } else {
+                setAvatar(fs.readFileSync(configModule.get().credentials.avatar, 'base64'), channelID);
+            }
+        } else if (configModule.get().credentials.avatar === null) {
+            bot.editUserInfo({
+                avatar: null,
+                password: configModule.get().credentials.password,
+            }, () => {
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'Avatar successfully changed.',
+                });
+            });
+        }
+    });
+}
+
 let plugin = {
     name: 'general',
     commands: {
@@ -440,11 +504,16 @@ let plugin = {
         },
         reload: {
             fn: reloadCommand,
-            description: 'Reloads the `config.json`',
+            description: 'Reloads your `config.json`',
             requirePermission: true,
             synonyms: [
                 'refresh',
             ],
+        },
+        avatar: {
+            fn: avatarCommand,
+            description: 'Give the bot an avatar',
+            requirePermission: true,
         },
     },
 };

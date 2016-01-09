@@ -26,6 +26,13 @@ Changes
     ```
 * You can now add or remove multiple permissions at the same time with `!op` and `!deop`
     + Example: `!op <user id> general:kill general:reload`
+* You can now give the bot an avatar with `!avatar <url or relative path>` or by setting it in your `config.json`
+    + Example:
+    ```json
+    "credentials": {
+        "avatar": "url or relative path"
+    }
+    ```
 
 v0.7.8
 ===

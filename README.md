@@ -76,6 +76,7 @@ General commands
 * `!owner <user id>` - Change the owner of the bot
 * `!rename <new name>` - Rename the bot
 * `!reload` (or `!refresh`) - Reloads the config
+* `!avatar <url or relative path>` - Give the bot an avatar
 
 Planned features
 ---

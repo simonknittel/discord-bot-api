@@ -134,6 +134,24 @@ function owner(newOwner, callback) {
     });
 }
 
+function avatar(path, callback) {
+    if (path == 'null') {
+        config.credentials.avatar = null;
+    } else {
+        config.credentials.avatar = path;
+    }
+
+    save(error => {
+        if (error) {
+            callback(error);
+            return false;
+        }
+
+        callback();
+        return true;
+    });
+}
+
 function reload(callback) {
     config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
     events.emit('config reloaded');
@@ -216,6 +234,7 @@ let configModule = {
     prefix,
     owner,
     reload,
+    avatar,
 };
 
 export default configModule; // Make the config available for everyone
