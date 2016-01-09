@@ -34,7 +34,7 @@ Changes
     }
     ```
 * You can now let your bot ignore channels defined by your `config.json`.
-    Example:
+    + Example:
     ```json
     {
         "ignoreChannels": [
