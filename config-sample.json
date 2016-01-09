@@ -13,6 +13,9 @@
     "globalCommandPrefix": "!",
     "reloadConfig": 5,
     "commandCooldown": 1000,
+    "ignoreChannels": [
+        "#bot-free-channel"
+    ],
     "operators": {
         "": {
             "permissions": [

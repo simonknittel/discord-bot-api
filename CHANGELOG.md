@@ -1,6 +1,6 @@
-v0.7.9 _(not released yet)_
+v0.7.9
 ===
-<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.9 -->
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.9
 
 Changes
 ---
@@ -31,6 +31,15 @@ Changes
     ```json
     "credentials": {
         "avatar": "url or relative path"
+    }
+    ```
+* You can now let your bot ignore channels defined by your `config.json`.
+    Example:
+    ```json
+    {
+        "ignoreChannels": [
+            "#bot-free-channel"
+        ]
     }
     ```
 

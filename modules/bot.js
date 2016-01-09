@@ -22,6 +22,27 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
         return false;
     }
 
+    // Check if channel is ignored
+    if (configModule.get().ignoreChannels) {
+        for (let channelName of configModule.get().ignoreChannels) {
+            channelName = channelName.replace('#', '');
+
+            for (let id in bot.servers[configModule.get().serverID].channels) {
+                if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
+                    const channel = bot.servers[configModule.get().serverID].channels[id];
+
+                    if (channel.type !== 'text') {
+                        continue;
+                    }
+
+                    if (channel.name === channelName && channel.id === channelID) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
     // Check if a mention is required by the configModule.json
     if (configModule.get().mentionRequired) {
         // Check if the bot got mentioned
@@ -114,7 +135,6 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                             }
                         }
 
-                        // if (message[0] === command || synonyms.indexOf(command) >= 0) {
                         if (synonyms.indexOf(message[0]) >= 0) {
                             // Remove the requested command from the message
                             message.shift();
