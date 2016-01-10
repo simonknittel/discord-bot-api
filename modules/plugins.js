@@ -10,7 +10,7 @@ function enablePlugin(name, callback) {
     }
 
     try {
-        const plugin = require('../_plugins/' + name);
+        const plugin = require('../plugins/' + name);
         plugins[name] = plugin.default;
 
         if (configModule.get().plugins.hasOwnProperty(name)) {
@@ -28,7 +28,7 @@ function enablePlugin(name, callback) {
 // Plugins
 for (let pluginName in configModule.get().plugins) {
     if (configModule.get().plugins.hasOwnProperty(pluginName)) {
-        const plugin = require('../_plugins/' + pluginName);
+        const plugin = require('../plugins/' + pluginName);
         plugins[pluginName] = plugin.default;
     }
 }

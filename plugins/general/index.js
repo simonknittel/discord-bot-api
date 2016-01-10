@@ -1,7 +1,7 @@
 // Discord Bot API
-import configModule from '../../_modules/config';
-import bot from '../../_modules/bot';
-import {plugins} from '../../_modules/plugins';
+import configModule from '../../modules/config';
+import bot from '../../modules/bot';
+import {plugins} from '../../modules/plugins';
 
 // Other
 import chalk from 'chalk';
