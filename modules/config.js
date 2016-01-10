@@ -6,6 +6,7 @@ import chalk from 'chalk';
 import jsonfile from 'jsonfile';
 
 let config = {}; // The config.json will be stored in this object
+let reloadConfig = null;
 
 // Save the new config
 function save(callback) {
@@ -43,7 +44,7 @@ function rename(name, callback) {
     });
 }
 
-function op(userID, permission, callback) {
+function op(userID, permissions, callback) {
     if (!config.hasOwnProperty('operators')) {
         config.operators = {};
     }
@@ -54,8 +55,14 @@ function op(userID, permission, callback) {
         };
     }
 
-    if (config.operators[userID].permissions.indexOf(permission) < 0) {
-        config.operators[userID].permissions.push(permission);
+    if (!config.operators[userID].hasOwnProperty('permissions')) {
+        config.operators[userID].permissions = [];
+    }
+
+    for (const permission of permissions) {
+        if (config.operators[userID].permissions.indexOf(permission) < 0) {
+            config.operators[userID].permissions.push(permission);
+        }
     }
 
     save(error => {
@@ -69,18 +76,24 @@ function op(userID, permission, callback) {
     });
 }
 
-function deop(userID, permission, callback) {
-    if (
-        !config.operators
-        || !config.operators[userID]
-        || !config.operators[userID].permissions
-        || config.operators[userID].permissions.indexOf(permission) < 0
-    ) {
-        callback('no such permission');
-        return false;
+function deop(userID, permissions, callback) {
+    for (const permission of permissions) {
+        if (
+            !config.operators
+            || !config.operators[userID]
+            || !config.operators[userID].permissions
+            || config.operators[userID].permissions.indexOf(permission) < 0
+        ) {
+            callback('no such permission');
+            return false;
+        }
+
+        config.operators[userID].permissions.splice(config.operators[userID].permissions.indexOf(permission), 1);
     }
 
-    config.operators[userID].permissions.splice(config.operators[userID].permissions.indexOf(permission), 1);
+    if (config.operators[userID].permissions.length === 0) {
+        delete config.operators[userID].permissions;
+    }
 
     save(error => {
         if (error) {
@@ -121,14 +134,57 @@ function owner(newOwner, callback) {
     });
 }
 
+function avatar(path, callback) {
+    if (path == 'null') {
+        config.credentials.avatar = null;
+    } else {
+        config.credentials.avatar = path;
+    }
+
+    save(error => {
+        if (error) {
+            callback(error);
+            return false;
+        }
+
+        callback();
+        return true;
+    });
+}
+
 function reload(callback) {
     config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
     events.emit('config reloaded');
+    automaticReload();
     if (callback) {
         callback();
     }
 }
 reload();
+
+function automaticReload() {
+    clearInterval(reloadConfig);
+
+    if (!config.reloadConfig && config.reloadConfig !== 0) {
+        reloadConfig = setInterval(() => {
+            reload();
+        }, 5000);
+        return true;
+    }
+
+    if (Math.ceil(config.reloadConfig) === 0) {
+        return false;
+    }
+
+    if (isNaN(config.reloadConfig)) {
+        console.log(chalk.red('The reload time of the config defined in your "config.json" is invalid. Therefore it defaults to 5 seconds.'));
+        return false;
+    }
+
+    reloadConfig = setInterval(() => {
+        reload();
+    }, Math.ceil(config.reloadConfig) * 1000);
+}
 
 if (!config.globalCommandPrefix) {
     config.globalCommandPrefix = '!';
@@ -178,6 +234,7 @@ let configModule = {
     prefix,
     owner,
     reload,
+    avatar,
 };
 
 export default configModule; // Make the config available for everyone

@@ -7,8 +7,11 @@
     "discord",
     "music",
     "bot",
-    "youtube"
+    "youtube",
+    "play",
+    "stream"
   ],
+  "license": "GNU GPL v3",
   "repository": {
     "type": "git",
     "url": "https://github.com/simonknittel/discord-bot-api"
@@ -20,6 +23,6 @@
   "dependencies": {
     "mkdirp": "^0.5.1",
     "youtube-info": "^1.1.0",
-    "youtube-mp3-downloader": "^0.4.1"
+    "youtube-mp3-downloader": "^0.4.2"
   }
 }

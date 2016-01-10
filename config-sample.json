@@ -11,7 +11,11 @@
     ],
     "mentionRequired": false,
     "globalCommandPrefix": "!",
+    "reloadConfig": 5,
     "commandCooldown": 1000,
+    "ignoreChannels": [
+        "#bot-free-channel"
+    ],
     "operators": {
         "": {
             "permissions": [
@@ -22,44 +26,31 @@
     "plugins": {
         "general": {
             "commands": {
+                "about": {
+                    "requirePermission": false,
+                    "synonyms": {
+                        "help": {
+                            "enabled": true
+                        }
+                    }
+                },
                 "kill": {
-                    "requirePermission": true
-                },
-                "config": {
-                    "requirePermission": true
-                },
-                "enable": {
-                    "requirePermission": true
-                },
-                "restart": {
-                    "requirePermission": true
-                },
-                "rename": {
-                    "requirePermission": true
-                },
-                "op": {
-                    "requirePermission": true
-                },
-                "deop": {
-                    "requirePermission": true
-                },
-                "prefix": {
-                    "requirePermission": true
-                },
-                "owner": {
-                    "requirePermission": true
-                },
-                "reload": {
                     "requirePermission": true
                 }
             }
         },
         "music-bot": {
+            "commands": {
+                "add": {
+                    "channel": "#music"
+                }
+            },
             "commandPrefix": "music",
             "library": "../music",
             "skipLimit": 1,
             "announceSongs": true,
-            "autoJoinVoiceChannel": "General"
+            "autoJoinVoiceChannel": "General",
+            "maxLength": 15
         }
     }
 }

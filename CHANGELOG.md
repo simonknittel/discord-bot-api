@@ -1,8 +1,128 @@
-Planned
+v0.7.10 _(not released yet)_
+===
+<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10 -->
+
+Changes
 ---
-* Add `!install <plugin>`
-* Add `!restart`
-* Require for some commands permissions by default
+* Fix for issue #45
+
+v0.7.9
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.9
+
+Changes
+---
+* Every command can now have synonyms. The plugins can define synonyms itself, but you can also add your custom ones or disable by the plugin defined ones with your `config.json`.
+    + Example:
+    ```json
+    "plugins": {
+        "general": {
+            "commands": {
+                "about": {
+                    "synonyms": {
+                        "help": {
+                            "enabled": true
+                        },
+                        "about": {
+                            "enabled": false
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ```
+* You can now add or remove multiple permissions at the same time with `!op` and `!deop`
+    + Example: `!op <user id> general:kill general:reload`
+* You can now give the bot an avatar with `!avatar <url or relative path>` or by setting it in your `config.json`. Setting it to `null` will remove the avatar.
+    + Example:
+    ```json
+    {
+        "credentials": {
+            "avatar": "url or relative path"
+        }
+    }
+    ```
+* You can now let your bot ignore channels defined by your `config.json`.
+    + Example:
+    ```json
+    {
+        "ignoreChannels": [
+            "#bot-free-channel"
+        ]
+    }
+    ```
+
+v0.7.8
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.8
+
+Important changes
+---
+* You don't have to require permissions anymore in your `config.json` for specific commands (defined by the plugin). Some commands will now require permissions by default. You can set it to false if they sould not require permissions. The following commands will now require permissions by default:
+    + `!kill`
+    + `!owner`
+    + `!prefix`
+    + `!op`
+    + `!deop`
+    + `!enable`
+    + `!rename`
+    + `!reload`
+
+Changes
+---
+* Fixed permission system
+
+v0.7.7
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.7
+
+Changes
+---
+* You can now specify a channel which is required to request a command
+    + Example:
+    ```json
+    "plugins": {
+        "music-bot": {
+            "commands": {
+                "add": {
+                    "channel": "#music"
+                }
+            }
+        }
+    }
+    ```
+
+v0.7.6
+===
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.6
+
+Important changes
+---
+* **[music-bot plugin]** You can now define the max length of a song (in minutes). It defaults to `15` minutes. `0` minutes will be endless.
+    + Example:
+    ```json
+    "plugins": {
+        "music-bot": {
+            "maxLength": 30
+        }
+    }
+    ```
+* Bumped the version of `discord.io` to 1.6.5
+    + Run `npm install discord.io` to install the new version
+* You can now define how fast (in seconds) your `config.json` will be reloaded automatically without restarting the bot (optional).It default to every 5 seconds. Settings it to `0` disables it. Example: `"reloadConfig": 10`.
+
+Changes
+---
+* Renamed some directories
+* Added missing information to the install instruction
+* Added a license
+* **[music-bot plugin]** Fixed `!music stop` command (issue #33)
+* Added missing commands to the [README.md](./README.md)
+* Fixed directory names
+* **[music-bot plugin]** You don't need to set a library anymore. It will default to the OS specific temp directories
+* Disconnect the bot before killing the process. The bot should now log out everytime when using `!kill`.
+>>>>>>> master
 
 v0.8.0 _(not released yet)_
 ===

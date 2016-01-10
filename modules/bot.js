@@ -8,6 +8,8 @@ import events from './events';
 import DiscordClient from 'discord.io';
 import chalk from 'chalk';
 import packageJSON from '../package';
+import fs from 'fs';
+import request from 'request';
 
 let bot = null; // The Discord instance will be stored in this object
 let commandHistory = {};
@@ -18,6 +20,27 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     // Only listen on the server defined by the config.json
     if (bot.serverFromChannel(channelID) !== configModule.get().serverID) {
         return false;
+    }
+
+    // Check if channel is ignored
+    if (configModule.get().ignoreChannels) {
+        for (let channelName of configModule.get().ignoreChannels) {
+            channelName = channelName.replace('#', '');
+
+            for (let id in bot.servers[configModule.get().serverID].channels) {
+                if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
+                    const channel = bot.servers[configModule.get().serverID].channels[id];
+
+                    if (channel.type !== 'text') {
+                        continue;
+                    }
+
+                    if (channel.name === channelName && channel.id === channelID) {
+                        return false;
+                    }
+                }
+            }
+        }
     }
 
     // Check if a mention is required by the configModule.json
@@ -76,11 +99,48 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
 
                 for (let command in plugin.commands) {
                     if (plugin.commands.hasOwnProperty(command)) {
-                        if (message[0] === command) {
+                        // Create a list with enabled synonyms for this command
+                        let synonyms = [];
+
+                        // Check plugins default synonyms
+                        if (plugin.commands[command].synonyms) {
+                            synonyms = plugin.commands[command].synonyms;
+                        }
+
+                        if (synonyms.indexOf(command) < 0) {
+                            synonyms.unshift(command);
+                        }
+
+                        // Check config.json for synonyms
+                        if (
+                            configModule.get().plugins
+                            && configModule.get().plugins[plugin.name]
+                            && configModule.get().plugins[plugin.name].commands
+                            && configModule.get().plugins[plugin.name].commands[command]
+                            && configModule.get().plugins[plugin.name].commands[command].synonyms
+                        ) {
+                            for (let synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
+                                if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
+                                    if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
+                                        if (synonyms.indexOf(synonym) < 0) {
+                                            synonyms.push(synonym);
+                                        }
+                                    } else if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled === false) {
+                                        const index = synonyms.indexOf(synonym);
+                                        if (index >= 0) {
+                                            synonyms.splice(index, 1);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (synonyms.indexOf(message[0]) >= 0) {
                             // Remove the requested command from the message
                             message.shift();
 
                             // Check the permissions of the command
+                            let permissionRequiredByConfig = null;
                             if (
                                 configModule.get().plugins
                                 && configModule.get().plugins[plugin.name]
@@ -88,8 +148,51 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                 && configModule.get().plugins[plugin.name].commands[command]
                                 && configModule.get().plugins[plugin.name].commands[command].requirePermission
                             ) {
-                                if (!api.isOperator(userID, plugin.name + ':' + command, channelID)) {
+                                permissionRequiredByConfig = true;
+                            } else if (
+                                configModule.get().plugins
+                                && configModule.get().plugins[plugin.name]
+                                && configModule.get().plugins[plugin.name].commands
+                                && configModule.get().plugins[plugin.name].commands[command]
+                                && configModule.get().plugins[plugin.name].commands[command].requirePermission === false
+                            ) {
+                                permissionRequiredByConfig = false;
+                            }
+
+                            if (permissionRequiredByConfig !== null) {
+                                if (permissionRequiredByConfig && !api.isOperator(userID, plugin.name + ':' + command, channelID)) {
                                     return false;
+                                }
+                            } else if (plugin.commands[command].requirePermission && !api.isOperator(userID, plugin.name + ':' + command, channelID)) {
+                                return false;
+                            }
+
+                            // Check the command requires an channel
+                            if (
+                                configModule.get().plugins
+                                && configModule.get().plugins[plugin.name]
+                                && configModule.get().plugins[plugin.name].commands
+                                && configModule.get().plugins[plugin.name].commands[command]
+                                && configModule.get().plugins[plugin.name].commands[command].channel
+                            ) {
+                                let requestChannel = configModule.get().plugins[plugin.name].commands[command].channel.replace('#', '');
+
+                                for (let id in bot.servers[configModule.get().serverID].channels) {
+                                    if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
+                                        const channel = bot.servers[configModule.get().serverID].channels[id];
+
+                                        if (channel.type !== 'text') {
+                                            continue;
+                                        }
+
+                                        if (channel.name === requestChannel && channel.id !== channelID) {
+                                            bot.sendMessage({
+                                                to: channelID,
+                                                message: 'You can request this command only here <#' + channel.id + '>',
+                                            });
+                                            return false;
+                                        }
+                                    }
                                 }
                             }
 
@@ -107,6 +210,13 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     }
 
     return false;
+}
+
+function setAvatar(base64) {
+    bot.editUserInfo({
+        avatar: base64,
+        password: configModule.get().credentials.password,
+    });
 }
 
 // Start the discord instance
@@ -142,6 +252,30 @@ bot.on('ready', () => {
         bot.editUserInfo({
             password: configModule.get().credentials.password,
             username: configModule.get().credentials.name,
+        });
+    }
+
+    // Set the avatar of the bot to the one defined in the configModule.json
+    if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
+        const reg = new RegExp(/^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
+        if (reg.test(configModule.get().credentials.avatar)) {
+            request({
+                url: configModule.get().credentials.avatar,
+                encoding: null,
+            }, (error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                    setAvatar(new Buffer(body).toString('base64'));
+                } else {
+                    console.log(chalk.red('The avatar could not be set. Make sure the path is correct.'));
+                }
+            });
+        } else {
+            setAvatar(fs.readFileSync(configModule.get().credentials.avatar, 'base64'));
+        }
+    } else if (configModule.get().credentials.avatar === null) {
+        bot.editUserInfo({
+            avatar: null,
+            password: configModule.get().credentials.password,
         });
     }
 

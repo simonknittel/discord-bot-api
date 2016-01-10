@@ -9,21 +9,16 @@ import YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import mkdirp from 'mkdirp';
 import fs from 'fs';
 import chalk from 'chalk';
-
-if (!configModule.get().plugins['music-bot'].library) {
-    console.log(chalk.red('You have to set the library property for the music-bot plugin in your config.json to enable the music-bot plugin.'));
-    console.log(''); // Empty line
-    process.exit();
-}
+import os from 'os';
 
 let YD = new YoutubeMp3Downloader({
-    outputPath: configModule.get().plugins['music-bot'].library + '/youtube',
+    outputPath: configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube'),
     queueParallelism: 5,
 });
 
 events.on('config reloaded', () => {
     YD = new YoutubeMp3Downloader({
-        outputPath: configModule.get().plugins['music-bot'].library + '/youtube',
+        outputPath: configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube'),
         queueParallelism: 5,
     });
 });
@@ -85,14 +80,16 @@ function playLoop(channelID) {
         bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
             stream.playAudioFile(currentSong.file);
             stream.once('fileEnd', () => {
-                // Hack required because the event fileEnd does not trigger when the file ends ...
-                setTimeout(() => {
-                    currentSong = null;
-                    bot.setPresence({
-                        game: null,
-                    });
-                    playLoop(channelID);
-                }, 2000);
+                if (currentSong) {
+                    // Hack required because the event fileEnd does not trigger when the file ends ...
+                    setTimeout(() => {
+                        currentSong = null;
+                        bot.setPresence({
+                            game: null,
+                        });
+                        playLoop(channelID);
+                    }, 2000);
+                }
             });
         });
     } else {
@@ -139,7 +136,7 @@ function addCommand(user, userID, channelID, message) {
     // Fetch meta data from YouTube video
     fetchVideoInfo(youtubeID, (error, videoInfo) => {
         if (error) {
-            console.error(error);
+            console.error(error, youtubeID);
             bot.sendMessage({
                 to: channelID,
                 message: 'This seems to be an invalid link.',
@@ -147,8 +144,33 @@ function addCommand(user, userID, channelID, message) {
             return false;
         }
 
+        // Check length of video
+        let maxLength = configModule.get().plugins['music-bot'].maxLength;
+        if (maxLength && isNaN(maxLength)) {
+            console.log(chalk.styles.red.open + 'The max length of a song defined in your "config.json" is invalid. Therefore the download of ' + chalk.styles.red.close + videoInfo.url + chalk.styles.red.open + ' will be stopped.' + chalk.styles.red.close);
+            bot.sendMessage({
+                to: channelID,
+                message: 'The max length of a song defined in your "config.json" is invalid. Therefore the download will be stopped.',
+            });
+            return false;
+        } else if (Math.ceil(maxLength) === 0) {
+
+        } else if (videoInfo.duration / 60 > Math.ceil(maxLength)) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The video is too long. Only videos up to ' + Math.round(maxLength) + ' minutes are allowed.',
+            });
+            return false;
+        } else if (videoInfo.duration / 60 > 15) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The video is too long. Only videos up to 15 minutes are allowed.',
+            });
+            return false;
+        }
+
         // Create download directory
-        mkdirp(configModule.get().plugins['music-bot'].library + '/youtube', error => {
+        mkdirp(configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube'), error => {
             if (error) {
                 console.error(error);
                 bot.sendMessage({
@@ -159,7 +181,7 @@ function addCommand(user, userID, channelID, message) {
             }
 
             // Check if already downloaded
-            fs.access(configModule.get().plugins['music-bot'].library + '/youtube/' + videoInfo.videoId + '.mp3', fs.F_OK, error => {
+            fs.access((configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/youtube' : '/tmp/youtube')) + '/' + videoInfo.videoId + '.mp3', fs.F_OK, error => {
                 if (error) {
                     bot.sendMessage({
                         to: channelID,
@@ -252,8 +274,18 @@ function skipCommand(user, userID, channelID) {
 }
 
 function leave() {
-    if (bot.servers[configModule.get().serverID].members[bot.id].voice_channel_id) {
-        bot.leaveVoiceChannel(bot.servers[configModule.get().serverID].members[bot.id].voice_channel_id);
+    // if (bot.servers[configModule.get().serverID].members[bot.id].voice_channel_id) {
+    //     bot.leaveVoiceChannel(bot.servers[configModule.get().serverID].members[bot.id].voice_channel_id);
+    // }
+
+    // Leaves every voice channel.
+    // It's needed to loop over all channels, because after a reconnect the previous voice channel is unknown
+    for (let voiceChannelID in bot.servers[configModule.get().serverID].channels) {
+        if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(voiceChannelID)) {
+            if (bot.servers[configModule.get().serverID].channels[voiceChannelID].type === 'voice') {
+                bot.leaveVoiceChannel(voiceChannelID);
+            }
+        }
     }
 }
 
@@ -332,6 +364,7 @@ function playCommand(user, userID, channelID) {
 }
 
 function stopCommand() {
+    events.emit('stop music');
     bot.getAudioContext({channel: voiceChannelID, stereo: true}, stream => {
         stream.stopAudioFile();
         currentSong = null;
@@ -383,6 +416,9 @@ let plugin = {
         add: {
             fn: addCommand,
             description: 'Adds a song to the playlist',
+            synonyms: [
+                'new',
+            ],
         },
         remove: {
             fn: removeCommand,
@@ -395,10 +431,16 @@ let plugin = {
         enter: {
             fn: enterCommand,
             description: 'Let the bot enter a voice channel',
+            synonyms: [
+                'join',
+            ],
         },
         play: {
             fn: playCommand,
             description: 'Starts the playlist',
+            synonyms: [
+                'start',
+            ],
         },
         stop: {
             fn: stopCommand,
@@ -407,6 +449,9 @@ let plugin = {
         current: {
             fn: currentCommand,
             description: 'Displays the current song',
+            synonyms: [
+                'now',
+            ],
         },
         playlist: {
             fn: playlistCommand,
