@@ -1,5 +1,6 @@
 // Discord Bot API
 import events from './modules/events';
+import updater from './modules/updater';
 
 // Other
 import request from 'request';
@@ -55,6 +56,8 @@ function checkForUpdates() {
         }
     });
 }
+
+updater.removeUpdater(() => {});
 
 checkForUpdates();
 setInterval(checkForUpdates, 3600000); // Check for updates all 60 minutes
