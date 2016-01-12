@@ -14,7 +14,7 @@ function removeUpdaterZIP(callback) {
 }
 
 function removeUpdaterDir(callback) {
-    rimraf('./updater/discord-bot-api-updater-master', error => {
+    rimraf('./updater', () => {
         callback();
     });
 }
@@ -64,7 +64,7 @@ function unzipUpdater(callback) {
 function installUpdaterDependencies(callback) {
     console.log('Installing updater dependencies ...');
 
-    childProcess.exec('cd updater/discord-bot-api-updater-master && npm install', (error, stdout, stderr) => {
+    childProcess.exec('cd updater/discord-bot-api-updater-master && npm install', error => {
         if (error) {
             console.log(chalk.red(error));
             console.log(''); // Empty line
@@ -78,7 +78,12 @@ function installUpdaterDependencies(callback) {
 }
 
 function runUpdater() {
+    console.log(chalk.yellow('Starting updater ...'));
+    console.log(''); // Empty line
+
     childProcess.exec('cd updater/discord-bot-api-updater-master && npm start');
+
+    // process.exit();
 }
 
 let updater = {
