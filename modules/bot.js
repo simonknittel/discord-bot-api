@@ -309,13 +309,15 @@ bot.on('ready', () => {
 
 // Try to reconnect
 bot.on('disconnected', () => {
+    clearInterval(reconnectInterval);
+
     console.log(chalk.red('Discord Bot API disconnected.'));
     console.log('Trying to reconnect ...');
     console.log(''); // Empty line
 
     reconnectInterval = setInterval(() => {
         bot.connect();
-    }, 60000);
+    }, 15000);
 });
 
 // Trigger on incomming message
