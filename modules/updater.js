@@ -2,8 +2,9 @@ import request from 'request';
 import fs from 'fs';
 import AdmZip from 'adm-zip';
 import chalk from 'chalk';
-import childProcess from 'child_process';
+import child_process from 'child_process';
 import rimraf from 'rimraf';
+import os from 'os';
 
 function removeUpdaterZIP(callback) {
     try {
@@ -64,7 +65,7 @@ function unzipUpdater(callback) {
 function installUpdaterDependencies(callback) {
     console.log('Installing updater dependencies ...');
 
-    childProcess.exec('cd updater/discord-bot-api-updater-master && npm install', error => {
+    child_process.exec('cd updater/discord-bot-api-updater-master && npm install', error => {
         if (error) {
             console.log(chalk.red(error));
             console.log(''); // Empty line
@@ -81,9 +82,15 @@ function runUpdater() {
     console.log(chalk.yellow('Starting updater ...'));
     console.log(''); // Empty line
 
-    childProcess.exec('cd updater/discord-bot-api-updater-master && npm start');
+    const child = child_process.spawn(os.platform() === 'win32' ? 'npm.cmd' : 'npm', [
+        'start',
+    ], {
+        cwd: './updater/discord-bot-api-updater-master',
+        detached: true,
+    });
+    child.unref();
 
-    // process.exit();
+    process.exit();
 }
 
 let updater = {

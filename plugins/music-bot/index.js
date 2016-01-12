@@ -274,10 +274,6 @@ function skipCommand(user, userID, channelID) {
 }
 
 function leave() {
-    // if (bot.servers[configModule.get().serverID].members[bot.id].voice_channel_id) {
-    //     bot.leaveVoiceChannel(bot.servers[configModule.get().serverID].members[bot.id].voice_channel_id);
-    // }
-
     // Leaves every voice channel.
     // It's needed to loop over all channels, because after a reconnect the previous voice channel is unknown
     for (let voiceChannelID in bot.servers[configModule.get().serverID].channels) {
