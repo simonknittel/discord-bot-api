@@ -25,6 +25,10 @@
     "start": "babel-node index"
   },
   "main": "index.js",
+  "engines": {
+      "node": ">=5.0.0 <6.0.0",
+      "npm": ">=3.0.0 <4.0.0"
+  },
   "dependencies": {
     "adm-zip": "^0.4.7",
     "babel-cli": "^6.3.17",

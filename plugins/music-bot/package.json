@@ -20,6 +20,10 @@
     "url": "https://github.com/simonknittel/discord-bot-api/issues"
   },
   "main": "index.js",
+  "engines": {
+      "node": ">=5.0.0 <6.0.0",
+      "npm": ">=3.0.0 <4.0.0"
+  },
   "dependencies": {
     "mkdirp": "^0.5.1",
     "youtube-info": "^1.1.0",

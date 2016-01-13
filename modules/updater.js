@@ -5,6 +5,8 @@ import chalk from 'chalk';
 import child_process from 'child_process';
 import rimraf from 'rimraf';
 import os from 'os';
+import semver from 'semver';
+import packageJSON from '../package';
 
 function removeUpdaterZIP(callback) {
     try {
@@ -94,20 +96,46 @@ function runUpdater() {
 }
 
 let updater = {
-    start: () => {
-        console.log(chalk.yellow('Starting update ...'));
-        console.log(''); // Empty line
+    start: (callback) => {
+        request({
+            url: 'https://api.github.com/repos/simonknittel/discord-bot-api/releases/latest',
+            json: true,
+            headers: {
+                'User-Agent': 'simonknittel', // Needed otherwise the GitHub API will reject the request
+            },
+        }, (error, response, body) => {
+            if (!error && response.statusCode === 200) {
+                const currentVersion = packageJSON.version;
+                const latestVersion = body.tag_name.substring(1);
 
-        removeUpdater(() => {
-            downloadUpdater(() => {
-                unzipUpdater(() => {
-                    removeUpdaterZIP(() => {
-                        installUpdaterDependencies(() => {
-                            runUpdater();
+                // Compares the latest release with local one
+                if (semver.lt(currentVersion, latestVersion)) {
+                    console.log(chalk.yellow('Starting update ...'));
+                    console.log(''); // Empty line
+                    callback();
+
+                    removeUpdater(() => {
+                        downloadUpdater(() => {
+                            unzipUpdater(() => {
+                                removeUpdaterZIP(() => {
+                                    installUpdaterDependencies(() => {
+                                        runUpdater();
+                                    });
+                                });
+                            });
                         });
                     });
-                });
-            });
+                } else {
+                    callback('already on latest release');
+                }
+            } else {
+                console.error('error:', error);
+                console.error('response.statusCode:', response.statusCode);
+                console.error('body:', body);
+                console.log(''); // Empty line
+
+                callback('github api down');
+            }
         });
     },
     removeUpdater,

@@ -383,12 +383,25 @@ function avatarCommand(user, userID, channelID, message) {
 }
 
 function updateCommand(user, userID, channelID) {
-    bot.sendMessage({
-        to: channelID,
-        message: 'Starting update. This may take a while.',
-    });
 
-    updater.start();
+    updater.start(error => {
+        if (error === 'already on latest release') {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The bot is already on the latest release.',
+            });
+        } else if (error === 'github api down') {
+            bot.sendMessage({
+                to: channelID,
+                message: 'Could not check for new release.',
+            });
+        } else {
+            bot.sendMessage({
+                to: channelID,
+                message: 'Starting update. This may take a while.',
+            });
+        }
+    });
 }
 
 let plugin = {
