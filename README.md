@@ -16,7 +16,7 @@ Install
     * Run `npm config set python python2.7`
 5. **[Windows]** Make sure you have [Microsoft Visual C++ Build Tools 2015](https://www.microsoft.com/en-us/download/details.aspx?id=49983) installed
     * Run `npm config set msvs_version 2015 --global`
-6. Install dependencies by running `npm install`
+6. Install dependencies by running `npm install --production`
 7. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
 8. Edit `config.json` to your needs
     * Visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information
