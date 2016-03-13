@@ -6,7 +6,7 @@ Important changes
 ---
 * Self-updating by running `!update`
 * Updated dependencies
-    + Remove the `node_directory` and reinstall all dependencies by running `npm install --msvs_version=2015`
+    + Remove the `node_directory` and reinstall all dependencies by running `npm install`
     + Do this for every plugin, too!
 
 Changes
