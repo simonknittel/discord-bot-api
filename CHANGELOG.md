@@ -1,10 +1,18 @@
-v0.7.10 _(not released yet)_
+v0.8.0 _(not released yet)_
 ===
 <!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10 -->
+
+Important changes
+---
+* Self-updating by running `!update`
+* Updated dependencies
+    + Remove the `node_directory` and reinstall all dependencies by running `npm install --msvs_version=2015`
+    + Do this for every plugin, too!
 
 Changes
 ---
 * Fix for issue #45
+* Updated install instructions
 
 v0.7.9
 ===

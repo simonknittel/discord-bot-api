@@ -25,8 +25,8 @@
       "npm": ">=3.0.0 <4.0.0"
   },
   "dependencies": {
-    "mkdirp": "^0.5.1",
-    "youtube-info": "^1.1.0",
-    "youtube-mp3-downloader": "^0.4.2"
+    "mkdirp": "0.5.1",
+    "youtube-info": "1.1.0",
+    "youtube-mp3-downloader": "0.4.2"
   }
 }

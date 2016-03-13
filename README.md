@@ -12,11 +12,11 @@ Install
 1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
 2. Make sure you have [Node](https://nodejs.org/en/) installed and available in your PATH variable
 3. Make sure you have [FFmpeg](https://www.ffmpeg.org/) installed and available in your PATH variable
-4. Make sure you have [Python](https://www.python.org/) installed and available in your PATH variable
+4. Make sure you have [Python 2.7](https://www.python.org/) installed and available in your PATH variable
     * Run `npm config set python python2.7`
-5. **[Windows]** Make sure you have [Microsoft Visual C++ Build Tools 2015](https://www.microsoft.com/en-us/download/details.aspx?id=49983) installed
-    * Run `npm config set msvs_version 2015 --global`
-6. Install dependencies by running `npm install`
+5. **[Windows]** Make sure you have `Visual Studio Community 2015` installed
+    * Make sure to check `Tools and Windows SDK` in the install instructions
+6. Install dependencies by running `npm install --msvs_version=2015`
 7. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
 8. Edit `config.json` to your needs
     * Visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information
@@ -39,9 +39,7 @@ Update your bot
 ---
 The bot will notify the owner if there is a new release available. It will check the version on the start and every 60 minutes after that.
 
-1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
-2. Keep your old `config.json`
-    * Make sure to read the changelog for important changes
+1. Run `!update`
 
 Develop your own plugin
 ---
@@ -77,6 +75,7 @@ General commands
     + Synonyms: `!refresh`
 * `!avatar <url or relative path>` - Gives the bot an avatar
     + Setting it to `null` will remove the avatar.
+* `!update` - Updates to the latest version
 
 Planned features
 ---
