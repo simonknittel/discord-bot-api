@@ -56,7 +56,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     }
 
     // Check if the global command prefix is on the first position of the message
-    if (message.indexOf(configModule.get().globalCommandPrefix) !== 0) {
+    if (message.indexOf(configModule.get().globalCommandPrefix) < 0) {
         return false;
     }
 
