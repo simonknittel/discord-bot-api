@@ -37,13 +37,9 @@ function commandsCommand(user, userID, channelID) {
                     let synonyms = [];
 
                     // Check plugins default synonyms
-                    if (plugin.commands[command].synonyms) {
-                        synonyms = plugin.commands[command].synonyms;
-                    }
+                    if (plugin.commands[command].synonyms) synonyms = plugin.commands[command].synonyms;
 
-                    if (synonyms.indexOf(command) < 0) {
-                        synonyms.unshift(command);
-                    }
+                    if (synonyms.indexOf(command) < 0) synonyms.unshift(command);
 
                     // Check config.json for synonyms
                     if (
@@ -179,7 +175,7 @@ function enableCommand(user, userID, channelID, message) {
         return false;
     }
 
-    enablePlugin(pluginName, error => {
+    configModule.enablePlugin(pluginName, (error) => {
         if (error === 'failed to load') {
             bot.sendMessage({
                 to: channelID,
@@ -193,6 +189,15 @@ function enableCommand(user, userID, channelID, message) {
                 to: channelID,
                 message: 'The plugin is already enabled.',
             });
+            return false;
+        } else if (error !== null) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'The plugin `' + pluginName + '` could not be enabled.',
+            });
+            console.log(chalk.red('Plugin ' + pluginName + ' could not be enabled'));
+            console.log(chalk.red(error));
+            console.log(''); // Empty line
             return false;
         }
 
@@ -226,10 +231,29 @@ function renameCommand(user, userID, channelID, message) {
             return false;
         }
 
+        if (bot.username === message.trim()) {
+            bot.sendMessage({
+                to: channelID,
+                message: 'No renaming needed.',
+            });
+            return false;
+        }
+
         bot.editUserInfo({
             username: message,
-            password: configModule.get().credentials.password,
-        }, () => {
+        }, (error) => {
+            if (error) {
+                console.log(chalk.red(error));
+                console.log(error);
+                console.log(''); // Empty line
+
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'There was an error with renaming the bot. Check out the console for more information.',
+                });
+                return false;
+            }
+
             bot.sendMessage({
                 to: channelID,
                 message: 'Bot successfully renamed.',

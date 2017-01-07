@@ -22,18 +22,27 @@ function save(callback) {
 }
 
 function get() {
+    if (!config.globalCommandPrefix || config.globalCommandPrefix.trim() === '') config.globalCommandPrefix = '!';
     return config;
 }
 
 function enablePlugin(name, callback) {
     config.plugins[name] = {};
-    save(null, callback);
+    save((error) => {
+        if (error) {
+            callback(error);
+            return false;
+        }
+
+        callback();
+        return true;
+    });
 }
 
 function rename(name, callback) {
     config.credentials.name = name;
 
-    save(error => {
+    save((error) => {
         if (error) {
             callback(error);
             return false;
@@ -45,9 +54,7 @@ function rename(name, callback) {
 }
 
 function op(userID, permissions, callback) {
-    if (!config.hasOwnProperty('operators')) {
-        config.operators = {};
-    }
+    if (!config.hasOwnProperty('operators')) config.operators = {};
 
     if (!config.operators.hasOwnProperty(userID)) {
         config.operators[userID] = {
@@ -55,17 +62,13 @@ function op(userID, permissions, callback) {
         };
     }
 
-    if (!config.operators[userID].hasOwnProperty('permissions')) {
-        config.operators[userID].permissions = [];
-    }
+    if (!config.operators[userID].hasOwnProperty('permissions')) config.operators[userID].permissions = [];
 
     for (const permission of permissions) {
-        if (config.operators[userID].permissions.indexOf(permission) < 0) {
-            config.operators[userID].permissions.push(permission);
-        }
+        if (config.operators[userID].permissions.indexOf(permission) < 0) config.operators[userID].permissions.push(permission);
     }
 
-    save(error => {
+    save((error) => {
         if (error) {
             callback(error);
             return false;
@@ -91,11 +94,9 @@ function deop(userID, permissions, callback) {
         config.operators[userID].permissions.splice(config.operators[userID].permissions.indexOf(permission), 1);
     }
 
-    if (config.operators[userID].permissions.length === 0) {
-        delete config.operators[userID].permissions;
-    }
+    if (config.operators[userID].permissions.length === 0) delete config.operators[userID].permissions;
 
-    save(error => {
+    save((error) => {
         if (error) {
             callback(error);
             return false;
@@ -109,7 +110,7 @@ function deop(userID, permissions, callback) {
 function prefix(newPrefix, callback) {
     config.globalCommandPrefix = newPrefix;
 
-    save(error => {
+    save((error) => {
         if (error) {
             callback(error);
             return false;
@@ -123,7 +124,7 @@ function prefix(newPrefix, callback) {
 function owner(newOwner, callback) {
     config.ownerID = newOwner;
 
-    save(error => {
+    save((error) => {
         if (error) {
             callback(error);
             return false;
@@ -135,13 +136,9 @@ function owner(newOwner, callback) {
 }
 
 function avatar(path, callback) {
-    if (path == 'null') {
-        config.credentials.avatar = null;
-    } else {
-        config.credentials.avatar = path;
-    }
+    config.credentials.avatar = path == 'null' ? null : path;
 
-    save(error => {
+    save((error) => {
         if (error) {
             callback(error);
             return false;
@@ -156,9 +153,7 @@ function reload(callback) {
     config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
     events.emit('config reloaded');
     automaticReload();
-    if (callback) {
-        callback();
-    }
+    if (callback) callback();
 }
 reload();
 
@@ -172,9 +167,7 @@ function automaticReload() {
         return true;
     }
 
-    if (Math.ceil(config.reloadConfig) === 0) {
-        return false;
-    }
+    if (Math.ceil(config.reloadConfig) === 0) return false;
 
     if (isNaN(config.reloadConfig)) {
         console.log(chalk.red('The reload time of the config defined in your "config.json" is invalid. Therefore it defaults to 5 seconds.'));
@@ -186,24 +179,14 @@ function automaticReload() {
     }, Math.ceil(config.reloadConfig) * 1000);
 }
 
-if (!config.globalCommandPrefix) {
-    config.globalCommandPrefix = '!';
-}
-
 if (!config.credentials) {
     console.log(chalk.red('You have to set the credentials in your config.json.'));
     console.log(''); // Empty line
     process.exit();
 }
 
-if (!config.credentials.email) {
-    console.log(chalk.red('You have to set the email in your config.json.'));
-    console.log(''); // Empty line
-    process.exit();
-}
-
-if (!config.credentials.password) {
-    console.log(chalk.red('You have to set the password in your config.json.'));
+if (!config.credentials.token) {
+    console.log(chalk.red('You have to set the token in your config.json.'));
     console.log(''); // Empty line
     process.exit();
 }

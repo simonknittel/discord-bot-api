@@ -1,56 +1,10 @@
 {
     "credentials": {
-        "name": "Bot - !commands",
-        "email": "",
-        "password": ""
+        "token": ""
     },
     "ownerID": "",
     "serverID": "",
-    "invites": [
-        ""
-    ],
-    "mentionRequired": false,
-    "globalCommandPrefix": "!",
-    "reloadConfig": 5,
-    "commandCooldown": 1000,
-    "ignoreChannels": [
-        "#bot-free-channel"
-    ],
-    "operators": {
-        "": {
-            "permissions": [
-                "general:kill"
-            ]
-        }
-    },
     "plugins": {
-        "general": {
-            "commands": {
-                "about": {
-                    "requirePermission": false,
-                    "synonyms": {
-                        "help": {
-                            "enabled": true
-                        }
-                    }
-                },
-                "kill": {
-                    "requirePermission": true
-                }
-            }
-        },
-        "music-bot": {
-            "commands": {
-                "add": {
-                    "channel": "#music"
-                }
-            },
-            "commandPrefix": "music",
-            "library": "../music",
-            "skipLimit": 1,
-            "announceSongs": true,
-            "autoJoinVoiceChannel": "General",
-            "maxLength": 15
-        }
+        "general": {}
     }
 }

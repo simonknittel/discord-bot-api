@@ -1,10 +1,26 @@
-v0.7.10 _(not released yet)_
+v0.7.10
 ===
-<!-- Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10 -->
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10
+
+Important changes
+---
+* Restart of development. This first update was just to make everything working as before.
 
 Changes
 ---
 * Fix for issue #45
+* Clean up
+    + Updated dependencies
+    + Updated install instructions
+    + Update the `config-sample.json` to provide a sample configuration that just works&trade; and utilized its defaults
+    + Fixed broken functions
+* **[music-bot plugin]** Fixed download path when library property is not set
+* **[music-bot plugin]** Added some emojis to the messages
+* **[music-bot plugin]** Shows some timestamps/progress states in the messages
+* **[music-bot plugin]** Added possibility to add multiple URLs at once
+* **[music-bot plugin]** Updated the `!music playlist` command with more information (closes #48)
+* Better error handling, when renaming of the bot goes wrong
+
 
 v0.7.9
 ===

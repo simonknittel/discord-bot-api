@@ -1,6 +1,6 @@
 Discord Bot API
 ===
-This is a plugin based and configurable Discord bot. You can use plugins to play music, do a raffle or other things. You can even create your own ones!
+This is a plugin based, self-hosted and configurable Discord bot. You can use plugins to play music, do a raffle or other things. You can even create your own ones!
 
 Need help?
 ---
@@ -10,16 +10,19 @@ Visit the [FAQ / Known issues](https://github.com/simonknittel/discord-bot-api/w
 Install
 ---
 1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
-2. Make sure you have [Node](https://nodejs.org/en/) installed and available in your PATH variable
-3. Make sure you have [FFmpeg](https://www.ffmpeg.org/) installed and available in your PATH variable
-4. Make sure you have [Python](https://www.python.org/) installed and available in your PATH variable
+2. Make sure you have [Node](https://nodejs.org/en) installed and available in your PATH variable
+3. Make sure you have [FFmpeg](https://ffmpeg.org) installed and available in your PATH variable
+4. Make sure you have [Python 2.7](https://python.org) installed and available in your PATH variable
     * Run `npm config set python python2.7`
-5. **[Windows]** Make sure you have [Microsoft Visual C++ Build Tools 2015](https://www.microsoft.com/en-us/download/details.aspx?id=49983) installed
+5. **[Windows]** Make sure you have `Visual Studio Community 2015` installed
+    * Make sure to check `Tools and Windows SDK` in the install instructions
     * Run `npm config set msvs_version 2015 --global`
-6. Install dependencies by running `npm install --production`
+6. Install dependencies by running `npm install --msvs_version=2015`
 7. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
 8. Edit `config.json` to your needs
     * Visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information
+9. https://discordapi.com/permissions.html#103926784
+9. https://finitereality.github.io/permissions/?v=103926784
 
 Start
 ---

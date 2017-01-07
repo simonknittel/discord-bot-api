@@ -5,7 +5,7 @@ import api from './api';
 import events from './events';
 
 // Other
-import DiscordClient from 'discord.io';
+import Discord from 'discord.io';
 import chalk from 'chalk';
 import packageJSON from '../package';
 import fs from 'fs';
@@ -18,7 +18,12 @@ let reconnectInterval = null;
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
     // Only listen on the server defined by the config.json
-    if (bot.serverFromChannel(channelID) !== configModule.get().serverID) {
+    if (bot.channels[channelID].guild_id !== configModule.get().serverID) {
+        return false;
+    }
+
+    // Ignore messages by the bot itself
+    if (userID === bot.id) {
         return false;
     }
 
@@ -215,14 +220,12 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
 function setAvatar(base64) {
     bot.editUserInfo({
         avatar: base64,
-        password: configModule.get().credentials.password,
     });
 }
 
 // Start the discord instance
-bot = new DiscordClient({
-    email: configModule.get().credentials.email,
-    password: configModule.get().credentials.password,
+bot = new Discord.Client({
+    token: configModule.get().credentials.token,
     autorun: true,
 });
 
@@ -248,17 +251,29 @@ bot.on('ready', () => {
     reconnectInterval = null;
 
     // Set the name of the bot to the one defined in the configModule.json
-    if (configModule.get().credentials.name) {
-        bot.editUserInfo({
-            password: configModule.get().credentials.password,
-            username: configModule.get().credentials.name,
-        });
+    if (configModule.get().credentials.name.trim()) {
+        if (bot.username !== configModule.get().credentials.name.trim()) {
+            bot.editUserInfo({
+                username: configModule.get().credentials.name,
+            }, (error, response) => {
+                if (error) {
+                    console.log(chalk.red(error));
+                    console.log(error);
+                    console.log(''); // Empty line
+                }
+
+                if (response) {
+                    console.log(response);
+                }
+            });
+        }
     }
 
     // Set the avatar of the bot to the one defined in the configModule.json
     if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
-        const reg = new RegExp(/^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
+        const reg = new RegExp(/^(http(s)?:\/\/.){1}(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
         if (reg.test(configModule.get().credentials.avatar)) {
+            console.log(configModule.get().credentials.avatar);
             request({
                 url: configModule.get().credentials.avatar,
                 encoding: null,
@@ -275,20 +290,7 @@ bot.on('ready', () => {
     } else if (configModule.get().credentials.avatar === null) {
         bot.editUserInfo({
             avatar: null,
-            password: configModule.get().credentials.password,
         });
-    }
-
-    // Accept the invites defined in the config.json
-    if (configModule.get().invites) {
-        for (const invite of configModule.get().invites) {
-            const inviteID = invite.replace('https://discord.gg/', '');
-            if (inviteID.length <= 0) {
-                continue;
-            }
-
-            bot.acceptInvite(inviteID);
-        }
     }
 
     // Listen for update events

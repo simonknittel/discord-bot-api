@@ -3,5 +3,8 @@ Thumbs.db
 .DS_Store
 node_modules/
 npm-debug.log
+
+music/
+ffmpeg.exe
 config.json
-tenc
+avatar.png

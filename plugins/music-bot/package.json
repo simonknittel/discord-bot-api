@@ -1,7 +1,7 @@
 {
   "name": "discord-music-bot",
   "description": "This is a music bot for Discord based on the Discord Bot API (https://github.com/simonknittel/discord-bot-api)",
-  "author": "Simon Knittel <hallo@simonknittel.de> (http://simonknittel.de/)",
+  "author": "Simon Knittel <hallo@simonknittel.de> (https://simonknittel.de)",
   "homepage": "https://github.com/simonknittel/discord-bot-api",
   "keywords": [
     "discord",
@@ -21,8 +21,8 @@
   },
   "main": "index.js",
   "dependencies": {
-    "mkdirp": "^0.5.1",
-    "youtube-info": "^1.1.0",
-    "youtube-mp3-downloader": "^0.4.2"
+    "mkdirp": "0.5.1",
+    "youtube-info": "1.1.1",
+    "youtube-mp3-downloader": "0.4.4"
   }
 }
