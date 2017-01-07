@@ -217,12 +217,6 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     return false;
 }
 
-function setAvatar(base64) {
-    bot.editUserInfo({
-        avatar: base64,
-    });
-}
-
 // Start the discord instance
 bot = new Discord.Client({
     token: configModule.get().credentials.token,
@@ -250,22 +244,12 @@ bot.on('ready', () => {
 
     reconnectInterval = null;
 
+    let userInfo = {};
+
     // Set the name of the bot to the one defined in the config.json
     if (configModule.get().credentials.name.trim()) {
         if (bot.username !== configModule.get().credentials.name.trim()) {
-            bot.editUserInfo({
-                username: configModule.get().credentials.name,
-            }, (error, response) => {
-                if (error) {
-                    console.log(chalk.red(error));
-                    console.log(error);
-                    console.log(''); // Empty line
-                }
-
-                if (response) {
-                    console.log(response);
-                }
-            });
+            userInfo.username = configModule.get().credentials.name;
         }
     }
 
@@ -273,25 +257,30 @@ bot.on('ready', () => {
     if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
         const reg = new RegExp(/^(http(s)?:\/\/.){1}(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
         if (reg.test(configModule.get().credentials.avatar)) {
-            console.log(configModule.get().credentials.avatar);
             request({
                 url: configModule.get().credentials.avatar,
                 encoding: null,
             }, (error, response, body) => {
                 if (!error && response.statusCode == 200) {
-                    setAvatar(new Buffer(body).toString('base64'));
+                    userInfo.avatar = new Buffer(body).toString('base64');
                 } else {
                     console.log(chalk.red('The avatar could not be set. Make sure the path is correct.'));
                 }
             });
         } else {
-            setAvatar(fs.readFileSync(configModule.get().credentials.avatar, 'base64'));
+            userInfo.avatar = fs.readFileSync(configModule.get().credentials.avatar, 'base64');
         }
     } else if (configModule.get().credentials.avatar === null) {
-        bot.editUserInfo({
-            avatar: null,
-        });
+        userInfo.avatar = null;
     }
+
+    bot.editUserInfo(userInfo, (error, response) => {
+        if (error) {
+            console.log(chalk.red(error));
+            console.log(error);
+            console.log(''); // Empty line
+        }
+    });
 
     // Listen for update events
     events.on('update', data => {
