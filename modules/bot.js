@@ -48,7 +48,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
         }
     }
 
-    // Check if a mention is required by the configModule.json
+    // Check if a mention is required by the config.json
     if (configModule.get().mentionRequired) {
         // Check if the bot got mentioned
         if (message.indexOf('<@' + bot.id + '>') !== 0) {
@@ -250,7 +250,7 @@ bot.on('ready', () => {
 
     reconnectInterval = null;
 
-    // Set the name of the bot to the one defined in the configModule.json
+    // Set the name of the bot to the one defined in the config.json
     if (configModule.get().credentials.name.trim()) {
         if (bot.username !== configModule.get().credentials.name.trim()) {
             bot.editUserInfo({
@@ -269,7 +269,7 @@ bot.on('ready', () => {
         }
     }
 
-    // Set the avatar of the bot to the one defined in the configModule.json
+    // Set the avatar of the bot to the one defined in the config.json
     if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
         const reg = new RegExp(/^(http(s)?:\/\/.){1}(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
         if (reg.test(configModule.get().credentials.avatar)) {

@@ -431,7 +431,7 @@ function avatarCommand(user, userID, channelID, message) {
             return false;
         }
 
-        // Set the avatar of the bot to the one defined in the configModule.json
+        // Set the avatar of the bot to the one defined in the config.json
         if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
             const reg = new RegExp(/^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
             if (reg.test(configModule.get().credentials.avatar)) {
