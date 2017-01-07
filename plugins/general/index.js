@@ -356,16 +356,41 @@ function prefixCommand(user, userID, channelID, message) {
 }
 
 function ownerCommand(user, userID, channelID, message) {
-    const newOwner = message.split(' ')[0];
+    let newOwner = message.trim().split(' ')[0];
+
+    // Message is empty
     if (newOwner.length < 1) {
         bot.sendMessage({
             to: channelID,
-            message: 'You have to add the user id of the new owner.',
+            message: 'You have to add the user id of the new owner or mention him.',
         });
         return false;
     }
 
-    configModule.prefix(newOwner, error => {
+    // Get user id by mention
+    if (newOwner.indexOf('<@') === 0) {
+        newOwner = newOwner.replace('<@', '');
+        newOwner = newOwner.replace('>', '');
+    }
+
+    // Check if user is known to he bot
+    let knownByTheBot = false;
+    for (const userID in bot.users) {
+        if (newOwner === userID) {
+            knownByTheBot = true;
+            break;
+        }
+    }
+
+    if (!knownByTheBot) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'The bot does not know the user.',
+        });
+        return false;
+    }
+
+    configModule.owner(newOwner, error => {
         if (error) {
             bot.sendMessage({
                 to: channelID,
