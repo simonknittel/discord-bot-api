@@ -262,8 +262,29 @@ function renameCommand(user, userID, channelID, message) {
     });
 }
 
+// Check if a user is known to he bot
+function isUserKnown(userID) {
+    for (const id in bot.users) {
+        if (userID === id) return true;
+    }
+
+    return false;
+}
+
+// Get the id from a user from a mention
+function getIDFromMention(mention) {
+    if (mention.indexOf('<@') === 0) {
+        mention = mention.replace('<@', '');
+        mention = mention.replace('>', '');
+    }
+
+    return mention;
+}
+
 function opCommand(user, userID, channelID, message) {
     message = message.split(' ');
+
+    // Eihter user id/mention or permission is missing
     if (message.length < 2) {
         bot.sendMessage({
             to: channelID,
@@ -272,10 +293,18 @@ function opCommand(user, userID, channelID, message) {
         return false;
     }
 
-    const operatorID = message[0];
-    message.shift();
+    const operatorID = getIDFromMention(message[0]);
+    if (!isUserKnown(operatorID)) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'The bot does not know the user.',
+        });
+        return false;
+    }
 
-    configModule.op(operatorID, message, error => {
+    message.shift(); // Remove the user id/mention from the message to leave only the permissions in the message
+
+    configModule.op(operatorID, message, (error) => {
         if (error) {
             bot.sendMessage({
                 to: channelID,
@@ -294,6 +323,8 @@ function opCommand(user, userID, channelID, message) {
 
 function deopCommand(user, userID, channelID, message) {
     message = message.split(' ');
+
+    // Eihter user id/mention or permission is missing
     if (message.length < 2) {
         bot.sendMessage({
             to: channelID,
@@ -302,10 +333,18 @@ function deopCommand(user, userID, channelID, message) {
         return false;
     }
 
-    const operatorID = message[0];
-    message.shift();
+    const operatorID = getIDFromMention(message[0]);
+    if (!isUserKnown(operatorID)) {
+        bot.sendMessage({
+            to: channelID,
+            message: 'The bot does not know the user.',
+        });
+        return false;
+    }
 
-    configModule.deop(operatorID, message, error => {
+    message.shift(); // Remove the user id/mention from the message to leave only the permissions in the message
+
+    configModule.deop(operatorID, message, (error) => {
         if (error === 'no such permission') {
             bot.sendMessage({
                 to: channelID,
@@ -329,7 +368,10 @@ function deopCommand(user, userID, channelID, message) {
 }
 
 function prefixCommand(user, userID, channelID, message) {
+    // Parse only the first part behind the command
     const newPrefix = message.split(' ')[0];
+
+    // Message is empty = no new prefix in the message found
     if (newPrefix.length < 1) {
         bot.sendMessage({
             to: channelID,
@@ -338,7 +380,7 @@ function prefixCommand(user, userID, channelID, message) {
         return false;
     }
 
-    configModule.prefix(newPrefix, error => {
+    configModule.prefix(newPrefix, (error) => {
         if (error) {
             bot.sendMessage({
                 to: channelID,
@@ -356,9 +398,10 @@ function prefixCommand(user, userID, channelID, message) {
 }
 
 function ownerCommand(user, userID, channelID, message) {
+    // Parse only the first part behind the command
     let newOwner = message.trim().split(' ')[0];
 
-    // Message is empty
+    // Message is empty = no new owner in the message found
     if (newOwner.length < 1) {
         bot.sendMessage({
             to: channelID,
@@ -367,22 +410,9 @@ function ownerCommand(user, userID, channelID, message) {
         return false;
     }
 
-    // Get user id by mention
-    if (newOwner.indexOf('<@') === 0) {
-        newOwner = newOwner.replace('<@', '');
-        newOwner = newOwner.replace('>', '');
-    }
+    newOwner = getIDFromMention(newOwner);
 
-    // Check if user is known to he bot
-    let knownByTheBot = false;
-    for (const userID in bot.users) {
-        if (newOwner === userID) {
-            knownByTheBot = true;
-            break;
-        }
-    }
-
-    if (!knownByTheBot) {
+    if (!isUserKnown(newOwner)) {
         bot.sendMessage({
             to: channelID,
             message: 'The bot does not know the user.',
@@ -390,7 +420,7 @@ function ownerCommand(user, userID, channelID, message) {
         return false;
     }
 
-    configModule.owner(newOwner, error => {
+    configModule.owner(newOwner, (error) => {
         if (error) {
             bot.sendMessage({
                 to: channelID,
@@ -408,7 +438,7 @@ function ownerCommand(user, userID, channelID, message) {
 }
 
 function reloadCommand(user, userID, channelID) {
-    configModule.reload(error => {
+    configModule.reload((error) => {
         if (error) {
             bot.sendMessage({
                 to: channelID,
@@ -429,7 +459,14 @@ function setAvatar(base64, channelID) {
     bot.editUserInfo({
         avatar: base64,
         password: configModule.get().credentials.password,
-    }, () => {
+    }, (error) => {
+        if (error) {
+            console.log(chalk.red(error));
+            console.log(error);
+            console.log(''); // Empty line
+            return false;
+        }
+
         bot.sendMessage({
             to: channelID,
             message: 'Avatar successfully changed.',

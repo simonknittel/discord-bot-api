@@ -12,16 +12,15 @@ Changes
 * Clean up
     + Updated dependencies
     + Updated install instructions
-    + Update the `config-sample.json` to provide a sample configuration that just works&trade; and utilized its defaults
-    + Fixed broken functions, but were working before
-* **[music-bot plugin]** Fixed download path when library property is not set
+    + Updated the `config-sample.json` to provide a sample configuration that just works&trade; and utilized the defaults
+    + Fixed broken stuff
 * **[music-bot plugin]** Added some emojis to the messages
-* **[music-bot plugin]** Shows some timestamps/progress states in the messages
+* **[music-bot plugin]** Shows now some timestamps/progress states in the messages
 * **[music-bot plugin]** Added possibility to add multiple URLs at once
 * **[music-bot plugin]** Updated the `!music playlist` command with more information (closes #48)
 * Better error handling, when renaming of the bot goes wrong
-* Fixed `!owner` command
-* Added possibility to change the owner with `!owner` by mentioning him
+* Made `!op`, `!deop` and `!owner` working with mentions (closes #52)
+* Relocated the documentation to the `documentation` directory to get version history for these too
 
 
 v0.7.9

@@ -5,7 +5,7 @@ This is a plugin based, self-hosted and configurable Discord bot. You can use pl
 Need help?
 ---
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f  
-Visit the [FAQ / Known issues](https://github.com/simonknittel/discord-bot-api/wiki/FAQ---Known-issues)  
+Visit the [FAQ / Known issues](./documentation/faq_known_issues.md)  
 
 Install
 ---
@@ -20,7 +20,7 @@ Install
 6. Install dependencies by running `npm install --msvs_version=2015`
 7. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
 8. Edit `config.json` to your needs
-    * Visit https://github.com/simonknittel/discord-bot-api/wiki/config.json-explained for more information
+    * Visit the full [documentation](./documentation/config.json_explained.md) for more information
 9. https://discordapi.com/permissions.html#103926784
 9. https://finitereality.github.io/permissions/?v=103926784
 
@@ -48,7 +48,7 @@ The bot will notify the owner if there is a new release available. It will check
 
 Develop your own plugin
 ---
-Visit https://github.com/simonknittel/discord-bot-api/wiki/Develop-your-own-plugin
+Visit the full [documentation](./documentation/develop_your_own_plugin.md)
 
 Available plugins
 ---

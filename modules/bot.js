@@ -279,6 +279,7 @@ bot.on('ready', () => {
             console.log(chalk.red(error));
             console.log(error);
             console.log(''); // Empty line
+            return false;
         }
     });
 
