@@ -34,6 +34,8 @@ let downloadQueue = {};
 let usersWantToSkip = []; // The id of the users that want to skip the current song will be stored in this array
 let currentStream = null;
 
+let disableLiveDownloadProgress = true; // Because of rate limiting
+
 let finishedListener = function() { // Wrapper lets this function called only once (because of the weird event emits from the YouTube download library)
     finishedListener = function() {};
 
@@ -65,48 +67,42 @@ let finishedListener = function() { // Wrapper lets this function called only on
     });
 }
 
-// Currently not possible because of rate limit (search for liveProgress for related code)
-// // Live updates of the `Downloading the requested video ...` message
-// let liveProgress = function() { // Wrapper lets this function called only once (because of the weird event emits from the YouTube download library)
-//     liveProgress = function() {};
-//
-//     YD.on('progress', (data) => {
-//         if (downloadQueue['yt:' + data.videoId] && downloadQueue['yt:' + data.videoId].noLiveProgress === false) {
-//             let message = '';
-//
-//             if (Math.floor(data.progress.percentage) === 100) {
-//                 message = '💾 Downloaded the requested video.';
-//             } else {
-//                 message = '💾 Downloading the requested video (' + Math.floor(data.progress.percentage) + '%) ... ';
-//             }
-//
-//             bot.editMessage({
-//                 channelID: downloadQueue['yt:' + data.videoId].channelID,
-//                 messageID: downloadQueue['yt:' + data.videoId].messageID,
-//                 message,
-//             }, (error) => {
-//                 if (error) {
-//                     console.log(chalk.red(error));
-//                     console.log(error);
-//                     console.log(''); // Empty line
-//                 }
-//             });
-//         }
-//     });
-// }
-
 let errorListener = function() { // Wrapper lets this function called only once (because of the weird event emits from the YouTube download library)
     errorListener = function() {};
 
     YD.on('error', (error) => {
         console.log(chalk.red(error));
+        console.log(error);
         console.log(''); // Empty line
+        return false;
 
         // bot.sendMessage({
         //     to: downloadQueue['yt:' + error.videoId].channelID,
         //     message: '⛔ The download of <' + error.youtubeURL + '> failed. Check out terminal of the bot to get more information.',
         // });
         // delete downloadQueue['yt:' + error.videoId];
+    });
+}
+
+// Live updates of the `Downloading the requested video ...` message
+let liveProgress = function() { // Wrapper lets this function called only once (because of the weird event emits from the YouTube download library)
+    liveProgress = function() {};
+
+    YD.on('progress', (data) => {
+        if (downloadQueue['yt:' + data.videoId] && downloadQueue['yt:' + data.videoId].noLiveProgress === false) {
+            bot.editMessage({
+                channelID: downloadQueue['yt:' + data.videoId].channelID,
+                messageID: downloadQueue['yt:' + data.videoId].messageID,
+                message: Math.floor(data.progress.percentage) === 100 ? '💾 Downloaded the requested video.' : '💾 Downloading the requested video (' + Math.floor(data.progress.percentage) + '%) ... ',
+            }, (error) => {
+                if (error) {
+                    console.log(chalk.red(error));
+                    console.log(error);
+                    console.log(''); // Empty line
+                    return false;
+                }
+            });
+        }
     });
 }
 
@@ -146,16 +142,16 @@ function playLoop(channelID) {
             currentStream.pipe(stream, {end: false});
 
             stream.once('done', function() {
-                if (currentSong) {
-                    setTimeout(() => {
-                        currentSong = null;
-                        bot.setPresence({
-                            game: null,
-                        });
+                if (!currentSong) return false;
 
-                        playLoop(channelID);
-                    }, 2000);
-                }
+                setTimeout(() => {
+                    currentSong = null;
+                    bot.setPresence({
+                        game: null,
+                    });
+
+                    playLoop(channelID);
+                }, 2000);
             });
         });
     } else {
@@ -169,9 +165,7 @@ function playLoop(channelID) {
 function extractYouTubeID(url, channelID) {
     const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const matches = url.match(regExp);
-    if (matches && matches[2].length === 11) {
-        return matches[2];
-    }
+    if (matches && matches[2].length === 11) return matches[2];
 
     bot.sendMessage({
         to: channelID,
@@ -183,7 +177,7 @@ function extractYouTubeID(url, channelID) {
 function addCommand(user, userID, channelID, message) {
     // Get the URL from the message (it should be the first element after the command)
     const urls = message.trim().split(' ');
-    // const multiple = urls.length > 1 ? true : false; // liveProgress
+    const multiple = urls.length > 1;
 
     if (urls.length < 1) {
         bot.sendMessage({
@@ -243,11 +237,15 @@ function addCommand(user, userID, channelID, message) {
                 // Create download directory
                 mkdirp(libraryPath, (error) => {
                     if (error) {
-                        console.error(error);
+                        console.log(chalk.red(error));
+                        console.log(error);
+                        console.log(''); // Empty line
+
                         bot.sendMessage({
                             to: channelID,
                             message: '⛔ There was a problem with downloading the video. Check out terminal of the bot to get more information.',
                         });
+
                         return false;
                     }
 
@@ -255,10 +253,11 @@ function addCommand(user, userID, channelID, message) {
                     const filePath = libraryPath + '/' + videoInfo.videoId + '.mp3';
                     fs.access(filePath, fs.F_OK, (error) => {
                         if (error) { // File not already downloaded
+                            const message = disableLiveDownloadProgress !== true && multiple ? '💾 Downloading the requested video' + (multiple ? '' : ' (0%)') + ' ...' : '💾 Downloading the requested video ...';
+
                             bot.sendMessage({
                                 to: channelID,
-                                // message: '💾 Downloading the requested video' + (multiple ? '' : ' (0%)') + ' ...', // liveProgress
-                                message: '💾 Downloading the requested video ...',
+                                message: message,
                             }, (error, response) => {
                                 if (error) {
                                     console.log(chalk.red(error));
@@ -269,14 +268,14 @@ function addCommand(user, userID, channelID, message) {
                                 downloadQueue['yt:' + videoInfo.videoId] = {
                                     channelID,
                                     messageID: response.id,
-                                    // noLiveProgress: multiple, // liveProgress
+                                    noLiveProgress: multiple,
                                 };
 
                                 // Download the requested song
                                 YD.download(videoInfo.videoId, videoInfo.videoId + '.mp3');
-                                errorListener();
-                                // liveProgress(); // liveProgress
                                 finishedListener();
+                                errorListener();
+                                if (disableLiveDownloadProgress !== true) liveProgress();
                             });
                         } else { // Already downloaded
                             // Add the song to the playlist

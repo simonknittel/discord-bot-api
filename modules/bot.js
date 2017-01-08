@@ -18,14 +18,10 @@ let reconnectInterval = null;
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
     // Only listen on the server defined by the config.json
-    if (bot.channels[channelID].guild_id !== configModule.get().serverID) {
-        return false;
-    }
+    if (bot.channels[channelID].guild_id !== configModule.get().serverID) return false;
 
     // Ignore messages by the bot itself
-    if (userID === bot.id) {
-        return false;
-    }
+    if (userID === bot.id) return false;
 
     // Check if channel is ignored
     if (configModule.get().ignoreChannels) {
@@ -36,13 +32,9 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                 if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
                     const channel = bot.servers[configModule.get().serverID].channels[id];
 
-                    if (channel.type !== 'text') {
-                        continue;
-                    }
+                    if (channel.type !== 'text') continue;
 
-                    if (channel.name === channelName && channel.id === channelID) {
-                        return false;
-                    }
+                    if (channel.name === channelName && channel.id === channelID) return false;
                 }
             }
         }
@@ -51,9 +43,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     // Check if a mention is required by the config.json
     if (configModule.get().mentionRequired) {
         // Check if the bot got mentioned
-        if (message.indexOf('<@' + bot.id + '>') !== 0) {
-            return false;
-        }
+        if (message.indexOf('<@' + bot.id + '>') !== 0) return false;
 
         // Remove the mention from the message
         message = message.substring(('<@' + bot.id + '>').length);
@@ -61,25 +51,19 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     }
 
     // Check if the global command prefix is on the first position of the message
-    if (message.indexOf(configModule.get().globalCommandPrefix) !== 0) {
-        return false;
-    }
+    if (message.indexOf(configModule.get().globalCommandPrefix) !== 0) return false;
 
     // Remove the global command prefix from the message
     message = message.substring(configModule.get().globalCommandPrefix.length).trim();
 
     // There is no requested command
-    if (message.length < 1) {
-        return false;
-    }
+    if (message.length < 1) return false;
 
     // Check if the cooldown of the user is already expired
     if (configModule.get().commandCooldown && commandHistory[userID]) {
         const timeDifference = new Date().getTime() - commandHistory[userID].getTime();
         // The cooldown is not yet expired
-        if (timeDifference < configModule.get().commandCooldown) {
-            return false;
-        }
+        if (timeDifference < configModule.get().commandCooldown) return false;
     }
     commandHistory[userID] = new Date();
 
@@ -97,10 +81,8 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                 : plugin.defaultCommandPrefix;
 
             if (!pluginCommandPrefix || message[0] === pluginCommandPrefix) {
-                if (pluginCommandPrefix) {
-                    // Remove the prefix of the plugin from the message
-                    message.shift();
-                }
+                // Remove the prefix of the plugin from the message
+                if (pluginCommandPrefix) message.shift();
 
                 for (let command in plugin.commands) {
                     if (plugin.commands.hasOwnProperty(command)) {
@@ -108,13 +90,9 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                         let synonyms = [];
 
                         // Check plugins default synonyms
-                        if (plugin.commands[command].synonyms) {
-                            synonyms = plugin.commands[command].synonyms;
-                        }
+                        if (plugin.commands[command].synonyms) synonyms = plugin.commands[command].synonyms;
 
-                        if (synonyms.indexOf(command) < 0) {
-                            synonyms.unshift(command);
-                        }
+                        if (synonyms.indexOf(command) < 0) synonyms.unshift(command);
 
                         // Check config.json for synonyms
                         if (
@@ -127,14 +105,10 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                             for (let synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
                                 if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
                                     if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
-                                        if (synonyms.indexOf(synonym) < 0) {
-                                            synonyms.push(synonym);
-                                        }
+                                        if (synonyms.indexOf(synonym) < 0) synonyms.push(synonym);
                                     } else if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled === false) {
                                         const index = synonyms.indexOf(synonym);
-                                        if (index >= 0) {
-                                            synonyms.splice(index, 1);
-                                        }
+                                        if (index >= 0) synonyms.splice(index, 1);
                                     }
                                 }
                             }
@@ -186,9 +160,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                     if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
                                         const channel = bot.servers[configModule.get().serverID].channels[id];
 
-                                        if (channel.type !== 'text') {
-                                            continue;
-                                        }
+                                        if (channel.type !== 'text') continue;
 
                                         if (channel.name === requestChannel && channel.id !== channelID) {
                                             bot.sendMessage({
@@ -247,11 +219,7 @@ bot.on('ready', () => {
     let userInfo = {};
 
     // Set the name of the bot to the one defined in the config.json
-    if (configModule.get().credentials.name.trim()) {
-        if (bot.username !== configModule.get().credentials.name.trim()) {
-            userInfo.username = configModule.get().credentials.name;
-        }
-    }
+    if (configModule.get().credentials.name.trim() && bot.username !== configModule.get().credentials.name.trim()) userInfo.username = configModule.get().credentials.name;
 
     // Set the avatar of the bot to the one defined in the config.json
     if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
@@ -261,11 +229,14 @@ bot.on('ready', () => {
                 url: configModule.get().credentials.avatar,
                 encoding: null,
             }, (error, response, body) => {
-                if (!error && response.statusCode == 200) {
-                    userInfo.avatar = new Buffer(body).toString('base64');
-                } else {
-                    console.log(chalk.red('The avatar could not be set. Make sure the path is correct.'));
+                if (error) {
+                    console.log(chalk.red(error));
+                    console.log(error);
+                    console.log(''); // Empty line
+                    return false;
                 }
+
+                userInfo.avatar = new Buffer(body).toString('base64');
             });
         } else {
             userInfo.avatar = fs.readFileSync(configModule.get().credentials.avatar, 'base64');
@@ -286,16 +257,16 @@ bot.on('ready', () => {
     // Listen for update events
     events.on('update', data => {
         // Send private message to owner
-        if (configModule.get().ownerID) {
-            bot.sendMessage({
-                to: configModule.get().ownerID,
-                message: 'There is a new version available for the bot.\n\n'
-                    + 'Visit <https://github.com/simonknittel/discord-bot-api> to download the latest version.\n'
-                    + 'Check out the CHANGELOG.md file for important changes.\n\n'
-                    + 'Your version: ' + data.currentVersion + '\n'
-                    + 'Latest version: ' + data.latestVersion + '\n',
-            });
-        }
+        if (!configModule.get().ownerID) return false;
+
+        bot.sendMessage({
+            to: configModule.get().ownerID,
+            message: 'There is a new version available for the bot.\n\n'
+                + 'Visit <https://github.com/simonknittel/discord-bot-api> to download the latest version.\n'
+                + 'Check out the CHANGELOG.md file for important changes.\n\n'
+                + 'Your version: ' + data.currentVersion + '\n'
+                + 'Latest version: ' + data.latestVersion + '\n',
+        });
     });
 });
 

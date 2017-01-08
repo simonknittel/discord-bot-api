@@ -21,8 +21,7 @@ Install
 7. Duplicate the [config-sample.json](./config-sample.json) and rename it to `config.json`
 8. Edit `config.json` to your needs
     * Visit the full [documentation](./documentation/config.json_explained.md) for more information
-9. https://discordapi.com/permissions.html#103926784
-9. https://finitereality.github.io/permissions/?v=103926784
+9. Invite the bot to your server https://finitereality.github.io/permissions/?v=103926784
 
 Start
 ---
@@ -70,11 +69,11 @@ General commands
     + Synonyms: `!userid`
 * `!enable <plugin>` - Enables a plugin
     + Example: `!enable dice`
-* `!op <user id> <permission>` - Gives an user a permission
-* `!deop <user id> <permission>` - Removes a permission from an user
+* `!op <user id or mention> <permission>` - Gives an user a permission
+* `!deop <user id or mention> <permission>` - Removes a permission from an user
 * `!prefix <new prefix>` - Changes the global command prefix
     + Example: `!prefix $`
-* `!owner <user id>` - Changes the owner of the bot
+* `!owner <user id or mention>` - Changes the owner of the bot
 * `!rename <new name>` - Renames the bot
 * `!reload` - Reloads the config
     + Synonyms: `!refresh`

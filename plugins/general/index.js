@@ -52,14 +52,10 @@ function commandsCommand(user, userID, channelID) {
                         for (let synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
                             if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
                                 if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
-                                    if (synonyms.indexOf(synonym) < 0) {
-                                        synonyms.push(synonym);
-                                    }
+                                    if (synonyms.indexOf(synonym) < 0) synonyms.push(synonym);
                                 } else if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled === false) {
                                     const index = synonyms.indexOf(synonym);
-                                    if (index >= 0) {
-                                        synonyms.splice(index, 1);
-                                    }
+                                    if (index >= 0) synonyms.splice(index, 1);
                                 }
                             }
                         }
@@ -264,10 +260,7 @@ function renameCommand(user, userID, channelID, message) {
 
 // Check if a user is known to he bot
 function isUserKnown(userID) {
-    for (const id in bot.users) {
-        if (userID === id) return true;
-    }
-
+    for (const id in bot.users) if (userID === id) return true;
     return false;
 }
 

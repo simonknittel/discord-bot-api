@@ -5,9 +5,7 @@ import bot from './bot';
 // Check if the user has the requested permission
 function isOperator(userID, requestedPermission, channelID) {
     // The owner has every permission
-    if (userID === configModule.get().ownerID) {
-        return true;
-    }
+    if (userID === configModule.get().ownerID) return true;
 
     if (
         configModule.get().operators
