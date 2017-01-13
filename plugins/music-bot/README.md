@@ -10,8 +10,8 @@ Commands
     + Currently only YouTube supported
     + Example: `!music add https://www.youtube.com/watch?v=iyqfHvoUtkU`
     + Synonyms: `!music new <link>`
-* `!music remove <link>` - Removes a song from the playlist
-    + Example: `!music remove https://www.youtube.com/watch?v=iyqfHvoUtkU`
+* `!music remove <Position on the playlist>` - Removes a song from the playlist
+    + Example: `!music remove 1`
 * `!music skip` - Skips the current song
 * `!music play` - Starts the playlist
     + Synonyms: `!music start`

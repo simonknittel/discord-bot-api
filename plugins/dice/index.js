@@ -3,6 +3,7 @@ import bot from '../../modules/bot';
 
 function rollCommand(user, userID, channelID, message) {
     message = message.split(' ');
+
     if (message.length < 1 || message[0].length < 1 || isNaN(message[0])) {
         bot.sendMessage({
             to: channelID,

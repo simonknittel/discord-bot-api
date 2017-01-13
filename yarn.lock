@@ -502,8 +502,8 @@ babel-types@^6.16.0, babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.21
     to-fast-properties "^1.0.1"
 
 babylon@^6.11.0:
-  version "6.14.1"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.14.1.tgz#956275fab72753ad9b3435d7afe58f8bf0a29815"
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.15.0.tgz#ba65cfa1a80e1759b0e89fb562e27dccae70348e"
 
 balanced-match@^0.4.1:
   version "0.4.2"
@@ -661,9 +661,9 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
-discord.io@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/discord.io/-/discord.io-2.4.0.tgz#dfb00f758e295413d6a38ee6462da8903e82e141"
+discord.io@2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/discord.io/-/discord.io-2.4.2.tgz#bd21ecfc8bbd03a9d33e767cf1a5cc47eae1be7d"
   dependencies:
     cjopus "^0.0.4"
     tweetnacl "^0.14.0"

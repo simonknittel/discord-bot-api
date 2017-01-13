@@ -197,6 +197,10 @@ bot = new Discord.Client({
 
 // Discord instance is ready
 bot.on('ready', () => {
+    console.log(chalk.green('Discord API'));
+    console.log('Connected');
+    console.log(''); // Empty line
+
     console.log(chalk.green('Plugins'));
     for (const name in configModule.get().plugins) {
         if (configModule.get().plugins.hasOwnProperty(name)) {
@@ -208,10 +212,6 @@ bot.on('ready', () => {
             console.log(name + ' loaded');
         }
     }
-    console.log(''); // Empty line
-
-    console.log(chalk.green('Discord Bot API started.'));
-    console.log('v' + packageJSON.version);
     console.log(''); // Empty line
 
     reconnectInterval = null;
@@ -268,10 +268,14 @@ bot.on('ready', () => {
                 + 'Latest version: ' + data.latestVersion + '\n',
         });
     });
+
+    console.log(chalk.green('Discord Bot API started.'));
+    console.log('v' + packageJSON.version);
+    console.log(''); // Empty line
 });
 
 // Try to reconnect
-bot.on('disconnected', () => {
+bot.on('disconnect', () => {
     clearInterval(reconnectInterval);
 
     console.log(chalk.red('Discord Bot API disconnected.'));

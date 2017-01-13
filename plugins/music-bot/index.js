@@ -303,35 +303,45 @@ function addCommand(user, userID, channelID, message) {
 }
 
 function removeCommand(user, userID, channelID, message) {
-    const url = message.split(' ')[0];
+    const itemsToRemove = message.split(' ');
 
-    if (url.length < 1) {
+    if (itemsToRemove.length < 1) {
         bot.sendMessage({
             to: channelID,
-            message: '⛔ You have to add a link to your command.',
+            message: '⛔ You have to add atleast one songs to your command.',
         });
 
         return false;
     }
 
-    // Extract YouTube ID
-    const youtubeID = extractYouTubeID(url, channelID);
-    if (!youtubeID) return false;
+    let removedItems = [];
 
-    playlist = playlist.filter(element => element.youtubeID !== youtubeID);
+    for (const index of itemsToRemove) {
+        if (index < 1 || index > itemsToRemove.length) continue;
+
+        removedItems.push(index + '. ' + playlist[index - 1].rawVideoInfo.title + "\r\n");
+        playlist.splice(index - 1, 1);
+    }
+
+    if (removedItems.length < 1) {
+        bot.sendMessage({
+            to: channelID,
+            message: '⛔ No songs removed.',
+        });
+
+        return true;
+    }
 
     bot.sendMessage({
         to: channelID,
-        message: '✅ Successfully removed from the playlist.',
+        message: '✅ Songs removed from the playlist:' + "\r\n" + '```' + removedItems.join('') + '```',
     });
 }
 
 function skipCommand(user, userID, channelID) {
     // Check if the bot is in a voice channel
     if (voiceChannelID) {
-        if (usersWantToSkip.indexOf(userID) === -1) {
-            usersWantToSkip.push(userID);
-        }
+        if (usersWantToSkip.indexOf(userID) === -1) usersWantToSkip.push(userID);
 
         const skipLimit = configModule.get().plugins['music-bot'].skipLimit ? configModule.get().plugins['music-bot'].skipLimit : 1;
         if (usersWantToSkip.length >= skipLimit) {
@@ -360,6 +370,8 @@ function skipCommand(user, userID, channelID) {
 
 // Leaves every voice channel.
 function leave() {
+    if (currentStream !== null) stopCommand();
+
     // It's needed to loop over all channels, because after a reconnect the previous voice channel is unknown
     for (const channelID in bot.channels) {
         if (bot.channels[channelID].type === 'voice') {
@@ -391,7 +403,23 @@ function enter(message, isID, callback) {
         return false;
     }
 
-    bot.joinVoiceChannel(voiceChannelID);
+    bot.joinVoiceChannel(voiceChannelID, (error, events) => {
+        // events.on('speaking', (userID, SSRC, speakingBool) => {
+        //     // Ignore the bots own events
+        //     if (userID === bot.id) return false;
+        //
+        //     // Check if speaking user is in the same channel
+        //     if (!bot.channels[voiceChannelID].members[userID]) return false;
+        //
+        //     // Reduce the volume
+        //     if (speakingBool) { // Started speaking
+        //         console.log('started');
+        //     } else { // Stopped speaking
+        //         console.log('stopped');
+        //     }
+        // });
+    });
+
     return true;
 }
 
