@@ -2,12 +2,11 @@
 
 ```cson
 credentials:
+    token: "" # Add the token of your bot here
     name: "Bot - !commands"
-    email: ""
-    password: ""
 
-ownerID: ""
-serverID: ""
+ownerID: "" # Add the ID of your Discord account here
+serverID: "" # Add the ID of the server the bot should run on here
 
 invites: [
     ""
@@ -27,7 +26,7 @@ operators:
             "general:kill"
         ]
 
-plugins:
+plugins: # Plugins listed here will be enabled
     general:
         commands:
             about:
@@ -49,8 +48,6 @@ plugins:
 ```
 
 **credentials.name:** You can give your bot here a new name and it will change when he joins your server (optional).  
-**credentials.email:** The email address of your bot. It is recommend to create a seperate account for your bot (required).  
-**credentials.password:** The password of your bot (required).  
 
 **ownerID:** The ID of your main account. This will give you the permission for some commands only the owner should be able to use.  
 **serverID:** The ID of the server the bot should join (required).  

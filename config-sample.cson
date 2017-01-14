@@ -1,6 +1,6 @@
 credentials:
-    token: ""
-ownerID: ""
-serverID: ""
-plugins:
+    token: "" # Add the token of your bot here
+ownerID: "" # Add the ID of your Discord account here
+serverID: "" # Add the ID of the server the bot should run on here
+plugins: # Plugins listed here will be enabled
     general: {}
