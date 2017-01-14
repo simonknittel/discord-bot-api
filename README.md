@@ -11,16 +11,11 @@ Install
 ---
 1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
 2. Make sure you have [Node](https://nodejs.org/en) installed and available in your PATH variable
-3. Make sure you have [Python 2.7](https://python.org) installed and available in your PATH variable
-    * Run `npm config set python python2.7`
-4. **[Windows]** Make sure you have `Visual Studio Community 2015` installed
-    * Make sure to check `Tools and Windows SDK` in the install instructions
-    * Run `npm config set msvs_version 2015 --global`
-5. Install dependencies by running `npm install --msvs_version=2015`
-6. Duplicate the [config-sample.cson](./config-sample.cson) and rename it to `config.cson`
-7. Edit `config.cson` to your needs
+3. Install dependencies by running `npm install --production`
+4. Duplicate the [config-sample.cson](./config-sample.cson) and rename it to `config.cson`
+5. Edit `config.cson` to your needs
     * Visit the full [documentation](./documentation/config.cson_explained.md) for more information
-8. Invite the bot to your server https://finitereality.github.io/permissions/?v=103926784
+6. Invite the bot to your server https://finitereality.github.io/permissions/?v=103926784
 
 Start
 ---
