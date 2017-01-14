@@ -1,8 +1,9 @@
 Install
 ---
-1. Copy the plugin to the `plugins` directory.
-2. Run `npm install` in the directory of the plugin
-3. Start your bot and enable the plugin with `!enable music-bot`
+1. Make sure you have [FFmpeg](https://ffmpeg.org) installed and available in your PATH variable or configure in your config.json
+2. Copy the plugin to the `plugins` directory.
+3. Run `npm install` in the directory of the plugin
+4. Start your bot and enable the plugin with `!enable music-bot`
 
 Commands
 ---
