@@ -1,13 +1,12 @@
-v0.7.10 _not released yet_
-===
+# Changelog
+
+## v0.7.10 _not released yet_
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10
 
-Important changes
----
+### Important changes
 * Restart of development. This first update was just to make everything working as before.
 
-Changes
----
+### Changes
 * Fix for issue #45
 * Clean up
     + Updated dependencies
@@ -23,12 +22,10 @@ Changes
 * Relocated the documentation to the `documentation` directory to get version history for these too
 
 
-v0.7.9
-===
+## v0.7.9
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.9
 
-Changes
----
+### Changes
 * Every command can now have synonyms. The plugins can define synonyms itself, but you can also add your custom ones or disable by the plugin defined ones with your `config.json`.
     + Example:
     ```json
@@ -70,12 +67,10 @@ Changes
     }
     ```
 
-v0.7.8
-===
+## v0.7.8
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.8
 
-Important changes
----
+### Important changes
 * You don't have to require permissions anymore in your `config.json` for specific commands (defined by the plugin). Some commands will now require permissions by default. You can set it to false if they sould not require permissions. The following commands will now require permissions by default:
     + `!kill`
     + `!owner`
@@ -86,16 +81,13 @@ Important changes
     + `!rename`
     + `!reload`
 
-Changes
----
+### Changes
 * Fixed permission system
 
-v0.7.7
-===
+## v0.7.7
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.7
 
-Changes
----
+### Changes
 * You can now specify a channel which is required to request a command
     + Example:
     ```json
@@ -110,12 +102,10 @@ Changes
     }
     ```
 
-v0.7.6
-===
+## v0.7.6
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.6
 
-Important changes
----
+### Important changes
 * **[music-bot plugin]** You can now define the max length of a song (in minutes). It defaults to `15` minutes. `0` minutes will be endless.
     + Example:
     ```json
@@ -129,8 +119,7 @@ Important changes
     + Run `npm install discord.io` to install the new version
 * You can now define how fast (in seconds) your `config.json` will be reloaded automatically without restarting the bot (optional).It default to every 5 seconds. Settings it to `0` disables it. Example: `"reloadConfig": 10`.
 
-Changes
----
+### Changes
 * Renamed some directories
 * Added missing information to the install instruction
 * Added a license
@@ -140,34 +129,27 @@ Changes
 * **[music-bot plugin]** You don't need to set a library anymore. It will default to the OS specific temp directories
 * Disconnect the bot before killing the process. The bot should now log out everytime when using `!kill`.
 
-v0.7.5
-===
+## v0.7.5
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.5
 
-Important changes
----
+### Important changes
 * Fixed issue that will check for updates in a high rate and will get blocked by the GitHub API because of that
 
-v0.7.4
-===
+## v0.7.4
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.4
 
-Important changes
----
+### Important changes
 * Added `!owner <user id>` to change the owner of the bot
     + Make sure to require permissions for this in your `config.json`. In the future commands like this will require permissions by default.
 
-Changes
----
+### Changes
 * Added `!reload` to reload your `config.json`
 * Send update notifications through direct messages to the owner only once for each version
 
-v0.7.3
-===
+## v0.7.3
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.3
 
-Important changes
----
+### Important changes
 * Bumped the version of `discord.io` to 1.6.3
     + Remove the `node_modules` directory and install all dependencies again with `npm install`
 * Removed `!config` completely. In addition to that: Added multiple specific commands to change the `config.json`
@@ -177,21 +159,17 @@ Important changes
     + `!prefix <new prefix>` Changes the global command prefix
     + Make sure to require permissions for them in your `config.json`. In the future commands like this will require permissions by default.
 
-Changes
----
+### Changes
 * Removed `enablePlugin` from the `!commands` output
 * On disconnect it tries now to reconnect every 1 minute, not 10
 
-v0.7.2
-===
+## v0.7.2
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.2
 
-Important changes
----
+### Important changes
 * `!config` is temporarily disabled, because it does not work as expected and can overrite parts of your `config.json`
 
-Changes
----
+### Changes
 * You can now enable plugins without having to restart with `!enable <name>`
     + Example: `!enable dice`
 * [music-bot plugin] When you leave out the channel in the `!music enter Channel` command and you are in a voice channel right now, it will try to join your voice channel
@@ -210,12 +188,10 @@ Changes
 * The bot will now notify the owner through a direct message if a new version is available.
 * The bot will now show the enabled plugins on start-up.
 
-v0.7.1
-===
+## v0.7.1
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.1
 
-Changes
----
+### Changes
 * [music-bot plugin] You can now define a channel which the bot should automatically join when started.
     + Example:
     ```json
@@ -237,65 +213,51 @@ Changes
     }
     ```
 
-v0.7.0
-===
+## v0.7.0
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.0
 
-Important changes
----
+### Important changes
 * Bumped the version of `discord.io` to 1.6.2
     + Remove the `node_modules` directory and install all dependencies again with `npm install`
 
-Changes
----
+### Changes
 * You can now roll a dice with the new `dice` plugin
     + Example: `!dice roll 6` Rolls a dice with 6 faces
 * The music-bot plugin is playing sound again
 * Removed some deprecated code
 
-v0.6.9
-===
+## v0.6.9
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.9
 
-Changes
----
+### Changes
 * Changed the style of the update notification.
 * You will now get notified when required properties like the bot credentials are not set in your config.json.
 
-v0.6.8
-===
+## v0.6.8
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.8
 
-Changes
----
+### Changes
 * Removed code used for testing ...
 
-v0.6.7
-===
+## v0.6.7
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.7
 
-Important changes
----
+### Important changes
 * Bumped the version of `discord.io` to 1.6.2
     + Remove the `node_modules` directory and install all dependencies again with `npm install`
 
-Changes
----
+### Changes
 * The bot tries to reconnect now if it gets disconnected from Discord.
 
-v0.6.6
-===
+## v0.6.6
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.6
 
-Important changes
----
+### Important changes
 * There is a new [CHANGELOG.md](./CHANGELOG.md) file which shows you important changes and what changes for you.
 
-v0.6.5
-===
+## v0.6.5
 
-Important changes
----
+### Important changes
 
 * You do not have to add plugins to the top of the [plugins.js](./_modules/plugin.js) anymore to enable them. You have to enable them in your `config.json` now. You have to give them at least an empty object like `"music-bot": {}`. Make sure to have `general` enabled to get the general commands like `!kill`, `!config`, `!commands`, ... Example:
 
@@ -312,12 +274,10 @@ Other changes
 ---
 * The bot prints your version in the terminal when you start the bot.
 
-v0.6.4
-===
+## v0.6.4
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.6.4
 
-Important changes
----
+### Important changes
 * The permission system has been reworked.
     + You have to define in your `config.json` now if a specific permission is required.
     + In addition to that every command got a default permission like `general:kill` or `music-bot:enter`.
@@ -348,11 +308,9 @@ Important changes
 }
 ```
 
-v0.6.3
-===
+## v0.6.3
 
-Important changes
----
+### Important changes
 * The bot can auto accept invites defined in your `config.json` now. Example:
 ```json
 "invites": [
@@ -360,6 +318,5 @@ Important changes
 ]
 ```
 
-Changes
----
+### Changes
 * Added some more error logging

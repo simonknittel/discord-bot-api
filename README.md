@@ -6,13 +6,19 @@ Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
 Visit the [FAQ / Known issues](./documentation/faq_known_issues.md)  
 
 ## Install
+
+### Install global dependencies
+1. Install [Node](https://nodejs.org) and be sure it's available in your [PATH](https://en.wikipedia.org/wiki/Environment_variable) variable
+
+### Install latest version of the bot
 1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
-2. Make sure you have [Node](https://nodejs.org) installed and available in your PATH variable
-3. Install dependencies by running `npm install --production`
-4. Duplicate the [config-sample.cson](./config-sample.cson) and rename it to `config.cson`
-5. Edit `config.cson` to your needs
+2. Extract the download
+3. Open a terminal in the extracted directory
+4. Install the dependencies by running `npm install --production`
+5. Duplicate the [config-sample.cson](./config-sample.cson) and rename it to `config.cson`
+6. Edit the new `config.cson` to your needs
     * Visit the full [documentation](./documentation/config.cson_explained.md) for more information
-6. Invite the bot to your server https://finitereality.github.io/permissions/?v=103926784
+7. Invite the bot to your server https://finitereality.github.io/permissions/?v=103926784
 
 ## Start
 1. Run `npm start`
@@ -20,7 +26,7 @@ Visit the [FAQ / Known issues](./documentation/faq_known_issues.md)
 ## Add plugins
 1. Follow the install instructions of the plugin
 
-OR
+_OR_
 
 1. Copy the plugin to the [plugins](./plugins) directory
 2. Start your bot and enable the plugin with `!enable <plugin>`
@@ -31,7 +37,7 @@ The bot will notify the owner if there is a new release available. It will check
 
 1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
 2. Keep your old `config.cson`
-    * Make sure to read the changelog for important changes
+    * Make sure to read the changelog for configuration changes
 
 ## Develop your own plugin
 Visit the full [documentation](./documentation/develop_your_own_plugin.md)

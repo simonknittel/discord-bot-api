@@ -9,10 +9,18 @@ import packageJSON from '../../package';
 import request from 'request';
 import fs from 'fs';
 
+/**
+ * Returns a short description about the bot.
+ * @method aboutCommand
+ * @param  {[type]}   user      [description]
+ * @param  {Interger} userID    [description]
+ * @param  {Integer}  channelID [description]
+ * @return {Void}               Returns nothing
+ */
 function aboutCommand(user, userID, channelID) {
     bot.sendMessage({
         to: channelID,
-        message: 'Hey there, my name is the `Discord Bot API`. I\'m made by Simon Knittel (<hallo@simonknittel.de>) and based on the Node.js library called discord.io (<https://github.com/izy521/discord.io>). My main feature is to offer a API for plugins that can be used with me. Visit <' + packageJSON.homepage + '> for more information. If you find bugs or have other issues please report them here <' + packageJSON.bugs.url + '>. Enter `' + configModule.get().globalCommandPrefix + 'commands` to get all my commands.',
+        message: 'Hey there, my name is the `Discord Bot API`. I\'m made by Simon Knittel (hallo@simonknittel.de) and based on the Node.js library called discord.io (<https://github.com/izy521/discord.io>). My main feature is to offer a API for plugins that can be used with me. Visit <' + packageJSON.homepage + '> for more information. If you find bugs or have other issues please report them here <' + packageJSON.bugs.url + '>. Enter `' + configModule.get().globalCommandPrefix + 'commands` to get all my commands.',
     });
 }
 
@@ -70,10 +78,9 @@ function commandsCommand(user, userID, channelID) {
                     synonyms.shift();
 
                     if (synonyms.length > 0) {
-                        string += ' (synonyms: `' + synonyms.join('`, `') + '`)'
-                            + '\n';
+                        string += ' (synonyms: `' + synonyms.join('`, `') + '`)' + "\n";
                     } else {
-                        string += '\n';
+                        string += "\n";
                     }
                 }
             }
