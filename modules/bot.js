@@ -15,7 +15,7 @@ let bot = null; // The Discord instance will be stored in this object
 let commandHistory = {};
 let reconnectInterval = null;
 
-// Handle incomming message
+// Handles incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
     // Only listen on the server defined by the config.cson
     if (bot.channels[channelID].guild_id !== configModule.get().serverID) return false;
@@ -40,7 +40,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
         }
     }
 
-    // Check if a mention is required by the config.cson
+    // Checks if a mention is required by the config.cson
     if (configModule.get().mentionRequired) {
         // Check if the bot got mentioned
         if (message.indexOf('<@' + bot.id + '>') !== 0) return false;

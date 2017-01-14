@@ -106,7 +106,12 @@ let liveProgress = function() { // Wrapper lets this function called only once (
     });
 }
 
-// Iterate through the playlist until there are no songs anymore
+/**
+ * Iterate through the playlist until there are no songs anymore
+ * @method playLoop
+ * @param  {Interger} channelID [description]
+ * @return {Void}
+ */
 function playLoop(channelID) {
     // Check if the bot is in a voice channel
     if (voiceChannelID) {

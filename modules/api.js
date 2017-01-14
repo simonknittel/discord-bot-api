@@ -2,7 +2,14 @@
 import configModule from './config';
 import bot from './bot';
 
-// Check if the user has the requested permission
+/**
+ * Checks if the user has the requested permission
+ * @method isOperator
+ * @param  {Integer} userID              [description]
+ * @param  {String}  requestedPermission [description]
+ * @param  {Integer} channelID           [description]
+ * @return {Boolean}                     [description]
+ */
 function isOperator(userID, requestedPermission, channelID) {
     // The owner has every permission
     if (userID === configModule.get().ownerID) return true;
