@@ -59,8 +59,8 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     // There is no requested command
     if (message.length < 1) return false;
 
-    // Check if the cooldown of the user is already expired
-    if (configModule.get().commandCooldown && commandHistory[userID]) {
+    // Check if the cooldown of the user is already expired or if the user is the owner
+    if (configModule.get().commandCooldown && commandHistory[userID] && userID !== configModule.get().ownerID) {
         const timeDifference = new Date().getTime() - commandHistory[userID].getTime();
         // The cooldown is not yet expired
         if (timeDifference < configModule.get().commandCooldown) return false;
