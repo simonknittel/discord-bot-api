@@ -17,7 +17,7 @@ let reconnectInterval = null;
 
 // Handle incomming message
 function handleMessage(user, userID, channelID, message, rawEvent) {
-    // Only listen on the server defined by the config.json
+    // Only listen on the server defined by the config.cson
     if (bot.channels[channelID].guild_id !== configModule.get().serverID) return false;
 
     // Ignore messages by the bot itself
@@ -40,7 +40,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
         }
     }
 
-    // Check if a mention is required by the config.json
+    // Check if a mention is required by the config.cson
     if (configModule.get().mentionRequired) {
         // Check if the bot got mentioned
         if (message.indexOf('<@' + bot.id + '>') !== 0) return false;
@@ -94,7 +94,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
 
                         if (synonyms.indexOf(command) < 0) synonyms.unshift(command);
 
-                        // Check config.json for synonyms
+                        // Check config.cson for synonyms
                         if (
                             configModule.get().plugins
                             && configModule.get().plugins[plugin.name]
@@ -218,10 +218,10 @@ bot.on('ready', () => {
 
     let userInfo = {};
 
-    // Set the name of the bot to the one defined in the config.json
+    // Set the name of the bot to the one defined in the config.cson
     if (configModule.get().credentials.name.trim() && bot.username !== configModule.get().credentials.name.trim()) userInfo.username = configModule.get().credentials.name;
 
-    // Set the avatar of the bot to the one defined in the config.json
+    // Set the avatar of the bot to the one defined in the config.cson
     if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
         const reg = new RegExp(/^(http(s)?:\/\/.){1}(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
         if (reg.test(configModule.get().credentials.avatar)) {

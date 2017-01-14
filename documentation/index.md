@@ -1,4 +1,4 @@
-[config.json explained](./config.json_explained.md)  
+[config.cson explained](./config.cson_explained.md)  
 [Develop your own plugin](./develop_your_own_plugin.md)  
 [FAQ / Known issues](./faq_kown_issues.md)
 

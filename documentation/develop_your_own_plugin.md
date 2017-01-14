@@ -5,7 +5,7 @@ The Discord Bot API runs with [babel-node](https://babeljs.io/docs/usage/cli/#ba
 **2. Fill it with the basic skeleton (read the comments):**
 ```javascript
 let plugin = {
-    name: 'your-plugin', // The bot will look for this name in the config.json
+    name: 'your-plugin', // The bot will look for this name in the config.cson
     defaultCommandPrefix: 'prefix', // Give your plugin a custom command prefix which will be lead by the global command prefix
     commands: { // Define your commands here
         your: { // This key defines the keyword this command listens to
@@ -24,7 +24,7 @@ export default plugin;
 
 **4. Done**
 
-I want to access the `config.json`
+I want to access the `config.cson`
 ---
 **1. Import the configModule with:**
 ```javascript
@@ -32,7 +32,7 @@ import configModule from '../modules/config';
 ```
 **2. Access the config with:**
 ```javascript
-configModule.get().globalCommandPrefix // Returns the globalCommandPrefix set by the config.json
+configModule.get().globalCommandPrefix // Returns the globalCommandPrefix set by the config.cson
 ```
 
 I want to check if a user has a specific permission

@@ -212,10 +212,10 @@ function addCommand(user, userID, channelID, message) {
                 // Check length of video
                 let maxLength = configModule.get().plugins['music-bot'].maxLength;
                 if (maxLength && isNaN(maxLength)) {
-                    console.log(chalk.styles.red.open + 'The max length of a song defined in your "config.json" is invalid. Therefore the download of ' + chalk.styles.red.close + videoInfo.url + chalk.styles.red.open + ' will be stopped.' + chalk.styles.red.close);
+                    console.log(chalk.styles.red.open + 'The max length of a song defined in your "config.cson" is invalid. Therefore the download of ' + chalk.styles.red.close + videoInfo.url + chalk.styles.red.open + ' will be stopped.' + chalk.styles.red.close);
                     bot.sendMessage({
                         to: channelID,
-                        message: '⛔ The max length of a song defined in your "config.json" is invalid. Therefore the download will be stopped.',
+                        message: '⛔ The max length of a song defined in your "config.cson" is invalid. Therefore the download will be stopped.',
                     });
                     return false;
                 } else if (Math.ceil(maxLength) === 0) {

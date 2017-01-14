@@ -1,6 +1,6 @@
 Install
 ---
-1. Make sure you have [FFmpeg](https://ffmpeg.org) installed and available in your PATH variable or configure in your config.json
+1. Make sure you have [FFmpeg](https://ffmpeg.org) installed and available in your PATH variable or configure in your config.cson
 2. Copy the plugin to the `plugins` directory.
 3. Run `npm install` in the directory of the plugin
 4. Start your bot and enable the plugin with `!enable music-bot`
@@ -27,7 +27,7 @@ Commands
 
 Config
 ---
-You can configure the `music-bot` by extending your `config.json` with the following:
+You can configure the `music-bot` by extending your `config.cson` with the following:
 
 * `commandPrefix` With this you can set a custom command prefix for this plugin.
     + Optional
@@ -51,17 +51,15 @@ You can configure the `music-bot` by extending your `config.json` with the follo
 
 Example
 ---
-```json
-"plugins": {
-    "music-bot": {
-        "commandPrefix": "music",
-        "library": "../music",
-        "skipLimit": 1,
-        "announceSongs": true,
-        "autoJoinVoiceChannel": "General",
-        "maxLength": 15
-    }
-}
+```cson
+plugins:
+    "music-bot":
+        commandPrefix: "music",
+        library: "../music",
+        skipLimit: 1,
+        announceSongs: true,
+        autoJoinVoiceChannel: "General",
+        maxLength: 15
 ```
 
 Need help?

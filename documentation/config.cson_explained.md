@@ -1,55 +1,49 @@
-```json
-{
-    "credentials": {
-        "name": "Bot - !commands",
-        "email": "",
-        "password": ""
-    },
-    "ownerID": "",
-    "serverID": "",
-    "invites": [
-        ""
-    ],
-    "mentionRequired": false,
-    "globalCommandPrefix": "!",
-    "reloadConfig": 5,
-    "commandCooldown": 1000,
-    "ignoreChannels": [
-        "#bot-free-channel"
-    ],
-    "operators": {
-        "": {
-            "permissions": [
-                "general:kill"
-            ]
-        }
-    },
-    "plugins": {
-        "general": {
-            "commands": {
-                "about": {
-                    "requirePermission": false
-                },
-                "kill": {
-                    "requirePermission": true
-                }
-            }
-        },
-        "music-bot": {
-            "commands": {
-                "add": {
-                    "channel": "#music"
-                }
-            },
-            "commandPrefix": "music",
-            "library": "../music",
-            "skipLimit": 1,
-            "announceSongs": true,
-            "autoJoinVoiceChannel": "General",
-            "maxLength": 15
-        }
-    }
-}
+```cson
+credentials:
+    name: "Bot - !commands"
+    email: ""
+    password: ""
+
+ownerID: ""
+serverID: ""
+
+invites: [
+    ""
+]
+
+mentionRequired: false
+globalCommandPrefix: "!"
+reloadConfig: 5
+commandCooldown: 1000
+ignoreChannels: [
+    "#bot-free-channel"
+]
+
+operators:
+    "":
+        permissions: [
+            "general:kill"
+        ]
+
+plugins:
+    general:
+        commands:
+            about:
+                requirePermission: false
+            kill:
+                requirePermission: true
+
+    "music-bot":
+        commands:
+            add:
+                channel: "#music"
+
+        commandPrefix: "music"
+        library: "../music"
+        skipLimit: 1
+        announceSongs: true
+        autoJoinVoiceChannel: "General"
+        maxLength: 15
 ```
 
 **credentials.name:** You can give your bot here a new name and it will change when he joins your server (optional).  
@@ -61,7 +55,7 @@
 **invites:** You can define here multiple invite URLs of servers the bot will automatically join (they should look like: https://discord.gg/0jV29zKlvdJbDx3f). Other formats of invite URLs aren't possible right now.  
 **mentionRequired:** If set to true, you have to mention the bot directly (optional).  
 **commandPrefix:** Set here the prefix for all your commands (optional). It defaults to `!`  
-**reloadConfig:** Set here how fast (in seconds) your `config.json` should be reloaded automatically without restarting the bot (optional).It default to every 5 seconds. Settings it to `0` disables it.  
+**reloadConfig:** Set here how fast (in seconds) your `config.cson` should be reloaded automatically without restarting the bot (optional).It default to every 5 seconds. Settings it to `0` disables it.  
 **commandCooldown:** You can set a time in milliseconds which the user has to wait until a new command from him will be executed (optional).  
 **ignoreChannels:** Here you can define which channels should be ignored by your bot.  
 

@@ -3,14 +3,17 @@ import events from './events';
 
 // Other
 import chalk from 'chalk';
-import jsonfile from 'jsonfile';
+import CSON from 'cson';
+import fs from 'fs';
 
-let config = {}; // The config.json will be stored in this object
+let config = {}; // The config.cson will be stored in this object
 let reloadConfig = null;
 
 // Save the new config
 function save(callback) {
-    jsonfile.writeFile('./config.json', config, {spaces: 4}, (error) => {
+    const csonString = CSON.createCSONString(config);
+
+    fs.writeFile('./config.cson', csonString, (error) => {
         if (error) {
             console.log(chalk.red(error));
             console.log(''); // Empty line
@@ -150,7 +153,7 @@ function avatar(path, callback) {
 }
 
 function reload(callback) {
-    config = jsonfile.readFileSync('./config.json'); // Load the config from the config.json
+    config = CSON.load('./config.cson'); // Load the config from the config.cson
     events.emit('config reloaded');
     automaticReload();
     if (callback) callback();
@@ -170,7 +173,7 @@ function automaticReload() {
     if (Math.ceil(config.reloadConfig) === 0) return false;
 
     if (isNaN(config.reloadConfig)) {
-        console.log(chalk.red('The reload time of the config defined in your "config.json" is invalid. Therefore it defaults to 5 seconds.'));
+        console.log(chalk.red('The reload time of the config defined in your "config.cson" is invalid. Therefore it defaults to 5 seconds.'));
         return false;
     }
 
@@ -180,30 +183,30 @@ function automaticReload() {
 }
 
 if (!config.credentials) {
-    console.log(chalk.red('You have to set the credentials in your config.json.'));
+    console.log(chalk.red('You have to set the credentials in your config.cson.'));
     console.log(''); // Empty line
     process.exit();
 }
 
 if (!config.credentials.token) {
-    console.log(chalk.red('You have to set the token in your config.json.'));
+    console.log(chalk.red('You have to set the token in your config.cson.'));
     console.log(''); // Empty line
     process.exit();
 }
 
 if (!config.serverID) {
-    console.log(chalk.red('You have to set the server id in your config.json so that the bot will listen only on one server.'));
+    console.log(chalk.red('You have to set the server id in your config.cson so that the bot will listen only on one server.'));
     console.log(''); // Empty line
     process.exit();
 }
 
 if (!config.plugins || Object.keys(config.plugins).length < 1) {
-    console.log(chalk.red('There are no plugins enabled in your config.json.'));
+    console.log(chalk.red('There are no plugins enabled in your config.cson.'));
     console.log(''); // Empty line
 }
 
 if (!config.ownerID) {
-    console.log(chalk.red('You should set an owner id in your config.json to give you the full control over the bot.'));
+    console.log(chalk.red('You should set an owner id in your config.cson to give you the full control over the bot.'));
     console.log(''); // Empty line
 }
 
