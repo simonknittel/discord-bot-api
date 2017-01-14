@@ -1,3 +1,5 @@
+# Develop your own plugin
+
 The Discord Bot API runs with [babel-node](https://babeljs.io/docs/usage/cli/#babel-node), so writing in ES6 is possible.
 
 **1. Create a JavaScript file in the [plugins](../plugins) directory.**
@@ -62,10 +64,8 @@ bot.sendMessage({
 });
 ```
 
-Examples
----
+## Examples
 Visit the [music bot plugin](../plugins/music-bot) which comes included in the download of the Discord Bot API.
 
-Need help?
----
+## Need help?
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f

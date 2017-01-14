@@ -1,3 +1,5 @@
+# config.cson explained
+
 ```cson
 credentials:
     name: "Bot - !commands"
@@ -71,6 +73,5 @@ plugins:
 
 The other properties listed here are plugin specific.
 
-Need help?
----
+## Need help?
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f

@@ -1,5 +1,6 @@
-ffmpeg exited with code 1
----
+# FAQ / Known issues
+
+## ffmpeg exited with code 1
 Try to remove `ffmpeg` completly and reinstall it with `brew`.
 
 **OR/AND**

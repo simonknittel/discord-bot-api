@@ -1,12 +1,12 @@
-Install
----
+# music-bot plugin
+
+## Install
 1. Make sure you have [FFmpeg](https://ffmpeg.org) installed and available in your PATH variable or configure in your config.cson
 2. Copy the plugin to the `plugins` directory.
 3. Run `npm install` in the directory of the plugin
 4. Start your bot and enable the plugin with `!enable music-bot`
 
-Commands
----
+## Commands
 * `!music add <link>` - Adds a song to the playlist
     + Currently only YouTube supported
     + Example: `!music add https://www.youtube.com/watch?v=iyqfHvoUtkU`
@@ -25,8 +25,7 @@ Commands
     + Example: `!music join General`
     + Synonyms: `!music enter <Channel name>`
 
-Config
----
+## Config
 You can configure the `music-bot` by extending your `config.cson` with the following:
 
 * `commandPrefix` With this you can set a custom command prefix for this plugin.
@@ -49,8 +48,7 @@ You can configure the `music-bot` by extending your `config.cson` with the follo
     + Optional
     + Default: `15`
 
-Example
----
+## Example
 ```cson
 plugins:
     "music-bot":
@@ -62,12 +60,10 @@ plugins:
         maxLength: 15
 ```
 
-Need help?
----
+## Need help?
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
 
-License
----
+## License
 Copyright (C) 2016  Simon Knittel <hallo@simonknittel.de>
 
 This program is free software: you can redistribute it and/or modify

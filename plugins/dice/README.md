@@ -1,19 +1,17 @@
-Install
----
+# dice plugin
+
+## Install
 1. Copy the plugin to the `plugins` directory.
 2. Start your bot and enable the plugin with `!enable dice`
 
-Commands
----
+## Commands
 * `!dice roll <number>` - Rolls a dice with `<number>` faces.
     + Example: `!dice roll 5` - Rolls a dice with 5 faces
 
-Need help?
----
+## Need help?
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
 
-License
----
+## License
 Copyright (C) 2016  Simon Knittel <hallo@simonknittel.de>
 
 This program is free software: you can redistribute it and/or modify
