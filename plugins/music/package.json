@@ -1,6 +1,6 @@
 {
-  "name": "discord-music-bot",
-  "description": "This is a music bot for Discord based on the Discord Bot API (https://github.com/simonknittel/discord-bot-api)",
+  "name": "discord-music",
+  "description": "This is a music for Discord based on the Discord Bot API (https://github.com/simonknittel/discord-bot-api)",
   "author": "Simon Knittel <hallo@simonknittel.de> (https://simonknittel.de)",
   "homepage": "https://github.com/simonknittel/discord-bot-api",
   "keywords": [

@@ -45,8 +45,8 @@ Visit the full [documentation](./documentation/develop_your_own_plugin.md)
 ## Available plugins
 Contact me to get your plugins listed here.
 
-* [Music bot](./plugins/music-bot) (enabled by default)
-    + Visit the [README.md](./plugins/music-bot/README.md) of the plugin for the commands, install instructions and more.
+* [Music bot](./plugins/music) (enabled by default)
+    + Visit the [README.md](./plugins/music/README.md) of the plugin for the commands, install instructions and more.
 * [Dice](./plugins/dice)
     + Visit the [README.md](./plugins/dice/README.md) of the plugin for the commands, install instructions and more.
 

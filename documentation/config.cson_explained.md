@@ -30,7 +30,7 @@ plugins: # Plugins listed here will be enabled
             kill:
                 requirePermission: true # If set to true, it will require permission for this command. If set to false, it will not. If unset it will default to the plugins default.
 
-    "music-bot":
+    music:
         commands: # You can configure here each command individually
             add:
                 channel: "#music"

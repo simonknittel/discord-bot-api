@@ -1,10 +1,11 @@
 # Changelog
 
-## v0.7.10 _not released yet_
+## v0.8.0 _not released yet_
 Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10
 
 ### Important changes
 * Restart of development. This first update was just to make everything working as before.
+* Replaced JSON configuration file with CSON one
 
 ### Changes
 * Fix for issue #45
@@ -13,13 +14,16 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7
     + Updated install instructions
     + Updated the `config-sample.json` to provide a sample configuration that just works&trade; and utilized the defaults
     + Fixed broken stuff
-* **[music-bot plugin]** Added some emojis to the messages
-* **[music-bot plugin]** Shows now some timestamps/progress states in the messages
-* **[music-bot plugin]** Added possibility to add multiple URLs at once
-* **[music-bot plugin]** Updated the `!music playlist` command with more information (closes #48)
+    + Renamed `music-bot` plugin to `music`
+    + Updated the install instructions
+* **[music plugin]** Added some emojis to the messages
+* **[music plugin]** Shows now some timestamps/progress states in the messages
+* **[music plugin]** Added possibility to add multiple URLs at once
+* **[music plugin]** Updated the `!music playlist` command with more information (closes #48)
 * Better error handling, when renaming of the bot goes wrong
 * Made `!op`, `!deop` and `!owner` working with mentions (closes #52)
 * Relocated the documentation to the `documentation` directory to get version history for these too
+* The command cooldown now doesn't affect the owner (closes #47)
 
 
 ## v0.7.9

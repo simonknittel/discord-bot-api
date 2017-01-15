@@ -11,19 +11,19 @@ import fs from 'fs';
 import chalk from 'chalk';
 import os from 'os';
 
-const libraryPath = configModule.get().plugins['music-bot'].library ? configModule.get().plugins['music-bot'].library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/discord-bot-api/youtube' : '/tmp/discord-bot-api/youtube');
+const libraryPath = configModule.get().plugins.music.library ? configModule.get().plugins.music.library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/discord-bot-api/youtube' : '/tmp/discord-bot-api/youtube');
 
 let youtubeOptions = {
     outputPath: libraryPath,
     queueParallelism: 10,
 };
 
-if (configModule.get().plugins['music-bot'].ffmpeg) youtubeOptions.ffmpegPath = configModule.get().plugins['music-bot'].ffmpeg;
+if (configModule.get().plugins.music.ffmpeg) youtubeOptions.ffmpegPath = configModule.get().plugins.music.ffmpeg;
 
 let YD = new YoutubeMp3Downloader(youtubeOptions);
 
 events.on('config reloaded', () => {
-    if (configModule.get().plugins['music-bot'].ffmpeg) youtubeOptions.ffmpegPath = configModule.get().plugins['music-bot'].ffmpeg;
+    if (configModule.get().plugins.music.ffmpeg) youtubeOptions.ffmpegPath = configModule.get().plugins.music.ffmpeg;
     YD = new YoutubeMp3Downloader(youtubeOptions);
 });
 
@@ -134,7 +134,7 @@ function playLoop(channelID) {
             },
         });
 
-        const announceSongs = configModule.get().plugins['music-bot'].announceSongs === false ? false : true;
+        const announceSongs = configModule.get().plugins.music.announceSongs === false ? false : true;
         if (announceSongs) {
             bot.sendMessage({
                 to: channelID,
@@ -215,7 +215,7 @@ function addCommand(user, userID, channelID, message) {
                 }
 
                 // Check length of video
-                let maxLength = configModule.get().plugins['music-bot'].maxLength;
+                let maxLength = configModule.get().plugins.music.maxLength;
                 if (maxLength && isNaN(maxLength)) {
                     console.log(chalk.styles.red.open + 'The max length of a song defined in your "config.cson" is invalid. Therefore the download of ' + chalk.styles.red.close + videoInfo.url + chalk.styles.red.open + ' will be stopped.' + chalk.styles.red.close);
                     bot.sendMessage({
@@ -348,7 +348,7 @@ function skipCommand(user, userID, channelID) {
     if (voiceChannelID) {
         if (usersWantToSkip.indexOf(userID) === -1) usersWantToSkip.push(userID);
 
-        const skipLimit = configModule.get().plugins['music-bot'].skipLimit ? configModule.get().plugins['music-bot'].skipLimit : 1;
+        const skipLimit = configModule.get().plugins.music.skipLimit ? configModule.get().plugins.music.skipLimit : 1;
         if (usersWantToSkip.length >= skipLimit) {
             currentStream.unpipe();
             currentSong = null;
@@ -429,8 +429,8 @@ function enter(message, isID, callback) {
 }
 
 bot.on('ready', () => {
-    if (configModule.get().plugins['music-bot'].autoJoinVoiceChannel && configModule.get().plugins['music-bot'].autoJoinVoiceChannel.length > 0) {
-        enter(configModule.get().plugins['music-bot'].autoJoinVoiceChannel, false, () => {
+    if (configModule.get().plugins.music.autoJoinVoiceChannel && configModule.get().plugins.music.autoJoinVoiceChannel.length > 0) {
+        enter(configModule.get().plugins.music.autoJoinVoiceChannel, false, () => {
             console.log(chalk.red('The voice channel defined in autoJoinVoiceChannel could not be found.'));
         });
     }
@@ -532,7 +532,7 @@ function playlistCommand(user, userID, channelID) {
 }
 
 let plugin = {
-    name: 'music-bot',
+    name: 'music',
     defaultCommandPrefix: 'music',
     commands: {
         add: {

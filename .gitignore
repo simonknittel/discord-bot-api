@@ -5,6 +5,7 @@ node_modules/
 npm-debug.log
 
 music/
+!plugins/music/
 ffmpeg.exe
 config.cson
 avatar.png

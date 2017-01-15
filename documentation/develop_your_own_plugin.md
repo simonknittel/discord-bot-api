@@ -65,7 +65,7 @@ bot.sendMessage({
 ```
 
 ## Examples
-Visit the [music bot plugin](../plugins/music-bot) which comes included in the download of the Discord Bot API.
+Visit the [music bot plugin](../plugins/music) which comes included in the download of the Discord Bot API.
 
 ## Need help?
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
