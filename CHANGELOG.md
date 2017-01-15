@@ -24,6 +24,7 @@ Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7
 * Made `!op`, `!deop` and `!owner` working with mentions (closes #52)
 * Relocated the documentation to the `documentation` directory to get version history for these too
 * The command cooldown now doesn't affect the owner (closes #47)
+* **[music plugin]** Ignores now the case sensitivity of the channel name in the `!music enter` command (closes #32)
 
 
 ## v0.7.9

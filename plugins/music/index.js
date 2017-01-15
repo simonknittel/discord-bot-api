@@ -397,7 +397,7 @@ function enter(message, isID, callback) {
     let notFound = true;
     // Look for the ID of the requested channel
     for (const channelID in bot.channels) {
-        if (bot.channels[channelID].name === message && bot.channels[channelID].type === 'voice') {
+        if (bot.channels[channelID].name.toLowerCase() === message.toLowerCase() && bot.channels[channelID].type === 'voice') {
             voiceChannelID = channelID;
             notFound = false;
         }
