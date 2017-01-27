@@ -1,4 +1,6 @@
 # Discord Bot API
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/simonknittel/discord-bot-api.svg)](https://greenkeeper.io/)
 This is a plugin based, self-hosted and configurable Discord bot. You can use plugins to play music, do a raffle or other things. You can even create your own ones!
 
 ## Need help?
