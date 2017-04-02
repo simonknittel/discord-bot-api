@@ -9,28 +9,27 @@ import YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import mkdirp from 'mkdirp';
 import fs from 'fs';
 import chalk from 'chalk';
-import os from 'os';
 
-const libraryPath = configModule.get().plugins.music.library ? configModule.get().plugins.music.library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/discord-bot-api/youtube' : '/tmp/discord-bot-api/youtube');
 
-let youtubeOptions = {
+const libraryPath = configModule.get().plugins.music.library ? configModule.get().plugins.music.library + '/youtube' : '/tmp/discord-bot-api/youtube';
+
+
+const youtubeOptions = {
     outputPath: libraryPath,
     queueParallelism: 10,
 };
 
-if (configModule.get().plugins.music.ffmpeg) youtubeOptions.ffmpegPath = configModule.get().plugins.music.ffmpeg;
 
 let YD = new YoutubeMp3Downloader(youtubeOptions);
 
 events.on('config reloaded', () => {
-    if (configModule.get().plugins.music.ffmpeg) youtubeOptions.ffmpegPath = configModule.get().plugins.music.ffmpeg;
     YD = new YoutubeMp3Downloader(youtubeOptions);
 });
 
-let playlist = []; // All requested songs will be saved in this array
+const playlist = []; // All requested songs will be saved in this array
 let voiceChannelID = null; // The ID of the voice channel the bot has entered will be saved in this variable
 let currentSong = null; // The current song will be saved in this variable
-let downloadQueue = {};
+const downloadQueue = {};
 let usersWantToSkip = []; // The id of the users that want to skip the current song will be stored in this array
 let currentStream = null;
 
@@ -50,7 +49,7 @@ let finishedListener = function() { // Wrapper lets this function called only on
             channelID: downloadQueue['yt:' + data.videoId].channelID,
             messageID: downloadQueue['yt:' + data.videoId].messageID,
             message: '💾 Downloaded the requested video.',
-        }, (error) => {
+        }, error => {
             if (error) {
                 console.log(chalk.red(error));
                 console.log(error);
@@ -70,7 +69,7 @@ let finishedListener = function() { // Wrapper lets this function called only on
 let errorListener = function() { // Wrapper lets this function called only once (because of the weird event emits from the YouTube download library)
     errorListener = function() {};
 
-    YD.on('error', (error) => {
+    YD.on('error', error => {
         console.log(chalk.red(error));
         console.log(error);
         console.log(''); // Empty line
@@ -94,7 +93,7 @@ let liveProgress = function() { // Wrapper lets this function called only once (
                 channelID: downloadQueue['yt:' + data.videoId].channelID,
                 messageID: downloadQueue['yt:' + data.videoId].messageID,
                 message: Math.floor(data.progress.percentage) === 100 ? '💾 Downloaded the requested video.' : '💾 Downloading the requested video (' + Math.floor(data.progress.percentage) + '%) ... ',
-            }, (error) => {
+            }, error => {
                 if (error) {
                     console.log(chalk.red(error));
                     console.log(error);
@@ -240,7 +239,7 @@ function addCommand(user, userID, channelID, message) {
                 }
 
                 // Create download directory
-                mkdirp(libraryPath, (error) => {
+                mkdirp(libraryPath, error => {
                     if (error) {
                         console.log(chalk.red(error));
                         console.log(error);
@@ -256,7 +255,7 @@ function addCommand(user, userID, channelID, message) {
 
                     // Check if already downloaded
                     const filePath = libraryPath + '/' + videoInfo.videoId + '.mp3';
-                    fs.access(filePath, fs.F_OK, (error) => {
+                    fs.access(filePath, fs.F_OK, error => {
                         if (error) { // File not already downloaded
                             const message = disableLiveDownloadProgress !== true && multiple ? '💾 Downloading the requested video' + (multiple ? '' : ' (0%)') + ' ...' : '💾 Downloading the requested video ...';
 
@@ -292,7 +291,7 @@ function addCommand(user, userID, channelID, message) {
                             bot.sendMessage({
                                 to: channelID,
                                 message: '✅ `' + videoInfo.title + '` added to the playlist. Position: ' + playlist.length,
-                            }, (error) => {
+                            }, error => {
                                 if (error) {
                                     console.log(chalk.red(error));
                                     console.log(error);
@@ -531,7 +530,8 @@ function playlistCommand(user, userID, channelID) {
     }
 }
 
-let plugin = {
+
+export default plugin = {
     name: 'music',
     defaultCommandPrefix: 'music',
     commands: {
@@ -588,5 +588,3 @@ let plugin = {
         },
     },
 };
-
-export default plugin;

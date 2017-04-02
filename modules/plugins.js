@@ -1,7 +1,9 @@
 // Discord Bot API
 import configModule from './config';
 
-let plugins = {};
+
+const plugins = {};
+
 
 function enablePlugin(name, callback) {
     if (plugins.hasOwnProperty(name)) {
@@ -25,12 +27,17 @@ function enablePlugin(name, callback) {
     }
 }
 
+
 // Plugins
-for (let pluginName in configModule.get().plugins) {
+for (const pluginName in configModule.get().plugins) {
     if (configModule.get().plugins.hasOwnProperty(pluginName)) {
         const plugin = require('../plugins/' + pluginName);
         plugins[pluginName] = plugin.default;
     }
 }
 
-export {plugins, enablePlugin};
+
+export {
+    plugins,
+    enablePlugin,
+};

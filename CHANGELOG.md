@@ -1,11 +1,11 @@
 # Changelog
 
 ## v0.8.0 _not released yet_
-Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.7.10
+Download here: https://github.com/simonknittel/discord-bot-api/releases/tag/v0.8.0
 
 ### Important changes
-* Restart of development. This first update was just to make everything working as before.
 * Replaced JSON configuration file with CSON one
+* Provided a Dockerfile for running the bot with Docker
 
 ### Changes
 * Fix for issue #45

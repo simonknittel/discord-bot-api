@@ -2,6 +2,7 @@
 import configModule from './config';
 import bot from './bot';
 
+
 /**
  * Checks if the user has the requested permission
  * @method isOperator
@@ -39,8 +40,7 @@ function isOperator(userID, requestedPermission, channelID) {
     return false;
 }
 
-let api = {
+
+export default api = {
     isOperator,
 };
-
-export default api;

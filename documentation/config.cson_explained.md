@@ -19,20 +19,20 @@ ignoreChannels: [ # Here you can define which channels should be ignored by your
 operators: # You can give other users specific permissions by adding them here (optional). The object key will be the user id.
     "":
         permissions: [ # The permissions of the operator (optional). You can give the user a wildcard `*` as permission to grant him all permissions.
-            "general:kill"
+            "general:kill" # plugin-name:command-name
         ]
 
 plugins: # Plugins listed here will be enabled
-    general:
+    general: # The name of the plugin you want to have enabled
         commands: # You can configure here each command individually
-            about:
+            about: # The name of the command you want to configure
                 requirePermission: false # If set to true, it will require permission for this command. If set to false, it will not. If unset it will default to the plugins default.
-            kill:
+            kill: # The name of the command you want to configure
                 requirePermission: true # If set to true, it will require permission for this command. If set to false, it will not. If unset it will default to the plugins default.
 
-    music:
+    music: # The name of the plugin you want to have enabled
         commands: # You can configure here each command individually
-            add:
+            add: # The name of the command you want to configure
                 channel: "#music"
 
         commandPrefix: "music" # Here you can customize the command prefix of this plugin (optional). It defaults to a prefix defined by the plugin itself.

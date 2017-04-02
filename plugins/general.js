@@ -9,6 +9,7 @@ import packageJSON from '../../package';
 import request from 'request';
 import fs from 'fs';
 
+
 /**
  * Returns a short description about the bot.
  * @method aboutCommand
@@ -28,18 +29,22 @@ function commandsCommand(user, userID, channelID) {
     let string = '';
 
     // Search for the commands
-    for (let key in plugins) {
+    for (const key in plugins) {
         if (plugins.hasOwnProperty(key)) {
-            let plugin = plugins[key];
+            const plugin = plugins[key];
 
             string += '\n**' + plugin.name + '**\n';
 
             // Get the command prefix of the plugin
-            let pluginCommandPrefix = configModule.get().plugins && configModule.get().plugins[plugin.name] && configModule.get().plugins[plugin.name].commandPrefix && configModule.get().plugins[plugin.name].commandPrefix.length > 0
+            const pluginCommandPrefix =
+                configModule.get().plugins
+                && configModule.get().plugins[plugin.name]
+                && configModule.get().plugins[plugin.name].commandPrefix
+                && configModule.get().plugins[plugin.name].commandPrefix.length > 0
                 ? configModule.get().plugins[plugin.name].commandPrefix
                 : plugin.defaultCommandPrefix;
 
-            for (let command in plugin.commands) {
+            for (const command in plugin.commands) {
                 if (plugin.commands.hasOwnProperty(command)) {
                     // Create a list with enabled synonyms for this command
                     let synonyms = [];
@@ -57,7 +62,7 @@ function commandsCommand(user, userID, channelID) {
                         && configModule.get().plugins[plugin.name].commands[command]
                         && configModule.get().plugins[plugin.name].commands[command].synonyms
                     ) {
-                        for (let synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
+                        for (const synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
                             if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
                                 if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
                                     if (synonyms.indexOf(synonym) < 0) synonyms.push(synonym);
@@ -456,10 +461,12 @@ function reloadCommand(user, userID, channelID) {
 }
 
 function setAvatar(base64, channelID) {
+    console.log(bot.avatar); // TODO: Check if new avatar is already set
+
     bot.editUserInfo({
         avatar: base64,
         password: configModule.get().credentials.password,
-    }, (error) => {
+    }, error => {
         if (error) {
             console.log(chalk.red(error));
             console.log(error);
@@ -524,7 +531,8 @@ function avatarCommand(user, userID, channelID, message) {
     });
 }
 
-let plugin = {
+
+export default plugin = {
     name: 'general',
     commands: {
         about: {
@@ -603,5 +611,3 @@ let plugin = {
         },
     },
 };
-
-export default plugin;

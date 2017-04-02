@@ -1,11 +1,20 @@
-Desktop.ini
-Thumbs.db
-.DS_Store
-node_modules/
-npm-debug.log
-
 music/
 !plugins/music/
-ffmpeg.exe
 config.cson
 avatar.png
+
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE/Editor files
+.sublime-gulp.cache
+.sublime-gulp-tmp.js
+sublime-gulp.log
+*.sublime-workspace
+*.sublime-project

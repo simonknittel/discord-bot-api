@@ -9,6 +9,13 @@
   "plugins": {
     "doc_comment": {},
     "node": {},
-    "es_modules": {}
-  }
+    "es_modules": {},
+    "node_resolve": {},
+    "modules": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    }
+  },
+  "dontLoad": []
 }

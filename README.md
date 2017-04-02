@@ -5,23 +5,16 @@ This is a plugin based, self-hosted and configurable Discord bot. You can use pl
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f  
 Visit the [FAQ / Known issues](./documentation/faq_known_issues.md)  
 
-## Install
-
-### Install global dependencies
-1. Install [Node](https://nodejs.org) and be sure it's available in your [PATH](https://en.wikipedia.org/wiki/Environment_variable) variable
-
-### Install latest version of the bot
-1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
-2. Extract the download
-3. Open a terminal in the extracted directory
-4. Install the dependencies by running `npm install --production`
-5. Duplicate the [config-sample.cson](./config-sample.cson) and rename it to `config.cson`
-6. Edit the new `config.cson` to your needs
+## Installation
+1. Install [Docker](https://docker.com) and make sure it's available in your [PATH](https://en.wikipedia.org/wiki/Environment_variable) variable
+2. Download the latest version of the bot here: https://github.com/simonknittel/discord-bot-api/archive/master.zip
+3. Extract the download
+4. Duplicate the [config-sample.cson](./config-sample.cson) and rename it to `config.cson`
+5. Edit the new `config.cson` to your needs
     * Visit the full [documentation](./documentation/config.cson_explained.md) for more information
-7. Invite the bot to your server https://finitereality.github.io/permissions/?v=103926784
-
-## Start
-1. Run `npm start`
+6. Invite the bot to your server https://finitereality.github.io/permissions/?v=103926784
+7. Open a terminal in that extracted directory
+8. Run `docker run -d my-bot` to start it
 
 ## Add plugins
 1. Follow the install instructions of the plugin
@@ -35,9 +28,9 @@ _OR_
 ## Update your bot
 The bot will notify the owner if there is a new release available. It will check the version on the start and every 60 minutes after that.
 
-1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/releases/latest
-2. Keep your old `config.cson`
-    * Make sure to read the changelog for configuration changes
+1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/archive/master.zip
+2. Do the same steps as listed under [Installation](#installation) Keep your old `config.cson`
+    * Make sure to read the changelog for possible changes of the configuration
 
 ## Develop your own plugin
 Visit the full [documentation](./documentation/develop_your_own_plugin.md)
@@ -45,10 +38,10 @@ Visit the full [documentation](./documentation/develop_your_own_plugin.md)
 ## Available plugins
 Contact me to get your plugins listed here.
 
-* [Music bot](./plugins/music) (enabled by default)
+* [Music](./plugins/music) (enabled by default)
     + Visit the [README.md](./plugins/music/README.md) of the plugin for the commands, install instructions and more.
 * [Dice](./plugins/dice)
-    + Visit the [README.md](./plugins/dice/README.md) of the plugin for the commands, install instructions and more.
+    + Visit the [dice.js](./plugins/dice.js) of the plugin for the commands, install instructions and more.
 
 ## General commands
 * `!commands` - Shows all available commands
@@ -75,10 +68,10 @@ Contact me to get your plugins listed here.
 Visit https://github.com/simonknittel/discord-bot-api/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement
 
 ## Thanks
-Thanks to everyone who reports me bugs, gives me feedback or tries to figure out the cause of an issues. Without them the Discord Bot API wouldn't be so cool.
+Thanks to everyone who reports me bugs, gives me feedback or tries to figure out the cause of an issues. Without them the Discord Bot API wouldn't be so awesome.
 
 ## License
-Copyright (C) 2017  Simon Knittel <hallo@simonknittel.de>
+Copyright (C) 2017 Simon Knittel <hallo@simonknittel.de>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

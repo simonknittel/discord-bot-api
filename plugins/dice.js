@@ -1,5 +1,19 @@
+/**
+ * # dice plugin
+ *
+ * ## Install
+ * 1. Copy the plugin to the `plugins` directory.
+ * 2. Start your bot and enable the plugin with `!enable dice`
+ *
+ * ## Commands
+ * * `!dice roll <number>` - Rolls a dice with `<number>` faces.
+ *     + Example: `!dice roll 5` - Rolls a dice with 5 faces
+ */
+
+
 // Discord Bot API
 import bot from '../../modules/bot';
+
 
 function rollCommand(user, userID, channelID, message) {
     message = message.split(' ');
@@ -22,7 +36,8 @@ function rollCommand(user, userID, channelID, message) {
     });
 }
 
-let plugin = {
+
+export default plugin = {
     name: 'dice',
     defaultCommandPrefix: 'dice',
     commands: {
@@ -32,5 +47,3 @@ let plugin = {
         },
     },
 };
-
-export default plugin;

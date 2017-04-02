@@ -6,8 +6,10 @@ import chalk from 'chalk';
 import CSON from 'cson';
 import fs from 'fs';
 
+
 let config = {}; // The config.cson will be stored in this object
 let reloadConfig = null;
+
 
 // Save the new config
 function save(callback) {
@@ -18,16 +20,19 @@ function save(callback) {
             console.log(chalk.red(error));
             console.log(''); // Empty line
             callback(error);
+            return false;
         }
 
         callback();
     });
 }
 
+
 function get() {
     if (!config.globalCommandPrefix || config.globalCommandPrefix.trim() === '') config.globalCommandPrefix = '!';
     return config;
 }
+
 
 function enablePlugin(name, callback) {
     config.plugins[name] = {};
@@ -42,6 +47,7 @@ function enablePlugin(name, callback) {
     });
 }
 
+
 function rename(name, callback) {
     config.credentials.name = name;
 
@@ -55,6 +61,7 @@ function rename(name, callback) {
         return true;
     });
 }
+
 
 function op(userID, permissions, callback) {
     if (!config.hasOwnProperty('operators')) config.operators = {};
@@ -81,6 +88,7 @@ function op(userID, permissions, callback) {
         return true;
     });
 }
+
 
 function deop(userID, permissions, callback) {
     for (const permission of permissions) {
@@ -110,6 +118,7 @@ function deop(userID, permissions, callback) {
     });
 }
 
+
 function prefix(newPrefix, callback) {
     config.globalCommandPrefix = newPrefix;
 
@@ -123,6 +132,7 @@ function prefix(newPrefix, callback) {
         return true;
     });
 }
+
 
 function owner(newOwner, callback) {
     config.ownerID = newOwner;
@@ -138,6 +148,7 @@ function owner(newOwner, callback) {
     });
 }
 
+
 function avatar(path, callback) {
     config.credentials.avatar = path == 'null' ? null : path;
 
@@ -151,6 +162,7 @@ function avatar(path, callback) {
         return true;
     });
 }
+
 
 function reload(callback) {
     config = CSON.load('./config.cson'); // Load the config from the config.cson
@@ -182,6 +194,7 @@ function automaticReload() {
     }, Math.ceil(config.reloadConfig) * 1000);
 }
 
+
 if (!config.credentials) {
     console.log(chalk.red('You have to set the credentials in your config.cson.'));
     console.log(''); // Empty line
@@ -210,7 +223,8 @@ if (!config.ownerID) {
     console.log(''); // Empty line
 }
 
-let configModule = {
+
+export default configModule = {
     save,
     get,
     enablePlugin,
@@ -221,6 +235,4 @@ let configModule = {
     owner,
     reload,
     avatar,
-};
-
-export default configModule; // Make the config available for everyone
+}; // Make the config available for everyone

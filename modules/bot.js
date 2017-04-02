@@ -11,11 +11,22 @@ import packageJSON from '../package';
 import fs from 'fs';
 import request from 'request';
 
+
 let bot = null; // The Discord instance will be stored in this object
 let commandHistory = {};
 let reconnectInterval = null;
 
-// Handles incomming message
+
+/**
+ * Handles incomming message
+ * @method handleMessage
+ * @param  {[type]}       user      [description]
+ * @param  {Integer}      userID    [description]
+ * @param  {Integer}      channelID [description]
+ * @param  {String}       message   [description]
+ * @param  {[type]}       rawEvent  [description]
+ * @return {Boolean|Void}           Returns false when the bot should do nothing, returns nothing otherwise
+ */
 function handleMessage(user, userID, channelID, message, rawEvent) {
     // Only listen on the server defined by the config.cson
     if (bot.channels[channelID].guild_id !== configModule.get().serverID) return false;
@@ -46,15 +57,18 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
         if (message.indexOf('<@' + bot.id + '>') !== 0) return false;
 
         // Remove the mention from the message
-        message = message.substring(('<@' + bot.id + '>').length);
-        message = message.trim();
+        message = message
+                    .substring(('<@' + bot.id + '>').length)
+                    .trim();
     }
 
     // Check if the global command prefix is on the first position of the message
     if (message.indexOf(configModule.get().globalCommandPrefix) !== 0) return false;
 
     // Remove the global command prefix from the message
-    message = message.substring(configModule.get().globalCommandPrefix.length).trim();
+    message = message
+                .substring(configModule.get().globalCommandPrefix.length)
+                .trim();
 
     // There is no requested command
     if (message.length < 1) return false;
@@ -71,9 +85,9 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
     message = message.split(' ');
 
     // Search for the command
-    for (let key in plugins) {
+    for (const key in plugins) {
         if (plugins.hasOwnProperty(key)) {
-            let plugin = plugins[key];
+            const plugin = plugins[key];
 
             // Get the command prefix of the plugin
             let pluginCommandPrefix = configModule.get().plugins && configModule.get().plugins[plugin.name] && configModule.get().plugins[plugin.name].commandPrefix && configModule.get().plugins[plugin.name].commandPrefix.length > 0
@@ -84,10 +98,10 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                 // Remove the prefix of the plugin from the message
                 if (pluginCommandPrefix) message.shift();
 
-                for (let command in plugin.commands) {
+                for (const command in plugin.commands) {
                     if (plugin.commands.hasOwnProperty(command)) {
                         // Create a list with enabled synonyms for this command
-                        let synonyms = [];
+                        const synonyms = [];
 
                         // Check plugins default synonyms
                         if (plugin.commands[command].synonyms) synonyms = plugin.commands[command].synonyms;
@@ -102,7 +116,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                             && configModule.get().plugins[plugin.name].commands[command]
                             && configModule.get().plugins[plugin.name].commands[command].synonyms
                         ) {
-                            for (let synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
+                            for (const synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
                                 if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
                                     if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
                                         if (synonyms.indexOf(synonym) < 0) synonyms.push(synonym);
@@ -139,9 +153,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                             }
 
                             if (permissionRequiredByConfig !== null) {
-                                if (permissionRequiredByConfig && !api.isOperator(userID, plugin.name + ':' + command, channelID)) {
-                                    return false;
-                                }
+                                if (permissionRequiredByConfig && !api.isOperator(userID, plugin.name + ':' + command, channelID)) return false;
                             } else if (plugin.commands[command].requirePermission && !api.isOperator(userID, plugin.name + ':' + command, channelID)) {
                                 return false;
                             }
@@ -154,9 +166,9 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                 && configModule.get().plugins[plugin.name].commands[command]
                                 && configModule.get().plugins[plugin.name].commands[command].channel
                             ) {
-                                let requestChannel = configModule.get().plugins[plugin.name].commands[command].channel.replace('#', '');
+                                const requestChannel = configModule.get().plugins[plugin.name].commands[command].channel.replace('#', '');
 
-                                for (let id in bot.servers[configModule.get().serverID].channels) {
+                                for (const id in bot.servers[configModule.get().serverID].channels) {
                                     if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
                                         const channel = bot.servers[configModule.get().serverID].channels[id];
 
@@ -216,10 +228,10 @@ bot.on('ready', () => {
 
     reconnectInterval = null;
 
-    let userInfo = {};
+    const userInfo = {};
 
     // Set the name of the bot to the one defined in the config.cson
-    if (configModule.get().credentials.name.trim() && bot.username !== configModule.get().credentials.name.trim()) userInfo.username = configModule.get().credentials.name;
+    if (configModule.get().credentials.name && configModule.get().credentials.name.trim() && bot.username !== configModule.get().credentials.name.trim()) userInfo.username = configModule.get().credentials.name;
 
     // Set the avatar of the bot to the one defined in the config.cson
     if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
@@ -241,11 +253,13 @@ bot.on('ready', () => {
         } else {
             userInfo.avatar = fs.readFileSync(configModule.get().credentials.avatar, 'base64');
         }
+
+        console.log(bot.avatar); // TODO: Check if new avatar is already set
     } else if (configModule.get().credentials.avatar === null) {
         userInfo.avatar = null;
     }
 
-    bot.editUserInfo(userInfo, (error, response) => {
+    bot.editUserInfo(userInfo, error => {
         if (error) {
             console.log(chalk.red(error));
             console.log(error);
@@ -289,6 +303,7 @@ bot.on('disconnect', () => {
 
 // Trigger on incomming message
 bot.on('message', handleMessage);
+
 
 // Make the discord instance, API endpoints and config available for plugins
 export default bot;

@@ -12,7 +12,7 @@ console.log(''); // Empty line
 
 import './modules/plugins';
 
-let newVersions = [];
+const newVersions = [];
 
 /**
  * Checks the GitHub releases for the latest version and notifies the owner if a new release is available
