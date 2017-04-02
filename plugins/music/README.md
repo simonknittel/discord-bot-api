@@ -64,7 +64,7 @@ plugins:
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f
 
 ## License
-Copyright (C) 2017 Simon Knittel <hallo@simonknittel.de>
+Copyright (C) 2017 Simon Knittel (<hallo@simonknittel.de>)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

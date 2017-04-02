@@ -71,7 +71,8 @@ Visit https://github.com/simonknittel/discord-bot-api/issues?q=is%3Aopen+is%3Ais
 Thanks to everyone who reports me bugs, gives me feedback or tries to figure out the cause of an issues. Without them the Discord Bot API wouldn't be so awesome.
 
 ## License
-Copyright (C) 2017 Simon Knittel <hallo@simonknittel.de>
+Copyright (C) 2017 Simon Knittel (<hallo@simonknittel.de>)
+>>>>>>> bc0f864b69e06c8534e3efd4a23607005b6cc098
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
