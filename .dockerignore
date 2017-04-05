@@ -1,7 +1,6 @@
 .git/
 documentation/
 plugins/.gitkeep
-.babelrc
 .dockerignore
 .editorconfig
 .eslintignore

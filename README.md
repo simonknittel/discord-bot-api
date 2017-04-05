@@ -14,7 +14,8 @@ Visit the [FAQ / Known issues](./documentation/faq_known_issues.md)
     * Visit the full [documentation](./documentation/config.cson_explained.md) for more information
 6. Invite the bot to your server https://finitereality.github.io/permissions/?v=103926784
 7. Open a terminal in that extracted directory
-8. Run `docker run -d my-bot` to start it
+8. Run `docker build -t my-bot .` to build the Docker image
+9. Run `docker run my-bot` to start it (run `docker run -d my-bot` to run it in the background)
 
 ## Add plugins
 1. Follow the install instructions of the plugin
@@ -38,7 +39,7 @@ Visit the full [documentation](./documentation/develop_your_own_plugin.md)
 ## Available plugins
 Contact me to get your plugins listed here.
 
-* [Music](./plugins/music) (enabled by default)
+* [Music](./plugins/music)
     + Visit the [README.md](./plugins/music/README.md) of the plugin for the commands, install instructions and more.
 * [Dice](./plugins/dice)
     + Visit the [dice.js](./plugins/dice.js) of the plugin for the commands, install instructions and more.
@@ -72,7 +73,6 @@ Thanks to everyone who reports me bugs, gives me feedback or tries to figure out
 
 ## License
 Copyright (C) 2017 Simon Knittel (<hallo@simonknittel.de>)
->>>>>>> bc0f864b69e06c8534e3efd4a23607005b6cc098
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
