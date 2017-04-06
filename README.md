@@ -30,7 +30,7 @@ _OR_
 The bot will notify the owner if there is a new release available. It will check the version on the start and every 60 minutes after that.
 
 1. Download the latest release here: https://github.com/simonknittel/discord-bot-api/archive/master.zip
-2. Do the same steps as listed under [Installation](#installation) Keep your old `config.cson`
+2. Do the same steps as listed under [Installation](#installation) but keep your old `config.cson`
     * Make sure to read the changelog for possible changes of the configuration
 
 ## Develop your own plugin
