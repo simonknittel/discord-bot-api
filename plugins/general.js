@@ -1,11 +1,11 @@
 // Discord Bot API
-import configModule from '../../modules/config';
-import bot from '../../modules/bot';
-import {plugins} from '../../modules/plugins';
+import configModule from '../modules/config';
+import bot from '../modules/bot';
+import {plugins} from '../modules/plugins';
 
 // Other
 import chalk from 'chalk';
-import packageJSON from '../../package';
+import packageJSON from '../package';
 import request from 'request';
 import fs from 'fs';
 
@@ -21,7 +21,7 @@ import fs from 'fs';
 function aboutCommand(user, userID, channelID) {
     bot.sendMessage({
         to: channelID,
-        message: 'Hey there, my name is the `Discord Bot API`. I\'m made by Simon Knittel (hallo@simonknittel.de) and based on the Node.js library called discord.io (<https://github.com/izy521/discord.io>). My main feature is to offer a API for plugins that can be used with me. Visit <' + packageJSON.homepage + '> for more information. If you find bugs or have other issues please report them here <' + packageJSON.bugs.url + '>. Enter `' + configModule.get().globalCommandPrefix + 'commands` to get all my commands.',
+        message: 'Hey there, my name is the `Discord Bot API`. I\'m made by Simon Knittel (hallo@simonknittel.de) and I\'m based on the Node.js library called discord.io (<https://github.com/izy521/discord.io>). My main feature is to offer a API for plugins that can be used with me. Visit <' + packageJSON.homepage + '> for more information. If you find bugs or have other issues please report them here <' + packageJSON.bugs.url + '>. Enter `' + configModule.get().globalCommandPrefix + 'commands` to get all my commands.',
     });
 }
 
@@ -532,7 +532,7 @@ function avatarCommand(user, userID, channelID, message) {
 }
 
 
-export default plugin = {
+const plugin = {
     name: 'general',
     commands: {
         about: {
@@ -611,3 +611,5 @@ export default plugin = {
         },
     },
 };
+
+export default plugin;

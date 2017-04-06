@@ -41,6 +41,8 @@ function isOperator(userID, requestedPermission, channelID) {
 }
 
 
-export default api = {
+const api = {
     isOperator,
 };
+
+export default api;

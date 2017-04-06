@@ -101,7 +101,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                 for (const command in plugin.commands) {
                     if (plugin.commands.hasOwnProperty(command)) {
                         // Create a list with enabled synonyms for this command
-                        const synonyms = [];
+                        let synonyms = [];
 
                         // Check plugins default synonyms
                         if (plugin.commands[command].synonyms) synonyms = plugin.commands[command].synonyms;

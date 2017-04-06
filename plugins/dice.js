@@ -12,7 +12,7 @@
 
 
 // Discord Bot API
-import bot from '../../modules/bot';
+import bot from '../modules/bot';
 
 
 function rollCommand(user, userID, channelID, message) {
@@ -37,7 +37,7 @@ function rollCommand(user, userID, channelID, message) {
 }
 
 
-export default plugin = {
+const plugin = {
     name: 'dice',
     defaultCommandPrefix: 'dice',
     commands: {
@@ -47,3 +47,5 @@ export default plugin = {
         },
     },
 };
+
+export default plugin;

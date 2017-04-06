@@ -1,2 +1,6 @@
 import Events from 'events';
-export default events = new Events.EventEmitter();
+
+
+const events = new Events.EventEmitter();
+
+export default events;

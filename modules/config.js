@@ -224,7 +224,7 @@ if (!config.ownerID) {
 }
 
 
-export default configModule = {
+const configModule = {
     save,
     get,
     enablePlugin,
@@ -235,4 +235,6 @@ export default configModule = {
     owner,
     reload,
     avatar,
-}; // Make the config available for everyone
+};
+
+export default configModule;

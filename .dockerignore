@@ -1,5 +1,6 @@
 .git/
 documentation/
+node_modules/
 plugins/.gitkeep
 .dockerignore
 .editorconfig
@@ -13,19 +14,18 @@ CHANGELOG.md
 config-sample.cson
 Dockerfile
 LICENSE.md
+npm-debug.log
 README.md
+yarn-error.log
 
+plugins/music/node_modules/
 plugins/music/.gitignore
 plugins/music/LICENSE.md
 plugins/music/README.md
 
 music/
-avatar.png
-config.cson
-
-node_modules/
-npm-debug.log*
-yarn-error.log
+# avatar.png
+# config.cson
 
 # System files
 .DS_Store

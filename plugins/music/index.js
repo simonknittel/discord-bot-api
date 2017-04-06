@@ -531,7 +531,7 @@ function playlistCommand(user, userID, channelID) {
 }
 
 
-export default plugin = {
+const plugin = {
     name: 'music',
     defaultCommandPrefix: 'music',
     commands: {
@@ -588,3 +588,5 @@ export default plugin = {
         },
     },
 };
+
+export default plugin;
