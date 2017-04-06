@@ -34,7 +34,7 @@ The bot will notify the owner if there is a new release available. It will check
     * Make sure to read the changelog for possible changes of the configuration
 
 ## Develop your own plugin
-Visit the full [documentation](./documentation/develop_your_own_plugin.md)
+Visit the [full documentation](./documentation/develop_your_own_plugin.md)
 
 ## Available plugins
 Contact me to get your plugins listed here.
