@@ -129,7 +129,7 @@ function playLoop(channelID) {
         usersWantToSkip = [];
         bot.setPresence({
             game: {
-                name: '🎶 ' + nextSong.rawVideoInfo.title,
+                name: '🎶 ' + nextSong.rawVideoInfo.videoTitle,
             },
         });
 
@@ -137,7 +137,7 @@ function playLoop(channelID) {
         if (announceSongs) {
             bot.sendMessage({
                 to: channelID,
-                message: '🎶 Now playing: `' + nextSong.rawVideoInfo.title + '`',
+                message: '🎶 Now playing: `' + nextSong.rawVideoInfo.videoTitle + '`',
             });
         }
 
@@ -323,7 +323,7 @@ function removeCommand(user, userID, channelID, message) {
     for (const index of itemsToRemove) {
         if (index < 1 || index > itemsToRemove.length) continue;
 
-        removedItems.push(index + '. ' + playlist[index - 1].rawVideoInfo.title + "\r\n");
+        removedItems.push(index + '. ' + playlist[index - 1].rawVideoInfo.videoTitle + "\r\n");
         playlist.splice(index - 1, 1);
     }
 
@@ -510,7 +510,7 @@ function playlistCommand(user, userID, channelID) {
         let string = '';
         let duration = 0;
         for (var i = 0; i < playlist.length; i++) {
-            string += (i + 1) + '. ' + playlist[i].rawVideoInfo.title + "\r\n";
+            string += (i + 1) + '. ' + playlist[i].rawVideoInfo.videoTitle + "\r\n";
             duration += playlist[i].rawVideoInfo.duration;
         }
 
@@ -545,6 +545,9 @@ const plugin = {
         remove: {
             fn: removeCommand,
             description: 'Removes a song from the playlist',
+            synonyms: [
+                'delete',
+            ],
         },
         skip: {
             fn: skipCommand,
@@ -585,6 +588,9 @@ const plugin = {
         playlist: {
             fn: playlistCommand,
             description: 'Displays all songs on the playlist',
+            synonyms: [
+                'queue',
+            ],
         },
     },
 };
