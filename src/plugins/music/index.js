@@ -5,8 +5,8 @@ import events from '../../modules/events';
 
 // Other
 import fetchVideoInfo from 'youtube-info';
-import YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import mkdirp from 'mkdirp';
+import YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import fs from 'fs';
 import chalk from 'chalk';
 
@@ -216,7 +216,7 @@ function addCommand(user, userID, channelID, message) {
                 // Check length of video
                 let maxLength = configModule.get().plugins.music.maxLength;
                 if (maxLength && isNaN(maxLength)) {
-                    console.log(chalk.styles.red.open + 'The max length of a song defined in your "config.cson" is invalid. Therefore the download of ' + chalk.styles.red.close + videoInfo.url + chalk.styles.red.open + ' will be stopped.' + chalk.styles.red.close);
+                    console.log(chalk.red('The max length of a song defined in your "config.cson" is invalid. Therefore the download of ') + videoInfo.url + chalk.red(' will be stopped.'));
                     bot.sendMessage({
                         to: channelID,
                         message: '⛔ The max length of a song defined in your "config.cson" is invalid. Therefore the download will be stopped.',
@@ -227,7 +227,7 @@ function addCommand(user, userID, channelID, message) {
                 } else if (videoInfo.duration / 60 > Math.ceil(maxLength)) {
                     bot.sendMessage({
                         to: channelID,
-                        message: '⛔ The video is too long. Only videos up to ' + Math.round(maxLength) + ' minutes are allowed.',
+                        message: `⛔ The video is too long. Only videos up to ${Math.round(maxLength)} minutes are allowed.`,
                     });
                     return false;
                 } else if (videoInfo.duration / 60 > 15) {
@@ -257,7 +257,7 @@ function addCommand(user, userID, channelID, message) {
                     const filePath = libraryPath + '/' + videoInfo.videoId + '.mp3';
                     fs.access(filePath, fs.F_OK, error => {
                         if (error) { // File not already downloaded
-                            const message = disableLiveDownloadProgress !== true && multiple ? '💾 Downloading the requested video' + (multiple ? '' : ' (0%)') + ' ...' : '💾 Downloading the requested video ...';
+                            const message = disableLiveDownloadProgress !== true && multiple ? `💾 Downloading the requested video${multiple ? '' : ' (0%)'} ...` : '💾 Downloading the requested video ...';
 
                             bot.sendMessage({
                                 to: channelID,
@@ -361,7 +361,7 @@ function skipCommand(user, userID, channelID) {
         } else {
             bot.sendMessage({
                 to: channelID,
-                message: '⛔ You need ' + (skipLimit - usersWantToSkip.length) + ' more to skip the current song.',
+                message: `⛔ You need ${skipLimit - usersWantToSkip.length} more to skip the current song.`,
             });
         }
     } else {
@@ -454,7 +454,7 @@ function enterCommand(user, userID, channelID, message) {
     enter(message, isID, () => {
         bot.sendMessage({
             to: channelID,
-            message: '⛔ There is no channel named ' + message + '.',
+            message: `⛔ There is no channel named ${message}.`,
         });
     });
 }
@@ -489,7 +489,7 @@ function currentCommand(user, userID, channelID) {
     if (currentSong) {
         bot.sendMessage({
             to: channelID,
-            message: '🎶 Currently playing: ' + currentSong.rawVideoInfo.url,
+            message: `🎶 Currently playing: ${currentSong.rawVideoInfo.url}`,
         });
     } else {
         bot.sendMessage({

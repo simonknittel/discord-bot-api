@@ -3,11 +3,11 @@ import events from './modules/events';
 
 // Other
 import request from 'request';
-import packageJSON from './package';
+import packageJSON from '../package';
 import cmp from 'semver-compare'; // Compare semver versions
 import chalk from 'chalk'; // Coloring console logs
 
-console.log(chalk.styles.blue.open + 'Need help? Join our Discord server: ' + chalk.styles.blue.close + 'https://discord.gg/0jV29zKlvdJbDx3f');
+console.log(chalk.blue('Need help? Join our Discord server:') + ' https://discord.gg/0jV29zKlvdJbDx3f');
 console.log(''); // Empty line
 
 import './modules/plugins';

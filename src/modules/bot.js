@@ -7,7 +7,7 @@ import events from './events';
 // Other
 import Discord from 'discord.io';
 import chalk from 'chalk';
-import packageJSON from '../package';
+import packageJSON from '../../package';
 import fs from 'fs';
 import request from 'request';
 
@@ -177,7 +177,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                         if (channel.name === requestChannel && channel.id !== channelID) {
                                             bot.sendMessage({
                                                 to: channelID,
-                                                message: 'You can request this command only here <#' + channel.id + '>',
+                                                message: `You can request this command only here <#${channel.id}>`,
                                             });
                                             return false;
                                         }
@@ -217,7 +217,7 @@ bot.on('ready', () => {
     for (const name in configModule.get().plugins) {
         if (configModule.get().plugins.hasOwnProperty(name)) {
             if (!plugins.hasOwnProperty(name)) {
-                console.log(chalk.red(name + ' failed to load'));
+                console.log(chalk.red(`${name} failed to load`));
                 continue;
             }
 
@@ -278,8 +278,8 @@ bot.on('ready', () => {
             message: 'There is a new version available for the bot.\n\n'
                 + 'Visit <https://github.com/simonknittel/discord-bot-api> to download the latest version.\n'
                 + 'Check out the CHANGELOG.md file for important changes.\n\n'
-                + 'Your version: ' + data.currentVersion + '\n'
-                + 'Latest version: ' + data.latestVersion + '\n',
+                + `Your version: ${data.currentVersion}\n`
+                + `Latest version: ${data.latestVersion}\n`,
         });
     });
 

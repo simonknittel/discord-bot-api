@@ -5,7 +5,7 @@ import {plugins} from '../modules/plugins';
 
 // Other
 import chalk from 'chalk';
-import packageJSON from '../package';
+import packageJSON from '../../package';
 import request from 'request';
 import fs from 'fs';
 

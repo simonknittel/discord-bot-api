@@ -1,7 +1,7 @@
 .git/
 documentation/
 node_modules/
-plugins/.gitkeep
+src/plugins/.gitkeep
 .dockerignore
 .editorconfig
 .eslintignore
@@ -18,19 +18,19 @@ npm-debug.log
 README.md
 yarn-error.log
 
-plugins/music/node_modules/
-plugins/music/.gitignore
-plugins/music/LICENSE.md
-plugins/music/README.md
+src/plugins/music/node_modules/
+src/plugins/music/.gitignore
+src/plugins/music/LICENSE.md
+src/plugins/music/README.md
 
-music/
+# music/
 # avatar.png
 # config.cson
 
 # System files
 .DS_Store
-Thumbs.db
 desktop.ini
+Thumbs.db
 
 # IDE/Editor files
 .sublime-gulp.cache

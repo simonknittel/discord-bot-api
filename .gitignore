@@ -1,16 +1,17 @@
-music/
-!plugins/music/
-config.cson
 avatar.png
+config.cson
+music/
+!src/plugins/music/
 
+dist/
 node_modules/
 npm-debug.log*
 yarn-error.log
 
 # System files
 .DS_Store
-Thumbs.db
 desktop.ini
+Thumbs.db
 
 # IDE/Editor files
 .sublime-gulp.cache
