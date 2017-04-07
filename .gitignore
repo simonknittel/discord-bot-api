@@ -1,5 +1,6 @@
 avatar.png
 config.cson
+ffmpeg.exe
 music/
 !src/plugins/music/
 

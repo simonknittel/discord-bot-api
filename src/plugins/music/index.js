@@ -9,20 +9,23 @@ import mkdirp from 'mkdirp';
 import YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import fs from 'fs';
 import chalk from 'chalk';
+import os from 'os';
 
 
-const libraryPath = configModule.get().plugins.music.library ? configModule.get().plugins.music.library + '/youtube' : '/tmp/discord-bot-api/youtube';
-
+const libraryPath = configModule.get().plugins.music.library ? configModule.get().plugins.music.library + '/youtube' : (os.platform() === 'win32' ? 'C:/Windows/Temp/discord-bot-api/youtube' : '/tmp/discord-bot-api/youtube');
 
 const youtubeOptions = {
     outputPath: libraryPath,
     queueParallelism: 10,
 };
 
+if (configModule.get().plugins.music.ffmpeg) youtubeOptions.ffmpegPath = configModule.get().plugins.music.ffmpeg;
+
 
 let YD = new YoutubeMp3Downloader(youtubeOptions);
 
 events.on('config reloaded', () => {
+    if (configModule.get().plugins.music.ffmpeg) youtubeOptions.ffmpegPath = configModule.get().plugins.music.ffmpeg;
     YD = new YoutubeMp3Downloader(youtubeOptions);
 });
 

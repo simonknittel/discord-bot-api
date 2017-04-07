@@ -1,4 +1,5 @@
 .git/
+dist/
 documentation/
 node_modules/
 src/plugins/.gitkeep
@@ -26,6 +27,7 @@ src/plugins/music/README.md
 # music/
 # avatar.png
 # config.cson
+ffmpeg.exe
 
 # System files
 .DS_Store
