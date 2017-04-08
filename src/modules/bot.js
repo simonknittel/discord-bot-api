@@ -254,7 +254,7 @@ bot.on('ready', () => {
             userInfo.avatar = fs.readFileSync(configModule.get().credentials.avatar, 'base64');
         }
 
-        console.log(bot.avatar); // TODO: Check if new avatar is already set
+        // TODO: Check if new avatar is already set (issue #56)
     } else if (configModule.get().credentials.avatar === null) {
         userInfo.avatar = null;
     }

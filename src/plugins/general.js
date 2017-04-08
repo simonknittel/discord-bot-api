@@ -461,7 +461,7 @@ function reloadCommand(user, userID, channelID) {
 }
 
 function setAvatar(base64, channelID) {
-    console.log(bot.avatar); // TODO: Check if new avatar is already set
+    // TODO: Check if new avatar is already set (issue #56)
 
     bot.editUserInfo({
         avatar: base64,

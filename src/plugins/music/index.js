@@ -430,14 +430,6 @@ function enter(message, isID, callback) {
     return true;
 }
 
-bot.on('ready', () => {
-    if (configModule.get().plugins.music.autoJoinVoiceChannel && configModule.get().plugins.music.autoJoinVoiceChannel.length > 0) {
-        enter(configModule.get().plugins.music.autoJoinVoiceChannel, false, () => {
-            console.log(chalk.red('The voice channel defined in autoJoinVoiceChannel could not be found.'));
-        });
-    }
-});
-
 function enterCommand(user, userID, channelID, message) {
     let isID = false;
     if (
@@ -532,6 +524,15 @@ function playlistCommand(user, userID, channelID) {
         });
     }
 }
+
+
+bot.on('ready', () => {
+    if (configModule.get().plugins.music.autoJoinVoiceChannel && configModule.get().plugins.music.autoJoinVoiceChannel.length > 0) {
+        enter(configModule.get().plugins.music.autoJoinVoiceChannel, false, () => {
+            console.log(chalk.red('The voice channel defined in autoJoinVoiceChannel could not be found.'));
+        });
+    }
+});
 
 
 const plugin = {
