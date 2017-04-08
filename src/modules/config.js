@@ -64,15 +64,15 @@ function rename(name, callback) {
 
 
 function op(userID, permissions, callback) {
-    if (!config.hasOwnProperty('operators')) config.operators = {};
+    if (Object.prototype.hasOwnProperty.call(!config, 'operators')) config.operators = {};
 
-    if (!config.operators.hasOwnProperty(userID)) {
+    if (Object.prototype.hasOwnProperty.call(!config.operators, userID)) {
         config.operators[userID] = {
             permissions: [],
         };
     }
 
-    if (!config.operators[userID].hasOwnProperty('permissions')) config.operators[userID].permissions = [];
+    if (Object.prototype.hasOwnProperty.call(!config.operators[userID], 'permissions')) config.operators[userID].permissions = [];
 
     for (const permission of permissions) {
         if (config.operators[userID].permissions.indexOf(permission) < 0) config.operators[userID].permissions.push(permission);
@@ -150,7 +150,7 @@ function owner(newOwner, callback) {
 
 
 function avatar(path, callback) {
-    config.credentials.avatar = path == 'null' ? null : path;
+    config.credentials.avatar = path === 'null' ? null : path;
 
     save((error) => {
         if (error) {
@@ -167,7 +167,7 @@ function avatar(path, callback) {
 function reload(callback) {
     config = CSON.load('./config.cson'); // Load the config from the config.cson
     events.emit('config reloaded');
-    automaticReload();
+    automaticReload(); // eslint-disable-line no-use-before-define
     if (callback) callback();
 }
 reload();
@@ -196,21 +196,15 @@ function automaticReload() {
 
 
 if (!config.credentials) {
-    console.log(chalk.red('You have to set the credentials in your config.cson.'));
-    console.log(''); // Empty line
-    process.exit();
+    throw new Error('You have to set the credentials in your config.cson.');
 }
 
 if (!config.credentials.token) {
-    console.log(chalk.red('You have to set the token in your config.cson.'));
-    console.log(''); // Empty line
-    process.exit();
+    throw new Error('You have to set the token in your config.cson.');
 }
 
 if (!config.serverID) {
-    console.log(chalk.red('You have to set the server id in your config.cson so that the bot will listen only on one server.'));
-    console.log(''); // Empty line
-    process.exit();
+    throw new Error('You have to set the server id in your config.cson so that the bot will listen only on one server.');
 }
 
 if (!config.plugins || Object.keys(config.plugins).length < 1) {

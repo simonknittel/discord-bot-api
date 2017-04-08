@@ -40,7 +40,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
             channelName = channelName.replace('#', '');
 
             for (let id in bot.servers[configModule.get().serverID].channels) {
-                if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
+                if (Object.prototype.hasOwnProperty.call(bot.servers[configModule.get().serverID].channels, id)) {
                     const channel = bot.servers[configModule.get().serverID].channels[id];
 
                     if (channel.type !== 'text') continue;
@@ -86,7 +86,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
 
     // Search for the command
     for (const key in plugins) {
-        if (plugins.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(plugins, key)) {
             const plugin = plugins[key];
 
             // Get the command prefix of the plugin
@@ -99,7 +99,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                 if (pluginCommandPrefix) message.shift();
 
                 for (const command in plugin.commands) {
-                    if (plugin.commands.hasOwnProperty(command)) {
+                    if (Object.prototype.hasOwnProperty.call(plugin.commands, command)) {
                         // Create a list with enabled synonyms for this command
                         let synonyms = [];
 
@@ -117,7 +117,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                             && configModule.get().plugins[plugin.name].commands[command].synonyms
                         ) {
                             for (const synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
-                                if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
+                                if (Object.prototype.hasOwnProperty.call(configModule.get().plugins[plugin.name].commands[command].synonyms, synonym)) {
                                     if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
                                         if (synonyms.indexOf(synonym) < 0) synonyms.push(synonym);
                                     } else if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled === false) {
@@ -169,7 +169,7 @@ function handleMessage(user, userID, channelID, message, rawEvent) {
                                 const requestChannel = configModule.get().plugins[plugin.name].commands[command].channel.replace('#', '');
 
                                 for (const id in bot.servers[configModule.get().serverID].channels) {
-                                    if (bot.servers[configModule.get().serverID].channels.hasOwnProperty(id)) {
+                                    if (Object.prototype.hasOwnProperty.call(bot.servers[configModule.get().serverID].channels, id)) {
                                         const channel = bot.servers[configModule.get().serverID].channels[id];
 
                                         if (channel.type !== 'text') continue;
@@ -215,8 +215,8 @@ bot.on('ready', () => {
 
     console.log(chalk.green('Plugins'));
     for (const name in configModule.get().plugins) {
-        if (configModule.get().plugins.hasOwnProperty(name)) {
-            if (!plugins.hasOwnProperty(name)) {
+        if (Object.prototype.hasOwnProperty.call(configModule.get().plugins, name)) {
+            if (!Object.prototype.hasOwnProperty.call(plugins, name)) {
                 console.log(chalk.red(`${name} failed to load`));
                 continue;
             }
@@ -235,7 +235,7 @@ bot.on('ready', () => {
 
     // Set the avatar of the bot to the one defined in the config.cson
     if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
-        const reg = new RegExp(/^(http(s)?:\/\/.){1}(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
+        const reg = new RegExp(/^(http(s)?:\/\/.){1}(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/, 'gi');
         if (reg.test(configModule.get().credentials.avatar)) {
             request({
                 url: configModule.get().credentials.avatar,

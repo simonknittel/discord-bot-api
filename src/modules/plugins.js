@@ -6,7 +6,7 @@ const plugins = {};
 
 
 function enablePlugin(name, callback) {
-    if (plugins.hasOwnProperty(name)) {
+    if (Object.prototype.hasOwnProperty.call(plugins, name)) {
         callback('already enabled');
         return true;
     }
@@ -15,7 +15,7 @@ function enablePlugin(name, callback) {
         const plugin = require('../plugins/' + name);
         plugins[name] = plugin.default;
 
-        if (configModule.get().plugins.hasOwnProperty(name)) {
+        if (Object.prototype.hasOwnProperty.call(configModule.get().plugins, name)) {
             callback();
         } else {
             configModule.enablePlugin(name, () => {
@@ -30,7 +30,7 @@ function enablePlugin(name, callback) {
 
 // Plugins
 for (const pluginName in configModule.get().plugins) {
-    if (configModule.get().plugins.hasOwnProperty(pluginName)) {
+    if (Object.prototype.hasOwnProperty.call(configModule.get().plugins, pluginName)) {
         const plugin = require('../plugins/' + pluginName);
         plugins[pluginName] = plugin.default;
     }

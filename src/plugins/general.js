@@ -30,7 +30,7 @@ function commandsCommand(user, userID, channelID) {
 
     // Search for the commands
     for (const key in plugins) {
-        if (plugins.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(plugins, key)) {
             const plugin = plugins[key];
 
             string += '\n**' + plugin.name + '**\n';
@@ -45,7 +45,7 @@ function commandsCommand(user, userID, channelID) {
                 : plugin.defaultCommandPrefix;
 
             for (const command in plugin.commands) {
-                if (plugin.commands.hasOwnProperty(command)) {
+                if (Object.prototype.hasOwnProperty.call(plugin.commands, command)) {
                     // Create a list with enabled synonyms for this command
                     let synonyms = [];
 
@@ -63,7 +63,7 @@ function commandsCommand(user, userID, channelID) {
                         && configModule.get().plugins[plugin.name].commands[command].synonyms
                     ) {
                         for (const synonym in configModule.get().plugins[plugin.name].commands[command].synonyms) {
-                            if (configModule.get().plugins[plugin.name].commands[command].synonyms.hasOwnProperty(synonym)) {
+                            if (Object.prototype.hasOwnProperty.call(configModule.get().plugins[plugin.name].commands[command].synonyms, synonym)) {
                                 if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled) {
                                     if (synonyms.indexOf(synonym) < 0) synonyms.push(synonym);
                                 } else if (configModule.get().plugins[plugin.name].commands[command].synonyms[synonym].enabled === false) {
@@ -160,6 +160,8 @@ function commandsCommand(user, userID, channelID) {
 function killCommand() {
     bot.disconnect();
 
+    // throw new Error('The Discord Bot API got stopped through the kill command.');
+
     console.log(chalk.yellow('The Discord Bot API got stopped through the kill command.'));
     console.log(''); // Empty line
     process.exit();
@@ -249,7 +251,7 @@ function renameCommand(user, userID, channelID, message) {
 
         bot.editUserInfo({
             username: message,
-        }, (error) => {
+        }, error => {
             if (error) {
                 console.log(chalk.red(error));
                 console.log(error);
@@ -502,13 +504,13 @@ function avatarCommand(user, userID, channelID, message) {
 
         // Set the avatar of the bot to the one defined in the config.cson
         if (configModule.get().credentials.avatar && configModule.get().credentials.avatar !== null) {
-            const reg = new RegExp(/^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$/, 'gi');
+            const reg = new RegExp(/^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/, 'gi');
             if (reg.test(configModule.get().credentials.avatar)) {
                 request({
                     url: configModule.get().credentials.avatar,
                     encoding: null,
                 }, (error, response, body) => {
-                    if (!error && response.statusCode == 200) {
+                    if (!error && response.statusCode === 200) {
                         setAvatar(new Buffer(body).toString('base64'), channelID);
                     } else {
                         console.log(chalk.red('The avatar could not be set. Make sure the path is correct.'));
