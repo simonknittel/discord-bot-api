@@ -13,21 +13,33 @@ import request from 'request';
 
 
 let bot = null; // The Discord instance will be stored in this object
-let commandHistory = {};
+const commandHistory = {};
 let reconnectInterval = null;
 
 
 /**
  * Handles incomming message
  * @method handleMessage
- * @param  {[type]}       user      [description]
- * @param  {Integer}      userID    [description]
- * @param  {Integer}      channelID [description]
+ * @param  {String}       user      [description]
+ * @param  {String}       userID    [description]
+ * @param  {String}       channelID [description]
  * @param  {String}       message   [description]
  * @param  {[type]}       rawEvent  [description]
  * @return {Boolean|Void}           Returns false when the bot should do nothing, returns nothing otherwise
  */
 function handleMessage(user, userID, channelID, message, rawEvent) {
+    if (configModule.get().debug) {
+        console.log(
+            chalk.yellow('DEBUG:'),
+            chalk.blue('handleMessage()'),
+            user, chalk.blue(`(${typeof user})`),
+            userID, chalk.blue(`(${typeof userID})`),
+            channelID, chalk.blue(`(${typeof channelID})`),
+            message, chalk.blue(`(${typeof message})`)
+        );
+        console.log(''); // Empty line
+    }
+
     // Only listen on the server defined by the config.cson
     if (bot.channels[channelID].guild_id !== configModule.get().serverID) return false;
 

@@ -42,6 +42,14 @@ let finishedListener = function() { // Wrapper lets this function called only on
     finishedListener = function() {};
 
     YD.on('finished', (error, data) => {
+        if (configModule.get().debug) {
+            console.log(
+                chalk.yellow('DEBUG:'),
+                chalk.blue('YD.on(\'finished\', () => {});')
+            );
+            console.log(''); // Empty line
+        }
+
         // Add the song to the playlist
         playlist.push({
             rawVideoInfo: data,
@@ -111,8 +119,8 @@ let liveProgress = function() { // Wrapper lets this function called only once (
 /**
  * Iterate through the playlist until there are no songs anymore
  * @method playLoop
- * @param  {Interger} channelID The ID of the channel were the song was requested
- * @return {Void}               Returns nothing
+ * @param  {String} channelID The ID of the channel were the song was requested
+ * @return {Void}             Returns nothing
  */
 function playLoop(channelID) {
     // Check if the bot is in a voice channel
@@ -411,6 +419,7 @@ function enter(message, isID, callback) {
     }
 
     bot.joinVoiceChannel(voiceChannelID, (error, events) => {
+        // Implementaion for issue #53
         // events.on('speaking', (userID, SSRC, speakingBool) => {
         //     // Ignore the bots own events
         //     if (userID === bot.id) return false;

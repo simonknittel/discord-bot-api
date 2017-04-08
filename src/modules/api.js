@@ -7,7 +7,7 @@ import bot from './bot';
  * Checks if the user has the requested permission
  * @method isOperator
  * @param  {Integer} userID              [description]
- * @param  {String}  requestedPermission [description]
+ * @param  {String}  requestedPermission The name of the requested permission
  * @param  {Integer} channelID           [description]
  * @return {Boolean}                     [description]
  */
