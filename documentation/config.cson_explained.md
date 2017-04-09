@@ -1,5 +1,4 @@
 # config.cson explained
-
 ```cson
 credentials:
     token: "" # Add the token of your bot here

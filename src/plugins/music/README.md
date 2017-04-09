@@ -1,10 +1,15 @@
 # music plugin
 
+## Enable
+1. Add the name of the plugin to the `plugins` array of the `config.cson` (see [below](#example) for an example)
+
+<!--
 ## Install
 1. Make sure you have [FFmpeg](https://ffmpeg.org) installed and available in your PATH variable or configure in your config.cson
 2. Copy the plugin to the `plugins` directory.
 3. Run `npm install` in the directory of the plugin
 4. Start your bot and enable the plugin with `!enable music`
+ -->
 
 ## Commands
 * `!music add <link>` - Adds a song to the playlist
@@ -13,6 +18,7 @@
     + Synonyms: `!music new <link>`
 * `!music remove <Position on the playlist>` - Removes a song from the playlist
     + Example: `!music remove 1`
+    + Synonyms: `!music rm`, `!music delete`
 * `!music skip` - Skips the current song
 * `!music play` - Starts the playlist
     + Synonyms: `!music start`
@@ -20,6 +26,7 @@
 * `!music current` - Displays the current song
     + Synonyms: `!music now`
 * `!music playlist` - Displays all songs on the playlist
+    + Synonyms: `!music queue`
 * `!music join <Channel name>` - Lets the bot enter a voice channel.
     + If you leave the channel name empty, it will join your current voice channel
     + Example: `!music join General`

@@ -1,12 +1,12 @@
 # Develop your own plugin
 
-The Discord Bot API runs with [babel-node](https://babeljs.io/docs/usage/cli/#babel-node), so writing in ES6 is possible.
+The Discord Bot API gets compiled with [Babel](https://babeljs.io), so writing in ES6 is possible.
 
 **1. Create a JavaScript file in the [plugins](../plugins) directory.**
 
-**2. Fill it with the basic skeleton (read the comments):**
+**2. Fill it with the basic skeleton (read the inline comments for more information):**
 ```javascript
-let plugin = {
+const plugin = {
     name: 'your-plugin', // The bot will look for this name in the config.cson
     defaultCommandPrefix: 'prefix', // Give your plugin a custom command prefix which will be lead by the global command prefix
     commands: { // Define your commands here

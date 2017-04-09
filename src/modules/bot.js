@@ -20,10 +20,10 @@ let reconnectInterval = null;
 /**
  * Handles incomming message
  * @method handleMessage
- * @param  {String}       user      [description]
- * @param  {String}       userID    [description]
- * @param  {String}       channelID [description]
- * @param  {String}       message   [description]
+ * @param  {String}       user      The name of the user who sent the message
+ * @param  {String}       userID    The ID of the user who sent the message
+ * @param  {String}       channelID The ID of the channel which the message was sent to
+ * @param  {String}       message   The message itself
  * @param  {[type]}       rawEvent  [description]
  * @return {Boolean|Void}           Returns false when the bot should do nothing, returns nothing otherwise
  */

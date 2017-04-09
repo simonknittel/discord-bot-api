@@ -3,7 +3,6 @@ This is a plugin based, self-hosted and configurable Discord bot. You can use pl
 
 ## Need help?
 Join my Discord server: https://discord.gg/0jV29zKlvdJbDx3f  
-Visit the [FAQ / Known issues](./documentation/faq_known_issues.md)  
 
 ## Installation
 1. Install [Docker](https://docker.com) and make sure it's available in your [PATH](https://en.wikipedia.org/wiki/Environment_variable) variable
@@ -17,6 +16,10 @@ Visit the [FAQ / Known issues](./documentation/faq_known_issues.md)
 8. Run `docker build -t my-bot .` to build the Docker image
 9. Run `docker run my-bot` to start it (run `docker run -d my-bot` to run it in the background)
 
+## Enable a plugin
+1. Add the name of the plugin to the `plugins` array of the `config.cson` (see [config.cson explained](./documentation/config.cson_explained.md) for an example)
+
+<!--
 ## Add plugins
 1. Follow the install instructions of the plugin
 
@@ -25,6 +28,7 @@ _OR_
 1. Copy the plugin to the [plugins](./plugins) directory
 2. Start your bot and enable the plugin with `!enable <plugin>`
     * Example: `!enable dice`
+ -->
 
 ## Update your bot
 The bot will notify the owner if there is a new release available. It will check the version on the start and every 60 minutes after that.

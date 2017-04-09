@@ -559,6 +559,7 @@ const plugin = {
             fn: removeCommand,
             description: 'Removes a song from the playlist',
             synonyms: [
+                'rm',
                 'delete',
             ],
         },
